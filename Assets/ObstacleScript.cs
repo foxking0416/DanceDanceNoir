@@ -5,7 +5,7 @@ public class ObstacleScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+		int testing;
 	}
 	
 	// Update is called once per frame
