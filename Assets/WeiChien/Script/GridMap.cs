@@ -16,6 +16,8 @@ public class GridMap : MonoBehaviour {
 
 	int width = 20;
 
+	enum objType{Enemy, Obstacle, BlueCabinet, YellowCabinet, RedCabinet, GreenCabinet, OrangeCabinet, BlueKey, YellowKey, RedKey, GreenKey, OrangeKey};
+
 	// Use this for initialization
 	void Start () {
 		map = new int[width * width]; 
@@ -113,18 +115,20 @@ public class GridMap : MonoBehaviour {
 				break;
 
 			case 21://Add Blue Cabinet
-				GameObject objCabinetBlue = Instantiate (gameObjCabinet, ComputePosition(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;
+				/*GameObject objCabinetBlue = Instantiate (gameObjCabinet, ComputePosition(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;
 				objCabinetBlue.tag = "BlueCabinet";
 				CabinetScript cabinetBlue = objCabinetBlue.GetComponent<CabinetScript>();
 				cabinetBlue.positionX = i % width + 1;
 				cabinetBlue.positionZ = i / width + 1;
-				cabinetBlue.SetColor(21);
-				/*GameObject objRefrigerator = Instantiate (gameObjRefrigerator, ComputePosition(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;
+				cabinetBlue.SetColor(21);*/
+				GameObject objRefrigerator = Instantiate (gameObjRefrigerator, ComputePosition(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;
 				objRefrigerator.tag = "BlueCabinet";
+				objRefrigerator.transform.localScale = new Vector3(5, 5, 5);
+				objRefrigerator.transform.localRotation = Quaternion.Euler( new Vector3(0, 180, 0));
 				CabinetScript cabinetBlue = objRefrigerator.GetComponent<CabinetScript>();
 				cabinetBlue.positionX = i % width + 1;
 				cabinetBlue.positionZ = i / width + 1;
-				cabinetBlue.SetColor(21);*/
+				cabinetBlue.SetColor(21);
 				break;
 			case 22://Add Yellow Cabinet
 				GameObject objCabinetYellow = Instantiate (gameObjCabinet, ComputePosition(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;
