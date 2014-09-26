@@ -9,16 +9,17 @@ public class Character2Script : MonoBehaviour {
 	int holdKeyStatus;//0: no key; 1: index
 	int positionX;
 	int positionZ;
+	int width;
 
 	// Use this for initialization
 	void Start () {
 
 		gameObjGridMap = GameObject.Find ("Map");
 		map = gameObjGridMap.GetComponent< GridMap >();
+		width = map.GetMapSize ();
 
-
-		positionX = 1;
-		positionZ = 1;
+		positionX = 10;
+		positionZ = 10;
 		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
 	}
 	
@@ -42,22 +43,43 @@ public class Character2Script : MonoBehaviour {
 
 	void MoveUp(){
 
-		gameObject.transform.position = ComputePosition(positionX,0 ,++positionZ);
+		++positionZ;
+	 	int objectType = map.GetObjectOnMap (positionX, positionZ);
+
+		if (positionZ > width || objectType == 1) {
+			--positionZ;		
+		}
+		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
 	}
 
 	void MoveLeft(){
 
-		gameObject.transform.position = ComputePosition(--positionX,0 ,positionZ);
+		--positionX;
+		int objectType = map.GetObjectOnMap (positionX, positionZ);
+		if (positionX < 1 || objectType == 1) {
+			++positionX;		
+		}
+		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
 	}
 
 	void MoveDown(){
 
-		gameObject.transform.position = ComputePosition(positionX,0 ,--positionZ);
+		--positionZ;
+		int objectType = map.GetObjectOnMap (positionX, positionZ);
+		if (positionZ < 1 || objectType == 1) {
+			++positionZ;		
+		}
+		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
 	}
 
 	void MoveRight(){
 
-		gameObject.transform.position = ComputePosition(++positionX,0 ,positionZ);
+		++positionX;
+		int objectType = map.GetObjectOnMap (positionX, positionZ);
+		if (positionX > width || objectType == 1) {
+			--positionX;		
+		}
+		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
 	}
 
 	Vector3 ComputePosition(int x, int y, int z){

@@ -5,18 +5,16 @@ public class KeyScript : MonoBehaviour {
 	private GameObject gameObjGridMap;
 	private GridMap map;
 
-	int positionX;
-	int positionZ;
-	int color;
+	public int positionX;
+	public int positionZ;
+
 	
 	// Use this for initialization
 	void Start () {
 		gameObjGridMap = GameObject.Find ("Map");
 		map = gameObjGridMap.GetComponent< GridMap >();
-		
-		positionX = 3;
-		positionZ = 5;
-		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
+
+		//gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
 	}
 	
 	// Update is called once per frame
@@ -30,6 +28,22 @@ public class KeyScript : MonoBehaviour {
 
 	void UpdateMap(){
 
+	}
+
+	public void SetColor(int color){
+		switch (color) {
+		case 31:
+
+			break;
+		case 32:
+			break;
+		case 33:
+			break;
+		case 34:
+			break;
+		case 35:
+			break;
+		}
 	}
 
 	Vector3 ComputePosition(int x, int y, int z){
