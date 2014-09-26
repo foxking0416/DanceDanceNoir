@@ -80,13 +80,13 @@ public class GridMap : MonoBehaviour {
 				keyGreen.positionZ = i / width + 1;
 				keyGreen.SetColor(34);
 				break;
-			case 35:
+			/*case 35:
 				GameObject obj = Instantiate (gameObjKey, ComputePosition(i % width + 1, 0, i / width + 1), Quaternion.identity) as GameObject;
 				KeyScript key = obj.GetComponent<KeyScript>();
 				key.positionX = i % width + 1;
 				key.positionZ = i / width + 1;
-				key.SetColor(31);
-				break;
+				key.SetColor(35);
+				break;*/
 			}		
 		}
 	}
