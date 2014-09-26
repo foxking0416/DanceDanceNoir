@@ -14,7 +14,7 @@ public class KeyScript : MonoBehaviour {
 		gameObjGridMap = GameObject.Find ("Map");
 		map = gameObjGridMap.GetComponent< GridMap >();
 
-		//gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
+
 	}
 	
 	// Update is called once per frame
@@ -22,8 +22,9 @@ public class KeyScript : MonoBehaviour {
 
 	}
 
-	void Pick(){
+	public void Pick(){
 		map.UpdateObjectsStatus (positionX, positionZ, 0);
+		Destroy (gameObject);
 	}
 
 	void UpdateMap(){

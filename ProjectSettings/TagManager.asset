@@ -3,6 +3,16 @@
 --- !u!78 &1
 TagManager:
   tags:
+  - BlueCabinet
+  - BlueKey
+  - YellowCabinet
+  - YellowKey
+  - GreenCabinet
+  - GreenKey
+  - RedCabinet
+  - RedKey
+  - OrangeCabinet
+  - OrangeKey
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX
