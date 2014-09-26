@@ -7,7 +7,12 @@ public class CabinetScript : MonoBehaviour {
 	
 	public int positionX;
 	public int positionZ;
-	
+
+	public Material materialBlue;
+	public Material materialYellow;
+	public Material materialRed;
+	public Material materialGreen;
+	public Material materialOrange;
 
 	// Use this for initialization
 	void Start () {
@@ -22,16 +27,20 @@ public class CabinetScript : MonoBehaviour {
 
 	public void SetColor(int color){
 		switch (color) {
-		case 31:
-			
+		case 21:
+			gameObject.renderer.material = materialBlue;
 			break;
-		case 32:
+		case 22:
+			gameObject.renderer.material = materialYellow;
 			break;
-		case 33:
+		case 23:
+			gameObject.renderer.material = materialRed;
 			break;
-		case 34:
+		case 24:
+			gameObject.renderer.material = materialGreen;
 			break;
-		case 35:
+		case 25:
+			gameObject.renderer.material = materialOrange;
 			break;
 		}
 	}

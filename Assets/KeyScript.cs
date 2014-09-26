@@ -8,6 +8,11 @@ public class KeyScript : MonoBehaviour {
 	public int positionX;
 	public int positionZ;
 
+	public Material materialBlue;
+	public Material materialYellow;
+	public Material materialRed;
+	public Material materialGreen;
+	public Material materialOrange;
 	
 	// Use this for initialization
 	void Start () {
@@ -34,15 +39,19 @@ public class KeyScript : MonoBehaviour {
 	public void SetColor(int color){
 		switch (color) {
 		case 31:
-
+			gameObject.renderer.material = materialBlue;
 			break;
 		case 32:
+			gameObject.renderer.material = materialYellow;
 			break;
 		case 33:
+			gameObject.renderer.material = materialRed;
 			break;
 		case 34:
+			gameObject.renderer.material = materialGreen;
 			break;
 		case 35:
+			gameObject.renderer.material = materialOrange;
 			break;
 		}
 	}

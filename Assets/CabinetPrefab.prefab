@@ -69,6 +69,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c336fea5744b3874c9f5394ed0118d20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  positionX: 0
+  positionZ: 0
+  materialBlue: {fileID: 2100000, guid: f788c2178a088604f8cdf95c7a5920f0, type: 2}
+  materialYellow: {fileID: 2100000, guid: 5bf60c24bdf63d84a8bb39384c0f6adf, type: 2}
+  materialRed: {fileID: 2100000, guid: 60c6b9ac68bc2374d9e5f3d51443c3e6, type: 2}
+  materialGreen: {fileID: 2100000, guid: a988abe8aa9e829478914973726b2699, type: 2}
+  materialOrange: {fileID: 2100000, guid: d08a2a44a26a8d84d85a7336941b05ec, type: 2}
 --- !u!136 &13600000
 CapsuleCollider:
   m_ObjectHideFlags: 1
