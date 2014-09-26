@@ -1,0 +1,8 @@
+newmtl MusicNote:MusicNote
+illum 4
+Kd 1.00 1.00 0.00
+Ka 0.15 0.15 0.15
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 1.00 1.00 0.40
+Ns 1138.89
