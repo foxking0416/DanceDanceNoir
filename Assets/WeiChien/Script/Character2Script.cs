@@ -40,40 +40,40 @@ public class Character2Script : MonoBehaviour {
 
 
 
-		if (Input.GetKeyDown ("w")) {
-			MoveUp();
-			player2Camera.transform.position = ComputeCameraPosition(positionX,0 ,positionZ);
-		}
-		if (Input.GetKeyDown ("a")) {
-			MoveLeft();
-			player2Camera.transform.position = ComputeCameraPosition(positionX,0 ,positionZ);
-		}
-		if (Input.GetKeyDown ("d")) {
-			MoveRight();
-			player2Camera.transform.position = ComputeCameraPosition(positionX,0 ,positionZ);
-		}
-		if (Input.GetKeyDown ("s")) {
-			MoveDown();
-			player2Camera.transform.position = ComputeCameraPosition(positionX,0 ,positionZ);
-		}
-
-		//pick up the key
-		if (Input.GetKeyDown ("g") && holdKeyStatus == 0) {
-			PickUpKey(objectType);
-		}
-
-		//open the cabinet
-		if (Input.GetKeyDown ("c")) {
-			OpenCabinet();
-		}
-
-		if (Input.GetKeyDown ("h")) {
-			CollectEvidence(objectType);		
-		}
-
-		if (Input.GetKeyDown ("u")) {
-			PickUpSuperEnergy(objectType);		
-		}
+//		if (Input.GetKeyDown ("w")) {
+//			MoveUp();
+//			player2Camera.transform.position = ComputeCameraPosition(positionX,0 ,positionZ);
+//		}
+//		if (Input.GetKeyDown ("a")) {
+//			MoveLeft();
+//			player2Camera.transform.position = ComputeCameraPosition(positionX,0 ,positionZ);
+//		}
+//		if (Input.GetKeyDown ("d")) {
+//			MoveRight();
+//			player2Camera.transform.position = ComputeCameraPosition(positionX,0 ,positionZ);
+//		}
+//		if (Input.GetKeyDown ("s")) {
+//			MoveDown();
+//			player2Camera.transform.position = ComputeCameraPosition(positionX,0 ,positionZ);
+//		}
+//
+//		//pick up the key
+//		if (Input.GetKeyDown ("g") && holdKeyStatus == 0) {
+//			PickUpKey(objectType);
+//		}
+//
+//		//open the cabinet
+//		if (Input.GetKeyDown ("c")) {
+//			OpenCabinet();
+//		}
+//
+//		if (Input.GetKeyDown ("h")) {
+//			CollectEvidence(objectType);		
+//		}
+//
+//		if (Input.GetKeyDown ("u")) {
+//			PickUpSuperEnergy(objectType);		
+//		}
 
 	}
 
