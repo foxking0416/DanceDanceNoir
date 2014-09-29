@@ -26,7 +26,7 @@ public class EnemyScript : MonoBehaviour {
 		timer += Time.deltaTime;
 
 		if (timer > beatTime) {
-			RandomMove();
+			//RandomMove();
 			timer = 0;
 		}
 

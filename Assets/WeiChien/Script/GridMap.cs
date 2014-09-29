@@ -9,6 +9,7 @@ public class GridMap : MonoBehaviour {
 	public GameObject gameObjEnemy;
 	public GameObject gameObjSuperEnergy;
 	public GameObject gameObjRefrigerator;
+	public GameObject gameObjCharacter;
 
 	private GameObject gameObjObstacleGenerated;
 	
@@ -16,10 +17,11 @@ public class GridMap : MonoBehaviour {
 
 	int width = 20;
 
-	enum objType{Enemy, Obstacle, BlueCabinet, YellowCabinet, RedCabinet, GreenCabinet, OrangeCabinet, BlueKey, YellowKey, RedKey, GreenKey, OrangeKey};
+	//enum objType{Enemy, Obstacle, BlueCabinet, YellowCabinet, RedCabinet, GreenCabinet, OrangeCabinet, BlueKey, YellowKey, RedKey, GreenKey, OrangeKey};
 
 	// Use this for initialization
 	void Start () {
+
 		map = new int[width * width]; 
 
 		UpdateObjectsStatus (7, 1, 1);
@@ -73,6 +75,7 @@ public class GridMap : MonoBehaviour {
 
 		GenerateEnvironment ();
 
+		GameObject objCharacter = Instantiate (gameObjCharacter, ComputePosition(10, 0,  9), Quaternion.identity) as GameObject;
 
 	}
 
@@ -96,7 +99,7 @@ public class GridMap : MonoBehaviour {
 				break;
 			case 1://Add obstacle
 				GameObject objWall = Instantiate (gameObjObstacle, ComputePosition(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;	
-				objWall.transform.localScale = new Vector3(2.0f, 5, 8);
+				objWall.transform.localScale = new Vector3(2.0f, 1, 8);
 				objWall.transform.localRotation = Quaternion.Euler( new Vector3(0, 0, 0));
 				break;
 			case 2://Add Super Energy
