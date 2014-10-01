@@ -14,4 +14,14 @@ public class PlayerCar : MonoBehaviour {
 	void Update () {
 	
 	}
+
+	public void MoveForward(){}
+
+	public void MoveBackward(){}
+
+	void Combo(){
+
+
+	}
+
 }
