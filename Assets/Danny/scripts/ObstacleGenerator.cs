@@ -1,0 +1,20 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class ObstacleGenerator : MonoBehaviour
+{
+	////////////////////////////////////////////////////
+	// Game object members.
+	////////////////////////////////////////////////////
+
+	public GameObject crate;
+
+
+	////////////////////////////////////////////////////
+	// Instantiate a new crate obstacle.
+	////////////////////////////////////////////////////
+	public void CreateCrate()
+	{
+		Instantiate( crate, transform.position, transform.rotation );
+	}
+}
