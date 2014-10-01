@@ -42,7 +42,7 @@ public class Character2Script : MonoBehaviour {
 			//Game Over
 			Debug.Log("You are caught by enemy!!!!!!");
 		}
-	/*	if (Input.GetKeyDown ("r")) {
+		if (Input.GetKeyDown ("r")) {
 			Vector3 oldRotation = player2Camera.transform.localRotation.eulerAngles;
 			oldRotation += new Vector3 (0, 5, 0);
 			player2Camera.transform.localRotation = Quaternion.Euler (oldRotation);
@@ -79,7 +79,7 @@ public class Character2Script : MonoBehaviour {
 		//pick up the key
 		if (Input.GetKeyDown ("g") && holdKeyStatus == 0) {
 			PickUpKey(objectType);
-		}*/
+		}
 //
 /*		//open the cabinet
 		if (Input.GetKeyDown ("c")) {
