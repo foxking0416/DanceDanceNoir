@@ -26,7 +26,7 @@ public class EnemyScript : MonoBehaviour {
 		timer += Time.deltaTime;
 
 		if (timer > beatTime) {
-			RandomMove();
+			//RandomMove();
 			timer = 0;
 		}
 
@@ -61,8 +61,8 @@ public class EnemyScript : MonoBehaviour {
 		if (positionZ > width ) {
 			--positionZ;		
 		} 
-		int objectType = map.GetObjectOnMap (positionX, positionZ);
-		if (objectType == 1 || objectType == 11 || objectType == 21 || objectType == 22 || objectType == 23 || objectType == 24 || objectType == 25) {
+		int objectType = map.GetObjectTypeOnMap (positionX, positionZ);
+		if (!CanWalkThrough(objectType)) {
 			--positionZ;		
 		}
 		
@@ -78,8 +78,8 @@ public class EnemyScript : MonoBehaviour {
 		if (positionX < 1) {
 			++positionX;		
 		}
-		int objectType = map.GetObjectOnMap (positionX, positionZ);
-		if (objectType == 1 || objectType == 11 || objectType == 21 || objectType == 22 || objectType == 23 || objectType == 24 || objectType == 25) {
+		int objectType = map.GetObjectTypeOnMap (positionX, positionZ);
+		if (!CanWalkThrough(objectType)) {
 			++positionX;		
 		}
 
@@ -95,8 +95,8 @@ public class EnemyScript : MonoBehaviour {
 		if (positionZ < 1) {
 			++positionZ;		
 		}
-		int objectType = map.GetObjectOnMap (positionX, positionZ);
-		if (objectType == 1 || objectType == 11 || objectType == 21 || objectType == 22 || objectType == 23 || objectType == 24 || objectType == 25) {
+		int objectType = map.GetObjectTypeOnMap (positionX, positionZ);
+		if (!CanWalkThrough(objectType)) {
 			++positionZ;		
 		}
 		
@@ -111,8 +111,8 @@ public class EnemyScript : MonoBehaviour {
 		if (positionX > width) {
 			--positionX;		
 		}
-		int objectType = map.GetObjectOnMap (positionX, positionZ);
-		if (objectType == 1 || objectType == 11 || objectType == 21 || objectType == 22 || objectType == 23 || objectType == 24 || objectType == 25) {
+		int objectType = map.GetObjectTypeOnMap (positionX, positionZ);
+		if (!CanWalkThrough(objectType)) {
 			--positionX;		
 		}
 		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
@@ -122,5 +122,12 @@ public class EnemyScript : MonoBehaviour {
 	Vector3 ComputePosition(int x, int y, int z){
 		Vector3 pos = new Vector3 (-2.5f + x * 5.0f, 0.0f, -2.5f + z * 5.0f);
 		return pos;
+	}
+
+	bool CanWalkThrough(int type){
+		if (type == 1 || type == 2 || type == 3 || type == 4 || type == 5 || type == 6|| type == 10 || type == 21 || type == 22 || type == 23 || type == 24 || type == 25)
+			return false;
+		else 
+			return true;
 	}
 }

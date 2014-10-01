@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Character2Script : MonoBehaviour {
 
+	public Shader transparentShader;
+	public Shader normalShader;
 	private GameObject gameObjGridMap;
 	private GridMap map;
 	private GameObject player2Camera;
@@ -13,59 +15,76 @@ public class Character2Script : MonoBehaviour {
 	int positionZ;
 	int width;
 	int holdKeyStatus;//0:no key; 31:blue key; 32:Yellow key; 33:Red Key; 34:Green Key; 35:Orange Key 
-
+	ArrayList obstacleArray1 = new ArrayList();
+	ArrayList obstacleArray2 = new ArrayList();
 	// Use this for initialization
+
 	void Start () {
 
 		gameObjGridMap = GameObject.Find ("Map");
 		map = gameObjGridMap.GetComponent< GridMap >();
-		player2Camera= GameObject.Find ("Player2Camera");
+		player2Camera= GameObject.Find ("Player2Camera2");
 		width = map.GetMapSize ();
 
 		positionX = 10;
 		positionZ = 10;
 		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
-		player2Camera.transform.localRotation = Quaternion.Euler (new Vector3 (30, 45, 0));
-		player2Camera.transform.position = ComputeCameraPosition(positionX,0 ,positionZ);
+		player2Camera.transform.localRotation = Quaternion.Euler (new Vector3 (45, 45, 0));//(30, 45, 0)
+		player2Camera.transform.position = ComputeCameraPosition(positionX,0 ,positionZ, 45);
+		player2Camera.camera.orthographicSize = 20;
 		holdKeyStatus = 0;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		int objectType = map.GetObjectOnMap (positionX, positionZ);
+		int objectType = map.GetObjectTypeOnMap (positionX, positionZ);
 		if (objectType == 11) {
 			//Game Over
 			Debug.Log("You are caught by enemy!!!!!!");
 		}
+	/*	if (Input.GetKeyDown ("r")) {
+			Vector3 oldRotation = player2Camera.transform.localRotation.eulerAngles;
+			oldRotation += new Vector3 (0, 5, 0);
+			player2Camera.transform.localRotation = Quaternion.Euler (oldRotation);
+			player2Camera.transform.position = ComputeCameraPosition(positionX,0 ,positionZ, player2Camera.transform.localRotation.eulerAngles.y);
+
+		}
+		if (Input.GetKeyDown ("e")) {
+			Vector3 oldRotation = player2Camera.transform.localRotation.eulerAngles;
+			oldRotation -= new Vector3 (0, 5, 0);
+			player2Camera.transform.localRotation = Quaternion.Euler (oldRotation);
+			player2Camera.transform.position = ComputeCameraPosition(positionX,0 ,positionZ, player2Camera.transform.localRotation.eulerAngles.y);
+			
+		}
 
 
+		if (Input.GetKeyDown ("w")) {
+			MoveUp();
 
-//		if (Input.GetKeyDown ("w")) {
-//			MoveUp();
-//			player2Camera.transform.position = ComputeCameraPosition(positionX,0 ,positionZ);
-//		}
-//		if (Input.GetKeyDown ("a")) {
-//			MoveLeft();
-//			player2Camera.transform.position = ComputeCameraPosition(positionX,0 ,positionZ);
-//		}
-//		if (Input.GetKeyDown ("d")) {
-//			MoveRight();
-//			player2Camera.transform.position = ComputeCameraPosition(positionX,0 ,positionZ);
-//		}
-//		if (Input.GetKeyDown ("s")) {
-//			MoveDown();
-//			player2Camera.transform.position = ComputeCameraPosition(positionX,0 ,positionZ);
-//		}
+			player2Camera.transform.position = ComputeCameraPosition(positionX,0 ,positionZ, player2Camera.transform.localRotation.eulerAngles.y);
+		}
+		if (Input.GetKeyDown ("a")) {
+			MoveLeft();
+			player2Camera.transform.position = ComputeCameraPosition(positionX,0 ,positionZ, player2Camera.transform.localRotation.eulerAngles.y);
+		}
+		if (Input.GetKeyDown ("d")) {
+			MoveRight();
+			player2Camera.transform.position = ComputeCameraPosition(positionX,0 ,positionZ, player2Camera.transform.localRotation.eulerAngles.y);
+		}
+		if (Input.GetKeyDown ("s")) {
+			MoveDown();
+			player2Camera.transform.position = ComputeCameraPosition(positionX,0 ,positionZ, player2Camera.transform.localRotation.eulerAngles.y);
+		}
+
+		//pick up the key
+		if (Input.GetKeyDown ("g") && holdKeyStatus == 0) {
+			PickUpKey(objectType);
+		}*/
 //
-//		//pick up the key
-//		if (Input.GetKeyDown ("g") && holdKeyStatus == 0) {
-//			PickUpKey(objectType);
-//		}
-//
-//		//open the cabinet
-//		if (Input.GetKeyDown ("c")) {
-//			OpenCabinet();
-//		}
+/*		//open the cabinet
+		if (Input.GetKeyDown ("c")) {
+			OpenCabinet();
+		}*/
 //
 //		if (Input.GetKeyDown ("h")) {
 //			CollectEvidence(objectType);		
@@ -85,11 +104,12 @@ public class Character2Script : MonoBehaviour {
 		if (positionZ > width ) {
 			--positionZ;		
 		} 
-		int objectType = map.GetObjectOnMap (positionX, positionZ);
-		if (objectType == 1 || objectType == 21 || objectType == 22 || objectType == 23 || objectType == 24 || objectType == 25) {
+		int objectType = map.GetObjectTypeOnMap (positionX, positionZ);
+		if (!CanWalkThrough(objectType)) {
 			--positionZ;		
 		}
-
+		MakeObjectNormal (obstacleArray1);
+		ComputeObstructViewObject (positionX, positionZ);
 		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
 	}
 
@@ -100,13 +120,13 @@ public class Character2Script : MonoBehaviour {
 		if (positionX < 1) {
 			++positionX;		
 		}
-		int objectType = map.GetObjectOnMap (positionX, positionZ);
-		if (objectType == 1 || objectType == 21 || objectType == 22 || objectType == 23 || objectType == 24 || objectType == 25) {
+		int objectType = map.GetObjectTypeOnMap (positionX, positionZ);
+		if (!CanWalkThrough(objectType)) {
 			++positionX;		
 		}
 
-
-
+		MakeObjectNormal (obstacleArray1);
+		ComputeObstructViewObject (positionX, positionZ);
 		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
 	}
 
@@ -117,11 +137,12 @@ public class Character2Script : MonoBehaviour {
 		if (positionZ < 1) {
 			++positionZ;		
 		}
-		int objectType = map.GetObjectOnMap (positionX, positionZ);
-		if (objectType == 1 || objectType == 21 || objectType == 22 || objectType == 23 || objectType == 24 || objectType == 25) {
+		int objectType = map.GetObjectTypeOnMap (positionX, positionZ);
+		if (!CanWalkThrough(objectType)) {
 			++positionZ;		
 		}
-
+		MakeObjectNormal (obstacleArray1);
+		ComputeObstructViewObject (positionX, positionZ);
 		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
 	}
 
@@ -131,10 +152,12 @@ public class Character2Script : MonoBehaviour {
 		if (positionX > width) {
 			--positionX;		
 		}
-		int objectType = map.GetObjectOnMap (positionX, positionZ);
-		if (objectType == 1 || objectType == 21 || objectType == 22 || objectType == 23 || objectType == 24 || objectType == 25) {
+		int objectType = map.GetObjectTypeOnMap (positionX, positionZ);
+		if (!CanWalkThrough(objectType)) {
 			--positionX;		
 		}
+		MakeObjectNormal (obstacleArray1);
+		ComputeObstructViewObject (positionX, positionZ);
 		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
 	}
 
@@ -144,8 +167,9 @@ public class Character2Script : MonoBehaviour {
 		return pos;
 	}
 
-	Vector3 ComputeCameraPosition(int x, int y, int z){
-		Vector3 pos = new Vector3 (-2.5f + x * 5.0f - 22.0f, 20.0f, -2.5f + z * 5.0f - 22.0f);
+	Vector3 ComputeCameraPosition(int x, int y, int z, float angle){
+		Vector3 pos = new Vector3 (-2.5f + x * 5.0f - 50.0f * Mathf.Cos(angle), 40.0f, -2.5f + z * 5.0f - 50.0f * Mathf.Cos(angle));
+		//Vector3 pos = new Vector3 (-2.5f + x * 5.0f , 1.0f, -2.5f + z * 5.0f );
 		return pos;
 	}
 	
@@ -153,27 +177,27 @@ public class Character2Script : MonoBehaviour {
 		int objectType;
 		Debug.Log ("Judge");
 		if (cx > 0 && cz > 0 && cx <= width && cz <= width) {
-			objectType = map.GetObjectOnMap (cx, cz);
+			objectType = map.GetObjectTypeOnMap (cx, cz);
 			if (objectType == type)
 					return true;
 		}
 		if (cx + 1 > 0 && cz > 0 && cx + 1 <= width && cz <= width) {
-			objectType = map.GetObjectOnMap (cx + 1, cz);
+			objectType = map.GetObjectTypeOnMap (cx + 1, cz);
 			if (objectType == type)
 				return true;
 		}
 		if (cx > 0 && cz + 1 > 0 && cx <= width && cz + 1 <= width) {
-			objectType = map.GetObjectOnMap (cx, cz + 1);
+			objectType = map.GetObjectTypeOnMap (cx, cz + 1);
 			if (objectType == type)
 				return true;
 		}
 		if (cx - 1 > 0 && cz > 0 && cx -1 <= width && cz <= width) {
-			objectType = map.GetObjectOnMap (cx - 1, cz);
+			objectType = map.GetObjectTypeOnMap (cx - 1, cz);
 			if (objectType == type)
 				return true;
 		}
 		if (cx > 0 && cz - 1 > 0 && cx <= width && cz -1 <= width) {
-			objectType = map.GetObjectOnMap (cx, cz - 1);
+			objectType = map.GetObjectTypeOnMap (cx, cz - 1);
 			if (objectType == type)
 				return true;
 		}
@@ -275,6 +299,53 @@ public class Character2Script : MonoBehaviour {
 			SuperEnergyScript superEnergy = objSuperEnergy.GetComponent<SuperEnergyScript> ();
 			superEnergy.Pick ();
 		}
+	}
+
+	bool CanWalkThrough(int type){
+		if (type == 1 || type == 2 || type == 3 || type == 4 || type == 5 || type == 6 || type == 10 || type == 21 || type == 22 || type == 23 || type == 24 || type == 25)
+			return false;
+		else 
+			return true;
+	}
+
+	void ComputeObstructViewObject(int cx, int cz){
+
+		MakeObjectTransparent(map.GetObjectOnObjectMap (cx-1, cz));
+		MakeObjectTransparent(map.GetObjectOnObjectMap (cx-1, cz-1));
+		MakeObjectTransparent(map.GetObjectOnObjectMap (cx-1, cz-2));
+		MakeObjectTransparent(map.GetObjectOnObjectMap (cx, cz-1));
+		MakeObjectTransparent(map.GetObjectOnObjectMap (cx-2, cz-1));
+		MakeObjectTransparent(map.GetObjectOnObjectMap (cx-2, cz-2));
+	}
+
+
+
+	void MakeObjectTransparent(GameObject obj){
+		if (obj != null) {
+
+			if (obj.tag == "Refrigerator") {
+				Debug.Log ("RefridgeratorPrefab");
+				GameObject refriBody = GameObject.Find("Refridgerator");
+				refriBody.renderer.material.shader = transparentShader;
+				GameObject refriDoor = GameObject.Find("Refridgerator_Door");
+				refriDoor.renderer.material.shader = transparentShader;
+				obstacleArray1.Add (refriBody);
+				obstacleArray1.Add (refriDoor);
+			} 
+			else {
+				Debug.Log(obj.name);
+					obj.renderer.material.shader = transparentShader;
+					obstacleArray1.Add (obj);
+			}
+		}
+	}
+
+	void MakeObjectNormal(ArrayList arr){
+		foreach (GameObject obj in arr) {
+			obj.renderer.material.shader = normalShader;			
+		}
+
+		arr.Clear ();
 	}
 	
 }
