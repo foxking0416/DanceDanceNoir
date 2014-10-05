@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 [RequireComponent( typeof( SpriteRenderer ) )]
 public class PlayerOne : MonoBehaviour
@@ -27,6 +28,7 @@ public class PlayerOne : MonoBehaviour
 	private float timeSprinting;
 
 	private Camera cam;
+	private SpriteRenderer spriteRenderer;
 
 	// Temporary variables used for development and testing.
 	private float slideTranslation = 1.0f;
@@ -47,6 +49,7 @@ public class PlayerOne : MonoBehaviour
 		verticalRestPosition = transform.position.y;
 
 		cam = ( Camera )GameObject.Find( "phase1_player1_camera" ).camera;
+		spriteRenderer = ( SpriteRenderer )gameObject.GetComponentInChildren<SpriteRenderer>();
 	}
 
 
@@ -155,13 +158,20 @@ public class PlayerOne : MonoBehaviour
 	}
 
 
-
-
 	// Collision detection.
-	public void OnTriggerEnter( Collider triggerCollider )
+	private void TestForCollisions()
 	{
-		Debug.Log( "Collision with player." );
+		// TODO: Get player sprite renderer bounds.
+		//spriteRenderer.bounds;
+		
+		// TODO: Get nearest crate sprite renderer bounds.
+		var crates =
+			from crateList in FindObjectsOfType( typeof( TranslateLeftAtConstantSpeed ) )
+				let aCrate = ( TranslateLeftAtConstantSpeed )crateList
+
+		// TODO: Test for collision.
+		// TODO: Resolve collision.
+
+
 	}
-
-
 }

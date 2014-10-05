@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 400000}
   - 114: {fileID: 11400000}
   m_Layer: 0
-  m_Name: obstacle_generator
+  m_Name: obstacle_manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36,10 +36,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43d7aa588629c8e4d832b57d39132cd3, type: 3}
+  m_Script: {fileID: 11500000, guid: ea5f893373f9ec54a9c9dc5acad64adf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crate: {fileID: 100004, guid: 744a8eb65c0a73a4e9bd11dc9c467faa, type: 2}
+  secondsBetweenObstacles: 3
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
