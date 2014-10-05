@@ -25,12 +25,15 @@ public class PlayerOneInputController : MonoBehaviour
 	void Update()
 	{
 		if ( Input.GetKeyDown( KeyCode.UpArrow ) ) {
+			Debug.Log( "Player 1 jump." );
 			player.jump();
 		}
 		else if ( Input.GetKeyDown( KeyCode.DownArrow ) ) {
+			Debug.Log( "Player 1 slide." );
 			player.slide();
 		}
 		else if ( Input.GetKeyDown( KeyCode.RightArrow ) ) {
+			Debug.Log( "Player 1 sprint." );
 			player.sprint();
 		}
 	}

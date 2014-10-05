@@ -112,6 +112,9 @@ public class PlayerOne : MonoBehaviour
 			transform.Translate( new Vector3 ( sprintSpeed * Time.deltaTime, 0.0f, 0.0f ) );
 			timeSprinting += Time.deltaTime;
 		}
+
+		// Collision detection.
+		//TestForCollisions();
 	}
 
 
@@ -158,20 +161,33 @@ public class PlayerOne : MonoBehaviour
 	}
 
 
-	// Collision detection.
-	private void TestForCollisions()
-	{
-		// TODO: Get player sprite renderer bounds.
-		//spriteRenderer.bounds;
-		
-		// TODO: Get nearest crate sprite renderer bounds.
-		var crates =
-			from crateList in FindObjectsOfType( typeof( TranslateLeftAtConstantSpeed ) )
-				let aCrate = ( TranslateLeftAtConstantSpeed )crateList
+//	// Collision detection.
+//	private void TestForCollisions()
+//	{
+//		// TODO: Get player sprite renderer bounds.
+//		SpriteRenderer thisSprite = spriteRenderer;
+//		
+//		// TODO: Get nearest crate sprite renderer bounds.
+//		var crates =
+//			from crateList in FindObjectsOfType( typeof( TranslateLeftAtConstantSpeed ) )
+//				let aCrate = ( TranslateLeftAtConstantSpeed )crateList
+//				let thatSprite = ( SpriteRenderer )aCrate.GetComponentInChildren<SpriteRenderer>()
+//				where thisSprite.bounds.Intersects( thatSprite.bounds )
+//				select aCrate;
+//
+//		var collisionObject = crates.FirstOrDefault();
+//		if ( collisionObject != null ) {
+//			SpriteRenderer crateSprite = ( SpriteRenderer )collisionObject.GetComponentInChildren<SpriteRenderer>();
+//			Debug.Log( "Collision" );
+//			Debug.Log( thisSprite.bounds );
+//			Debug.Log( crateSprite.bounds );
+//		}
+//	}
 
-		// TODO: Test for collision.
-		// TODO: Resolve collision.
-
-
+	void OnTriggerEnter2D( Collider2D otherCollider ) {
+		TranslateLeftAtConstantSpeed crate = otherCollider.gameObject.GetComponent<TranslateLeftAtConstantSpeed>();
+		if ( crate != null ) {
+			Debug.Log( "Collision!" );
+		}
 	}
 }
