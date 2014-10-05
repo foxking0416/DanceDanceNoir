@@ -21,6 +21,8 @@ public class Phase1 : MonoBehaviour {
 	int beatBarHeight;
 	float actionBarWidth;
 
+	public Character2Script player2;
+
 	// Use this for initialization
 	void Start () {
 		musicBarLayerOffset = 150.0f;
@@ -44,7 +46,8 @@ public class Phase1 : MonoBehaviour {
 		isToClear = false;
 		actionPatterns = new string[3];
 		actionPatterns[0] = " A D D";	actionPatterns[1] = " A W D";	actionPatterns[2] = " A S D";
-		
+
+		player2 = GameObject.Find ("Player").GetComponent<Character2Script>();
 
 		PlayerPrefs.SetInt ("Signal1", (int)Action.None);
 		PlayerPrefs.SetInt ("Signal2", (int)Action.None);
@@ -130,18 +133,22 @@ public class Phase1 : MonoBehaviour {
 	{
 		if (!Input.anyKey)
 			return false;
-
+		
 		if (Input.GetKeyDown(KeyCode.LeftArrow)){
 			signal2 = (int)Action.Left;
+			player2.MoveLeft();
 		}
 		else if (Input.GetKeyDown(KeyCode.RightArrow)){
 			signal2 = (int)Action.Right;
+			player2.MoveRight();
 		}
 		else if (Input.GetKeyDown(KeyCode.UpArrow)){
 			signal2 = (int)Action.Up;
+			player2.MoveUp();
 		}
 		else if (Input.GetKeyDown(KeyCode.DownArrow)){
 			signal2 = (int)Action.Down;
+			player2.MoveDown();
 		}
 		else if (Input.GetKeyDown(KeyCode.K)){
 			signal2 = (int)Action.Key;
@@ -152,7 +159,7 @@ public class Phase1 : MonoBehaviour {
 		else {
 			signal2 = (int)Action.None;
 		}
-
+		
 		PlayerPrefs.SetInt ("Signal2", signal2);
 		return true;
 	}

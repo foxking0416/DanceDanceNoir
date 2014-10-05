@@ -41,8 +41,8 @@ public class Character2Script : MonoBehaviour {
 		if (objectType == 11) {
 			//Game Over
 			Debug.Log("You are caught by enemy!!!!!!");
-		}
-	/*	if (Input.GetKeyDown ("r")) {
+		}/*
+		if (Input.GetKeyDown ("r")) {
 			Vector3 oldRotation = player2Camera.transform.localRotation.eulerAngles;
 			oldRotation += new Vector3 (0, 5, 0);
 			player2Camera.transform.localRotation = Quaternion.Euler (oldRotation);
@@ -56,22 +56,28 @@ public class Character2Script : MonoBehaviour {
 			player2Camera.transform.position = ComputeCameraPosition(positionX,0 ,positionZ, player2Camera.transform.localRotation.eulerAngles.y);
 			
 		}
-
-
-		if (Input.GetKeyDown ("w")) {
+		Debug.Log(PlayerPrefs.GetInt("Signal2"));
+		
+		if(PlayerPrefs.GetInt("Signal2") == (int)Action.Up)
+		//if (Input.GetKeyDown ("w")) 
+		{
+			Debug.Log("Move up");
 			MoveUp();
 
 			player2Camera.transform.position = ComputeCameraPosition(positionX,0 ,positionZ, player2Camera.transform.localRotation.eulerAngles.y);
 		}
-		if (Input.GetKeyDown ("a")) {
+		if(PlayerPrefs.GetInt("Signal2") == (int)Action.Left){
+		//if (Input.GetKeyDown ("a")) {
 			MoveLeft();
 			player2Camera.transform.position = ComputeCameraPosition(positionX,0 ,positionZ, player2Camera.transform.localRotation.eulerAngles.y);
 		}
-		if (Input.GetKeyDown ("d")) {
+		if(PlayerPrefs.GetInt("Signal2") == (int)Action.Right){
+		//if (Input.GetKeyDown ("d")) {
 			MoveRight();
 			player2Camera.transform.position = ComputeCameraPosition(positionX,0 ,positionZ, player2Camera.transform.localRotation.eulerAngles.y);
 		}
-		if (Input.GetKeyDown ("s")) {
+		if(PlayerPrefs.GetInt("Signal2") == (int)Action.Down){
+		//if (Input.GetKeyDown ("s")) {
 			MoveDown();
 			player2Camera.transform.position = ComputeCameraPosition(positionX,0 ,positionZ, player2Camera.transform.localRotation.eulerAngles.y);
 		}
@@ -96,8 +102,9 @@ public class Character2Script : MonoBehaviour {
 
 	}
 
+	 
 
-	void MoveUp(){
+	public void MoveUp(){
 
 		++positionZ;
 	 	
@@ -111,9 +118,10 @@ public class Character2Script : MonoBehaviour {
 		MakeObjectNormal (obstacleArray1);
 		ComputeObstructViewObject (positionX, positionZ);
 		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
+		player2Camera.transform.position = ComputeCameraPosition(positionX,0 ,positionZ, player2Camera.transform.localRotation.eulerAngles.y);
 	}
 
-	void MoveLeft(){
+	public void MoveLeft(){
 
 		--positionX;
 
@@ -128,9 +136,10 @@ public class Character2Script : MonoBehaviour {
 		MakeObjectNormal (obstacleArray1);
 		ComputeObstructViewObject (positionX, positionZ);
 		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
+		player2Camera.transform.position = ComputeCameraPosition (positionX, 0, positionZ, player2Camera.transform.localRotation.eulerAngles.y);
 	}
 
-	void MoveDown(){
+	public void MoveDown(){
 
 		--positionZ;
 
@@ -144,9 +153,10 @@ public class Character2Script : MonoBehaviour {
 		MakeObjectNormal (obstacleArray1);
 		ComputeObstructViewObject (positionX, positionZ);
 		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
+		player2Camera.transform.position = ComputeCameraPosition (positionX, 0, positionZ, player2Camera.transform.localRotation.eulerAngles.y);
 	}
 
-	void MoveRight(){
+	public void MoveRight(){
 
 		++positionX;
 		if (positionX > width) {
@@ -159,6 +169,7 @@ public class Character2Script : MonoBehaviour {
 		MakeObjectNormal (obstacleArray1);
 		ComputeObstructViewObject (positionX, positionZ);
 		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
+		player2Camera.transform.position = ComputeCameraPosition (positionX, 0, positionZ, player2Camera.transform.localRotation.eulerAngles.y);
 	}
 
 
@@ -205,7 +216,7 @@ public class Character2Script : MonoBehaviour {
 		return false;
 	}
 
-	void PickUpKey(int objectType){
+	public void PickUpKey(int objectType){
 		switch(objectType){
 		case 31://Pick up Blue key
 			GameObject objKeyBlue = GameObject.FindGameObjectWithTag("BlueKey");
@@ -245,7 +256,7 @@ public class Character2Script : MonoBehaviour {
 		}
 	}
 	
-	void OpenCabinet(){
+	public void OpenCabinet(){
 		if(holdKeyStatus == 31 && CheckAround(positionX, positionZ, 21)){
 			GameObject objCabinetBlue = GameObject.FindGameObjectWithTag ("BlueCabinet");
 			CabinetScript cabinetBlue = objCabinetBlue.GetComponent<CabinetScript> ();
