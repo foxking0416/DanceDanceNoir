@@ -199,7 +199,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
 --- !u!1 &171238734
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,10 +328,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af4ea44351ec5d745a4e7ca5f1b7a71b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idlePenalty: .5
+  idlePenalty: 1
   sprintSpeed: 3
   sprintDuration: .5
-  jumpHeight: 3
+  jumpHeight: 4
   slideDuration: 1.5
 --- !u!61 &192338910
 BoxCollider2D:
@@ -702,6 +702,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: ff712985bae36a34f92eadc3801afecb, type: 2}
+      propertyPath: idlePenalty
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ff712985bae36a34f92eadc3801afecb, type: 2}
   m_RootGameObject: {fileID: 192338907}
@@ -866,7 +870,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
 --- !u!114 &1983827944
 MonoBehaviour:
   m_ObjectHideFlags: 0

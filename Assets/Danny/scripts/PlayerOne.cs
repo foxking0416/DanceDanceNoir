@@ -15,24 +15,25 @@ public class PlayerOne : MonoBehaviour
 	public float jumpHeight;
 	public float slideDuration;
 
-	private bool isIdle;
-
+	// Player states.
+	private bool isColliding;
 	private bool isJumping;
 	private bool isFalling;
-	private float verticalRestPosition;
-
 	private bool isSliding;
-	private float timeSliding;
-
 	private bool isSprinting;
+
+	private float playerSpeedHorizontal;
+	private float playerSpeedVertical;
+
+	private float verticalRestPosition;
+	private float timeSliding;
 	private float timeSprinting;
 
 	private Camera cam;
-	private SpriteRenderer spriteRenderer;
 
 	// Temporary variables used for development and testing.
 	private float slideTranslation = 1.0f;
-	private float jumpingStep = 0.05f;
+	private float jumpingStep = 4.0f;
 
 
 	////////////////////////////////////////////////////
@@ -40,16 +41,20 @@ public class PlayerOne : MonoBehaviour
 	////////////////////////////////////////////////////
 	void Start()
 	{
-		isIdle = true;
-		isSprinting = false;
+		isColliding = false;
 		isJumping = false;
-		isSliding = false;
 		isFalling = false;
+		isSprinting = false;
+		isSliding = false;
+
+		playerSpeedHorizontal = -idlePenalty;
+		playerSpeedVertical = 0.0f;
 
 		verticalRestPosition = transform.position.y;
+		timeSliding = 0.0f;
+		timeSprinting = 0.0f;
 
 		cam = ( Camera )GameObject.Find( "phase1_player1_camera" ).camera;
-		spriteRenderer = ( SpriteRenderer )gameObject.GetComponentInChildren<SpriteRenderer>();
 	}
 
 
@@ -58,63 +63,155 @@ public class PlayerOne : MonoBehaviour
 	////////////////////////////////////////////////////
 	void Update()
 	{
-		// Check if losing condition has been met.
+		if ( IsGameOver() ) {
+			GameOver();
+		}
+		else {
+			UpdatePlayerState();
+			UpdatePlayerPosition();
+		}
+	}
+
+
+	////////////////////////////////////////////////////
+	// Method to check if losing condition has been met.
+	// Player one loses if character is pushed off left side of screen.
+	////////////////////////////////////////////////////
+	private bool IsGameOver()
+	{
 		Vector3 screenSpacePosition = cam.WorldToScreenPoint( gameObject.transform.position );
 		if ( screenSpacePosition.x < -12.0f ) {
-			Debug.Log( "GAME OVER!" );
+			return true;
 		}
-
-		// Player is not performing any actions.
-		if ( isIdle ) {
-			transform.Translate( new Vector3 ( idlePenalty * -1.0f * Time.deltaTime, 0.0f, 0.0f ) );
+		else {
+			return false;
 		}
+	}
 
-		// Player is sliding.
-		if ( isSliding ) {
+
+	////////////////////////////////////////////////////
+	// Method to handle actions that occur when player one has lost the game.
+	////////////////////////////////////////////////////
+	private void GameOver()
+	{
+		// TODO: Implement this method.
+		Debug.Log( "Game over player one." );
+	}
+
+
+	////////////////////////////////////////////////////
+	// Method to test when collisions between player and obstacles begin.
+	////////////////////////////////////////////////////
+	void OnTriggerEnter2D( Collider2D otherCollider ) {
+		TranslateLeftAtConstantSpeed crate = otherCollider.gameObject.GetComponent<TranslateLeftAtConstantSpeed>();
+		if ( crate != null ) {
+			isColliding = true;
+		}
+		else {
+			isColliding = false;
+		}
+	}
+
+
+	////////////////////////////////////////////////////
+	// Method to test when collisions between player and obstacles end.
+	////////////////////////////////////////////////////
+	void OnTriggerExit2D( Collider2D otherCollider ) {
+		TranslateLeftAtConstantSpeed crate = otherCollider.gameObject.GetComponent<TranslateLeftAtConstantSpeed>();
+		if ( crate != null ) {
+			isColliding = false;
+		}
+		else {
+			isColliding = true;
+		}
+	}
+
+
+	////////////////////////////////////////////////////
+	// Method to determine speed of incoming obstacles.
+	////////////////////////////////////////////////////
+	private float getObstacleSpeed()
+	{
+		var crate = ( TranslateLeftAtConstantSpeed )FindObjectOfType( typeof( TranslateLeftAtConstantSpeed ) );
+		if ( crate != null ) {
+			return crate.getTranslationSpeed();
+		}
+		else {
+			return 0.0f;
+		}
+	}
+
+
+	////////////////////////////////////////////////////
+	// Method to change player state based on game conditions.
+	////////////////////////////////////////////////////
+	private void UpdatePlayerState()
+	{
+		if ( isJumping ) {
+			if ( transform.position.y >= ( verticalRestPosition + jumpHeight ) ) {
+				isJumping = false;
+				isFalling = true;
+			}
+		}
+		else if ( isFalling ) {
+			if ( transform.position.y <= verticalRestPosition ) {
+				isFalling = false;
+			}
+		}
+		else if ( isSliding ) {
 			if ( timeSliding >= slideDuration ) {
 				isSliding = false;
-				isIdle = true;
-
+				
 				// Undo the translation performed for sliding visualization.
 				transform.Translate( new Vector3 ( 0.0f, slideTranslation, 0.0f ) );
 			}
 			timeSliding += Time.deltaTime;
 		}
-
-		// Player is jumping.
-		if ( isJumping ) {
-			if ( transform.position.y < ( verticalRestPosition + jumpHeight ) ) {
-				transform.Translate( new Vector3 ( 0.0f, jumpingStep, 0.0f ) );
-			}
-			else {
-				isJumping = false;
-				isFalling = true;
-			}
-		}
-
-		// Player's jump has peaked, and their character is now falling back to the ground plane.
-		if ( isFalling ) {
-			if ( transform.position.y > verticalRestPosition ) {
-				transform.Translate( new Vector3 ( 0.0f, -jumpingStep, 0.0f ) );
-			}
-			else {
-				isFalling = false;
-				isIdle = true;
-			}
-		}
-
-		// Player is running to the right side of the screen.
-		if ( isSprinting ) {
+		else if ( isSprinting ) {
 			if ( timeSprinting >= sprintDuration ) {
 				isSprinting = false;
-				isIdle = true;
 			}
-			transform.Translate( new Vector3 ( sprintSpeed * Time.deltaTime, 0.0f, 0.0f ) );
 			timeSprinting += Time.deltaTime;
 		}
+	}
 
-		// Collision detection.
-		//TestForCollisions();
+
+	////////////////////////////////////////////////////
+	// Method to determine horizontal and vertical speed of player,
+	// and update player position accrodingly.
+	////////////////////////////////////////////////////
+	private void UpdatePlayerPosition()
+	{
+		// Determine player horizontal speed.
+		if ( isColliding ) {
+			playerSpeedHorizontal = -getObstacleSpeed();
+		}
+		else {
+			if ( isJumping || isFalling || isSliding ) {
+				playerSpeedHorizontal = 0.0f;
+			}
+			else if ( isSprinting ) {
+				playerSpeedHorizontal = sprintSpeed;
+			}
+			else {
+				playerSpeedHorizontal = -idlePenalty;
+			}
+		}
+		
+		// Determine player vertical speed.
+		if ( isJumping ) {
+			playerSpeedVertical = jumpingStep;
+		}
+		else if ( isFalling ) {
+			playerSpeedVertical = -jumpingStep;
+		}
+		else {
+			playerSpeedVertical = 0.0f;
+		}
+		
+		// Update player position.
+		transform.Translate( new Vector3( playerSpeedHorizontal * Time.deltaTime, 0.0f, 0.0f ) );
+		transform.Translate( new Vector3( 0.0f, playerSpeedVertical * Time.deltaTime, 0.0f ) );
 	}
 
 
@@ -125,7 +222,6 @@ public class PlayerOne : MonoBehaviour
 	{
 		if ( !isSprinting && !isSliding && !isFalling ) {
 			isJumping = true;
-			isIdle = false;
 		}
 	}
 
@@ -137,8 +233,6 @@ public class PlayerOne : MonoBehaviour
 	{
 		if ( !isSprinting && !isJumping && !isFalling ) {
 			isSliding = true;
-			isIdle = false;
-
 			timeSliding = 0.0f;
 
 			// Translate player sprite down to temporarily visualize sliding.
@@ -152,42 +246,9 @@ public class PlayerOne : MonoBehaviour
 	////////////////////////////////////////////////////
 	public void sprint()
 	{
-		if ( !isJumping && !isSliding && !isFalling ) {
+		if ( !isJumping && !isSliding && !isFalling && !isColliding ) {
 			isSprinting = true;
-			isIdle = false;
-
 			timeSprinting = 0.0f;
-		}
-	}
-
-
-//	// Collision detection.
-//	private void TestForCollisions()
-//	{
-//		// TODO: Get player sprite renderer bounds.
-//		SpriteRenderer thisSprite = spriteRenderer;
-//		
-//		// TODO: Get nearest crate sprite renderer bounds.
-//		var crates =
-//			from crateList in FindObjectsOfType( typeof( TranslateLeftAtConstantSpeed ) )
-//				let aCrate = ( TranslateLeftAtConstantSpeed )crateList
-//				let thatSprite = ( SpriteRenderer )aCrate.GetComponentInChildren<SpriteRenderer>()
-//				where thisSprite.bounds.Intersects( thatSprite.bounds )
-//				select aCrate;
-//
-//		var collisionObject = crates.FirstOrDefault();
-//		if ( collisionObject != null ) {
-//			SpriteRenderer crateSprite = ( SpriteRenderer )collisionObject.GetComponentInChildren<SpriteRenderer>();
-//			Debug.Log( "Collision" );
-//			Debug.Log( thisSprite.bounds );
-//			Debug.Log( crateSprite.bounds );
-//		}
-//	}
-
-	void OnTriggerEnter2D( Collider2D otherCollider ) {
-		TranslateLeftAtConstantSpeed crate = otherCollider.gameObject.GetComponent<TranslateLeftAtConstantSpeed>();
-		if ( crate != null ) {
-			Debug.Log( "Collision!" );
 		}
 	}
 }
