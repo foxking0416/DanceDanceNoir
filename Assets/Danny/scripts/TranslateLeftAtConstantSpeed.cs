@@ -9,8 +9,6 @@ public class TranslateLeftAtConstantSpeed : MonoBehaviour
 
 	public float translationSpeed;
 
-	private Camera cam;
-
 
 	////////////////////////////////////////////////////
 	// Getters.
@@ -21,15 +19,6 @@ public class TranslateLeftAtConstantSpeed : MonoBehaviour
 		return translationSpeed;
 	}
 
-
-	////////////////////////////////////////////////////
-	// Game object initialization.
-	////////////////////////////////////////////////////
-	void Start()
-	{
-		cam = ( Camera )GameObject.Find( "phase1_player1_camera" ).camera;
-	}
-
 	
 	////////////////////////////////////////////////////
 	// Called once per frame of gameplay.
@@ -38,6 +27,11 @@ public class TranslateLeftAtConstantSpeed : MonoBehaviour
 	{
 		// Move game object to the left every frame.
 		transform.Translate( new Vector3 ( translationSpeed * -1.0f * Time.deltaTime, 0.0f, 0.0f ) );
+
+		Camera cam = ( Camera )GameObject.FindGameObjectWithTag( "Phase1Player1Camera" ).camera;
+		if ( cam == null ) {
+			return;
+		}
 
 		// Destroy game object if it moves off the left side of the viewable game area.
 		Vector3 screenSpacePosition = cam.WorldToScreenPoint( gameObject.transform.position );

@@ -29,8 +29,6 @@ public class PlayerOne : MonoBehaviour
 	private float timeSliding;
 	private float timeSprinting;
 
-	private Camera cam;
-
 	// Temporary variables used for development and testing.
 	private float slideTranslation = 1.0f;
 	private float jumpingStep = 4.0f;
@@ -53,8 +51,6 @@ public class PlayerOne : MonoBehaviour
 		verticalRestPosition = transform.position.y;
 		timeSliding = 0.0f;
 		timeSprinting = 0.0f;
-
-		cam = ( Camera )GameObject.Find( "phase1_player1_camera" ).camera;
 	}
 
 
@@ -79,6 +75,11 @@ public class PlayerOne : MonoBehaviour
 	////////////////////////////////////////////////////
 	private bool IsGameOver()
 	{
+		Camera cam = ( Camera )GameObject.FindGameObjectWithTag( "Phase1Player1Camera" ).camera;
+		if ( cam == null ) {
+			return false;
+		}
+		
 		Vector3 screenSpacePosition = cam.WorldToScreenPoint( gameObject.transform.position );
 		if ( screenSpacePosition.x < -12.0f ) {
 			return true;
