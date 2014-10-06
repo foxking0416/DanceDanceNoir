@@ -80,7 +80,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af4ea44351ec5d745a4e7ca5f1b7a71b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idlePenalty: 0
+  idlePenalty: .200000003
   sprintSpeed: 3
   sprintDuration: .5
   jumpHeight: 4

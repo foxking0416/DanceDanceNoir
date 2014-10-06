@@ -338,6 +338,69 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 9
+--- !u!1 &231712202
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 231712204}
+  - 108: {fileID: 231712203}
+  m_Layer: 0
+  m_Name: Directional light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!108 &231712203
+Light:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 231712202}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Type: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: .5
+  m_Range: 10
+  m_SpotAngle: 30
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_Strength: 1
+    m_Bias: .0500000007
+    m_Softness: 4
+    m_SoftnessFade: 1
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_ActuallyLightmapped: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 1
+  m_ShadowSamples: 1
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+  m_IndirectIntensity: 1
+  m_AreaSize: {x: 1, y: 1}
+--- !u!4 &231712204
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 231712202}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 100, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
 --- !u!1 &393918746
 GameObject:
   m_ObjectHideFlags: 0
@@ -427,7 +490,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: cf27b11596510d14fb8a50fe72907a5d, type: 2}
+  - {fileID: 2100000, guid: a97eb6e7d3fb33c4fa28852dc4c692d3, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -561,6 +624,7 @@ GameObject:
   - 4: {fileID: 836956548}
   - 114: {fileID: 836956547}
   - 114: {fileID: 836956549}
+  - 114: {fileID: 836956550}
   m_Layer: 0
   m_Name: Phase1
   m_TagString: Untagged
@@ -607,6 +671,23 @@ MonoBehaviour:
   notetoSpwan: {fileID: 100000, guid: 5fe2a935cf9b9d24c967d21974872f3b, type: 2}
   beatBarBg: {fileID: 393918747}
   musicCamera: {fileID: 1500500513}
+  player2: {fileID: 0}
+--- !u!114 &836956550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 836956546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9ffa51a5bb2d2f4ab2a767ca53dd38f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camera: {fileID: 100000, guid: 147ff7ab80d8bed4bbf2b191b572931f, type: 2}
+  background: {fileID: 100002, guid: f9e0f4d8d5d98a44087230036a39dbeb, type: 2}
+  player: {fileID: 100000, guid: ff712985bae36a34f92eadc3801afecb, type: 2}
+  obstacleManager: {fileID: 100000, guid: 35e0cc6a61187994d84b78dab10f6401, type: 2}
+  obstacleGenerator: {fileID: 100000, guid: 3cf39ed700115c046897012d7262acbf, type: 2}
 --- !u!1001 &863625539
 Prefab:
   m_ObjectHideFlags: 0
