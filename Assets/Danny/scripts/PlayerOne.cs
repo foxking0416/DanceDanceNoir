@@ -81,7 +81,7 @@ public class PlayerOne : MonoBehaviour
 		}
 		
 		Vector3 screenSpacePosition = cam.WorldToScreenPoint( gameObject.transform.position );
-		if ( screenSpacePosition.x < -12.0f ) {
+		if ( screenSpacePosition.x < -40.0f ) {
 			return true;
 		}
 		else {
@@ -188,8 +188,11 @@ public class PlayerOne : MonoBehaviour
 			playerSpeedHorizontal = -getObstacleSpeed();
 		}
 		else {
-			if ( isJumping || isFalling || isSliding ) {
-				playerSpeedHorizontal = 0.0f;
+			if ( isSliding ) {
+				playerSpeedHorizontal = sprintSpeed / 4.0f;
+			}
+			else if ( isJumping || isFalling ) {
+				playerSpeedHorizontal = sprintSpeed / 2.0f;
 			}
 			else if ( isSprinting ) {
 				playerSpeedHorizontal = sprintSpeed;
@@ -221,7 +224,7 @@ public class PlayerOne : MonoBehaviour
 	////////////////////////////////////////////////////
 	public void jump()
 	{
-		if ( !isSprinting && !isSliding && !isFalling ) {
+		if ( !isSprinting && !isSliding && !isFalling && !isJumping ) {
 			isJumping = true;
 		}
 	}
@@ -232,7 +235,7 @@ public class PlayerOne : MonoBehaviour
 	////////////////////////////////////////////////////
 	public void slide()
 	{
-		if ( !isSprinting && !isJumping && !isFalling ) {
+		if ( !isSprinting && !isJumping && !isFalling && !isSliding ) {
 			isSliding = true;
 			timeSliding = 0.0f;
 
@@ -247,7 +250,7 @@ public class PlayerOne : MonoBehaviour
 	////////////////////////////////////////////////////
 	public void sprint()
 	{
-		if ( !isJumping && !isSliding && !isFalling && !isColliding ) {
+		if ( !isJumping && !isSliding && !isFalling && !isColliding && !isSprinting ) {
 			isSprinting = true;
 			timeSprinting = 0.0f;
 		}
