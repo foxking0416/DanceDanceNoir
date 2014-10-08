@@ -44,7 +44,7 @@ public class Phase1 : MonoBehaviour {
 		musicBarLayerOffset = 150.0f;
 
 		timing = 0;
-		noteSpwanDuration = 20;
+		noteSpwanDuration = 22;
 		PlayerPrefs.SetFloat ("noteSpeed", 0.035f);
 
 		beatBarHeight = (int)(Screen.height * 0.06);
@@ -113,7 +113,7 @@ public class Phase1 : MonoBehaviour {
 		while (curPos > endPos)
 		{
 			generateNewNote(curPos);
-			curPos -= 20 * PlayerPrefs.GetFloat("noteSpeed");
+			curPos -= noteSpwanDuration * PlayerPrefs.GetFloat("noteSpeed");
 		}
 	}
 
