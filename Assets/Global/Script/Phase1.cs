@@ -22,6 +22,21 @@ public class Phase1 : MonoBehaviour {
 	float actionBarWidth;
 
 	public Character2Script player2;
+	public PlayerOne player1;
+
+	//audio
+	int qSamples  = 1024;  // array size
+	int eSamples = 44;
+	int subbands = 32;
+	int eId = -1;
+	
+	private float[] samples ; // audio samples
+	private float[] spectrum; // audio spectrum
+	private float fSample;
+	private float[] E;
+	private float[] Es;
+	
+	float last = 0.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -42,33 +57,40 @@ public class Phase1 : MonoBehaviour {
 
 		signal1 = 0;
 		signal2 = 0;
+		keySequence = "";
 
 		isToClear = false;
 		actionPatterns = new string[3];
 		actionPatterns[0] = " A D D";	actionPatterns[1] = " A W D";	actionPatterns[2] = " A S D";
 
 		player2 = GameObject.Find ("Player").GetComponent<Character2Script>();
+		//player1 = GameObject.Find ("player_one(Clone)").GetComponent<PlayerOne> ();
 
 		PlayerPrefs.SetInt ("Signal1", (int)Action.None);
 		PlayerPrefs.SetInt ("Signal2", (int)Action.None);
 
 		PlayerPrefs.SetInt ("HittingPeriod", 0);
+
+		//audio
+		samples = new float[qSamples];
+		spectrum = new float[qSamples];
+		fSample = AudioSettings.outputSampleRate;
+		E = new float[eSamples];
+		Es = new float[subbands];
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
+		//AnalyzeSound();
+
+
 		if (timing-- <= 0)
 		{
 			timing = noteSpwanDuration;
-			GameObject p1 = Instantiate(notetoSpwan, new Vector3(musicBarLayerOffset + screenWidth2World/2, 0.0f, 50.0f), 
-			            	Quaternion.Euler(new Vector3(0.0f, 90.0f, 90.0f))) as GameObject;
-			p1.tag = "P1P1Note";
-
-			GameObject p2 = Instantiate(notetoSpwan, new Vector3(musicBarLayerOffset + screenWidth2World/2, 0.0f, 50.0f), 
-			                            Quaternion.Euler(new Vector3(0.0f, 90.0f, 90.0f))) as GameObject;
-			p2.tag = "P1P2Note";
+			generateNewNote();
 		}
+
 		if (isToClear)
 		{
 			keySequence = "";
@@ -77,6 +99,17 @@ public class Phase1 : MonoBehaviour {
 		}
 		PlayerPrefs.SetInt ("Signal1", (int)Action.None);
 		PlayerPrefs.SetInt ("Signal2", (int)Action.None);
+	}
+
+	void generateNewNote()
+	{
+		GameObject p1 = Instantiate(notetoSpwan, new Vector3(musicBarLayerOffset + screenWidth2World/2, 0.0f, 50.0f), 
+		                            Quaternion.Euler(new Vector3(0.0f, 90.0f, 90.0f))) as GameObject;
+		p1.tag = "P1P1Note";
+		
+		GameObject p2 = Instantiate(notetoSpwan, new Vector3(musicBarLayerOffset + screenWidth2World/2, 0.0f, 50.0f), 
+		                            Quaternion.Euler(new Vector3(0.0f, 90.0f, 90.0f))) as GameObject;
+		p2.tag = "P1P2Note";
 	}
 
 	public bool player1KeyPressDetection()
@@ -110,12 +143,27 @@ public class Phase1 : MonoBehaviour {
 		
 		if (keySequence.Length >= 6)
 		{
+			if (player1 == null)
+				player1 = (PlayerOne)FindObjectOfType (typeof(PlayerOne));
+
 			if (keySequence == actionPatterns[0])
+			{
 				signal1 = (int)Action.Run;
+				if (player1 != null)
+					player1.sprint();
+			}
 			else if (keySequence == actionPatterns[1])
+			{
 				signal1 = (int)Action.Jump;
+				if (player1 != null)
+					player1.jump();
+			}
 			else if (keySequence == actionPatterns[2])
+			{
+				if (player1 != null)
+					player1.slide();
 				signal1 = (int)Action.Slide;
+			}
 			else
 				isToClear = true;
 			
@@ -152,9 +200,11 @@ public class Phase1 : MonoBehaviour {
 		}
 		else if (Input.GetKeyDown(KeyCode.K)){
 			signal2 = (int)Action.Key;
+			player2.PickUpKey();
 		}
 		else if (Input.GetKeyDown(KeyCode.U)){
 			signal2 = (int)Action.Unlock;
+			player2.OpenCabinet();
 		}
 		else {
 			signal2 = (int)Action.None;
@@ -182,5 +232,51 @@ public class Phase1 : MonoBehaviour {
 		
 		GUILayout.EndHorizontal();
 		GUILayout.EndArea();
+	}
+
+	void AnalyzeSound(){
+		audio.GetOutputData(samples, 0); // fill array with samples
+		audio.GetSpectrumData(spectrum, 0, FFTWindow.BlackmanHarris); 
+
+		for (int i=0; i < subbands; i++){ 
+			for (int j = i *32; j < (i+1) *32; j++) {
+				Es[i] += spectrum[j] * spectrum[j];
+			}
+			Es[i] /= (float)subbands;
+		}
+
+		//S1: instant sound energy
+		float instantE= 0;
+		for (int i=0; i < qSamples; i++){
+			instantE += samples[i]*samples[i]; // sum squared samples
+		}
+		
+		//S2: compute average energy
+		float aveE = 0.0f;
+		for (int i = 0; i < eSamples; i++)
+			aveE += E[i];
+		aveE /= (float)eSamples;
+		
+		//S3: variance of energies in E
+		float V = 0.0f;
+		for (int i = 0; i < eSamples; i++)
+			V += Mathf.Pow(E[i] - aveE, 2.0f);
+		V /= (float)eSamples;
+		
+		//S4:
+		double C = (-0.0025714 * V) + 1.5142857;
+		
+		//S5: repace the old E
+		eId = (++eId == eSamples) ? 0 : eId;
+		E [eId] = instantE;
+		
+		//S6: compare e > C*E
+		if (instantE > C * aveE)
+		{
+			Debug.Log (instantE.ToString() + " time:" + (audio.time - last).ToString());
+			last = audio.time;
+			generateNewNote();
+		}
+
 	}
 }

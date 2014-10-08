@@ -294,14 +294,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameObjObstacleWall: {fileID: 100000, guid: 055460536162c0346bd2326820ea5330, type: 2}
   gameObjObstacleChair: {fileID: 100004, guid: b57353291c077f1448de18853cee43c9, type: 2}
+  gameObjObstacleChair2: {fileID: 0}
   gameObjObstacleTable: {fileID: 100004, guid: 1256aa2b1dac8cf49b03bfee96a3f47e, type: 2}
   gameObjObstacleRefrigerator: {fileID: 100004, guid: 9048c4a908dcc0b40bae5f18cee14d7c,
     type: 2}
   gameObjObstacleStove: {fileID: 100000, guid: 5747077aa795f254e971c5f24bdda17f, type: 2}
-  gameObjKey: {fileID: 100000, guid: 2cce743c0a40136409a9d266ce4f675d, type: 2}
   gameObjEnemy: {fileID: 100000, guid: aabe8c72677d91944ba80a0e9c487dd1, type: 2}
   gameObjSuperEnergy: {fileID: 100000, guid: 5d3155c59b5f11a449c9ac1fa884060d, type: 2}
   gameObjCase: {fileID: 100000, guid: 344bb760a90e1024db0cc39916c0574f, type: 2}
+  gameObjKey: {fileID: 100000, guid: 2cce743c0a40136409a9d266ce4f675d, type: 2}
+  wallTransparentShader: {fileID: 0}
+  wallNormalShader: {fileID: 0}
 --- !u!1 &202094754
 GameObject:
   m_ObjectHideFlags: 0
@@ -941,6 +944,7 @@ GameObject:
   - 4: {fileID: 836956548}
   - 114: {fileID: 836956547}
   - 114: {fileID: 836956549}
+  - 82: {fileID: 836956550}
   m_Layer: 0
   m_Name: Phase1
   m_TagString: Untagged
@@ -987,6 +991,65 @@ MonoBehaviour:
   notetoSpwan: {fileID: 100000, guid: 5fe2a935cf9b9d24c967d21974872f3b, type: 2}
   beatBarBg: {fileID: 393918747}
   musicCamera: {fileID: 1500500513}
+  player2: {fileID: 0}
+--- !u!82 &836956550
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 836956546}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 8300000, guid: 5ea201b838c2d5c45a7fc3867d4f6cce, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 1
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!1001 &863625539
 Prefab:
   m_ObjectHideFlags: 0
@@ -1422,6 +1485,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a255853eacddcb442bacaaae21f20ff8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transparentShader: {fileID: 0}
+  normalShader: {fileID: 0}
 --- !u!1 &1427145403
 GameObject:
   m_ObjectHideFlags: 0
