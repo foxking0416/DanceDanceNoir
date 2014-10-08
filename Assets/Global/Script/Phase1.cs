@@ -15,6 +15,7 @@ public class Phase1 : MonoBehaviour {
 	string keySequence;
 	string[] actionPatterns;
 
+	float noteStartX;
 	public GUITexture beatBarBg;
 	public Camera musicCamera;
 	float screenWidth2World;
@@ -43,7 +44,8 @@ public class Phase1 : MonoBehaviour {
 		musicBarLayerOffset = 150.0f;
 
 		timing = 0;
-		noteSpwanDuration = 25;
+		noteSpwanDuration = 20;
+		PlayerPrefs.SetFloat ("noteSpeed", 0.035f);
 
 		beatBarHeight = (int)(Screen.height * 0.06);
 		actionBarWidth = (float)(Screen.width * 0.3);
@@ -54,6 +56,7 @@ public class Phase1 : MonoBehaviour {
 		PlayerPrefs.SetFloat ("ScreenWidth2World", screenWidth2World);
 		float t = (float)(musicBarLayerOffset - (0.5 - 0.3 * 0.75) * screenWidth2World);
 		PlayerPrefs.SetFloat ("HittingPos", t);
+		noteStartX = musicBarLayerOffset + screenWidth2World / 2;
 
 		signal1 = 0;
 		signal2 = 0;
@@ -70,6 +73,8 @@ public class Phase1 : MonoBehaviour {
 		PlayerPrefs.SetInt ("Signal2", (int)Action.None);
 
 		PlayerPrefs.SetInt ("HittingPeriod", 0);
+
+		preGenerateMusicNote ();
 
 		//audio
 		samples = new float[qSamples];
@@ -88,7 +93,7 @@ public class Phase1 : MonoBehaviour {
 		if (timing-- <= 0)
 		{
 			timing = noteSpwanDuration;
-			generateNewNote();
+			generateNewNote(noteStartX);
 		}
 
 		if (isToClear)
@@ -101,13 +106,24 @@ public class Phase1 : MonoBehaviour {
 		PlayerPrefs.SetInt ("Signal2", (int)Action.None);
 	}
 
-	void generateNewNote()
+	void preGenerateMusicNote()
 	{
-		GameObject p1 = Instantiate(notetoSpwan, new Vector3(musicBarLayerOffset + screenWidth2World/2, 0.0f, 50.0f), 
+		float endPos = PlayerPrefs.GetFloat ("HittingPos");
+		float curPos = noteStartX;
+		while (curPos > endPos)
+		{
+			generateNewNote(curPos);
+			curPos -= 20 * PlayerPrefs.GetFloat("noteSpeed");
+		}
+	}
+
+	void generateNewNote(float posX)
+	{
+		GameObject p1 = Instantiate(notetoSpwan, new Vector3(posX, 0.0f, 50.0f), 
 		                            Quaternion.Euler(new Vector3(0.0f, 90.0f, 90.0f))) as GameObject;
 		p1.tag = "P1P1Note";
 		
-		GameObject p2 = Instantiate(notetoSpwan, new Vector3(musicBarLayerOffset + screenWidth2World/2, 0.0f, 50.0f), 
+		GameObject p2 = Instantiate(notetoSpwan, new Vector3(posX, 0.0f, 50.0f), 
 		                            Quaternion.Euler(new Vector3(0.0f, 90.0f, 90.0f))) as GameObject;
 		p2.tag = "P1P2Note";
 	}
@@ -275,7 +291,7 @@ public class Phase1 : MonoBehaviour {
 		{
 			Debug.Log (instantE.ToString() + " time:" + (audio.time - last).ToString());
 			last = audio.time;
-			generateNewNote();
+			generateNewNote(noteStartX);
 		}
 
 	}

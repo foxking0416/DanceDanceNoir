@@ -13,7 +13,7 @@ public class MusicNote : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		orgPos = gameObject.transform.position;
-		speed = 0.03f;
+		speed = PlayerPrefs.GetFloat("noteSpeed");
 
 		hittingRange = PlayerPrefs.GetFloat("ScreenWidth2World") * 0.3f * 0.25f;
 	}
