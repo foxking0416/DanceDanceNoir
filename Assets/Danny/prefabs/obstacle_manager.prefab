@@ -39,7 +39,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea5f893373f9ec54a9c9dc5acad64adf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  secondsBetweenObstacles: 3
+  secondsBetweenObstacles: 8
+  timeUntilFirstObject: 6
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

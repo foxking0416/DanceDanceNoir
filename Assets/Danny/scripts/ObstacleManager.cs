@@ -8,8 +8,10 @@ public class ObstacleManager : MonoBehaviour
 	////////////////////////////////////////////////////
 
 	public float secondsBetweenObstacles;
+	public float timeUntilFirstObject;
 
 	private float _timeSinceLastObstacle;
+	private float _timeSinceGameStarted;
 
 
 	////////////////////////////////////////////////////
@@ -18,6 +20,7 @@ public class ObstacleManager : MonoBehaviour
 	void Start()
 	{
 		_timeSinceLastObstacle = 0.0f;
+		_timeSinceGameStarted = 0.0f;
 	}
 
 
@@ -28,7 +31,12 @@ public class ObstacleManager : MonoBehaviour
 	{
 		_timeSinceLastObstacle += Time.deltaTime;
 
-		if ( _timeSinceLastObstacle >= secondsBetweenObstacles ) {
+		if ( _timeSinceGameStarted < timeUntilFirstObject ) {
+			_timeSinceGameStarted += Time.deltaTime;
+		}
+
+		if ( ( _timeSinceLastObstacle >= secondsBetweenObstacles ) &&
+		     ( _timeSinceGameStarted >= timeUntilFirstObject ) ) {
 			_timeSinceLastObstacle = 0.0f;
 			CreateCrate();
 		}

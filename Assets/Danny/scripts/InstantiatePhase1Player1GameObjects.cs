@@ -31,7 +31,7 @@ public class InstantiatePhase1Player1GameObjects : MonoBehaviour
 		Instantiate( camera, cameraPosition, transform.rotation );
 		Instantiate( background, backgroundPosition, transform.rotation );
 		Instantiate( player, playerPosition, transform.rotation );
-		//Instantiate( obstacleManager, obstacleManagerPosition, transform.rotation );
+		Instantiate( obstacleManager, obstacleManagerPosition, transform.rotation );
 		Instantiate( obstacleGenerator, obstacleGenerator1Position, transform.rotation );
 		Instantiate( obstacleGenerator, obstacleGenerator2Position, transform.rotation );
 	}
