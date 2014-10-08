@@ -59,30 +59,31 @@ public class GridMap : MonoBehaviour {
 		UpdateObjectsStatus (18, 13, 1);
 		UpdateObjectsStatus (19, 13, 1);
 		UpdateObjectsStatus (20, 13, 1);
-		UpdateObjectsStatus (18, 6, 2);//chair
-		UpdateObjectsStatus (7, 10, 3);//table
-		UpdateObjectsStatus (12, 15, 4);//Refrigerator
-		UpdateObjectsStatus (16, 10, 5);//Stove
-		UpdateObjectsStatus (11, 8, 6);//chair2
+		UpdateObjectsStatus (10, 11, 2);//chair
+		UpdateObjectsStatus (12, 13, 211);//chair
+		UpdateObjectsStatus (10, 13, 3);//table
+		UpdateObjectsStatus (13, 20, 4);//Refrigerator
+		UpdateObjectsStatus (16, 12, 5);//Stove
+		UpdateObjectsStatus (8, 13, 6);//chair2
 
 		
-		UpdateObjectsStatus (9, 10, 15);//super energy
+		UpdateObjectsStatus (11, 2, 15);//super energy
 		
 		UpdateObjectsStatus (11, 11, 11);//enemy
 		UpdateObjectsStatus (12, 11, 11);//enemy
 
-		UpdateObjectsStatus (18, 8, 21);//blue cabinet
-		UpdateObjectsStatus ( 18, 12, 22);//yellow cabinet
-		UpdateObjectsStatus (18, 11, 23);//red cabinet
-		UpdateObjectsStatus (18,  10, 24);//green cabinet
-		UpdateObjectsStatus ( 18,  9, 25);//orange cabinet
+		UpdateObjectsStatus (20, 14, 21);//blue cabinet
+		UpdateObjectsStatus (17, 12, 22);//yellow cabinet
+		UpdateObjectsStatus (8, 18, 23);//red cabinet
+		UpdateObjectsStatus (6,  6, 24);//green cabinet
+		UpdateObjectsStatus ( 14,  10, 25);//orange cabinet
 		
 		
-		UpdateObjectsStatus ( 5,  5, 31);//blue key
+		UpdateObjectsStatus ( 5,  3, 31);//blue key
 		UpdateObjectsStatus ( 3, 16, 32);//yellow key
 		UpdateObjectsStatus (18,  4, 33);//red key
-		UpdateObjectsStatus (16, 16, 34);//green key
-		UpdateObjectsStatus (10, 12, 35);//orange key
+		UpdateObjectsStatus (19, 18, 34);//green key
+		UpdateObjectsStatus (10, 20, 35);//orange key
 
 
 		gameObject.transform.position = new Vector3 ((float)width / 2 * 5.0f, 0.0f, (float)width / 2 * 5.0f);
@@ -125,6 +126,12 @@ public class GridMap : MonoBehaviour {
 				objChair.transform.localScale = new Vector3(5, 5, 5);
 				objChair.transform.localRotation = Quaternion.Euler( new Vector3(0, 0, 0));
 				break;
+			case 211://Add obstacle chair
+				GameObject objChaira = Instantiate (gameObjObstacleChair, ComputePosition(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;	
+				objChaira.tag = "Chair";
+				objChaira.transform.localScale = new Vector3(5, 5, 5);
+				objChaira.transform.localRotation = Quaternion.Euler( new Vector3(0, 270, 0));
+				break;
 			case 3://Add obstacle table
 				GameObject objTable = Instantiate (gameObjObstacleTable, ComputePosition(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;	
 				objTable.tag = "Table";
@@ -160,7 +167,7 @@ public class GridMap : MonoBehaviour {
 				GameObject objChair2 = Instantiate (gameObjObstacleChair2, ComputePosition_Chair2(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;	
 				objChair2.tag = "Chair";
 				objChair2.transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
-				objChair2.transform.localRotation = Quaternion.Euler( new Vector3(270, 0, 0));
+				objChair2.transform.localRotation = Quaternion.Euler( new Vector3(270, 270, 0));
 				break;
 			case 11://Add Enemy
 				GameObject objEnemy = Instantiate (gameObjEnemy, ComputePosition(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;	

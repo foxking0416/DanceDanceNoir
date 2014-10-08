@@ -18,7 +18,7 @@ public class EnemyScript : MonoBehaviour {
 		map = gameObjGridMap.GetComponent< GridMap >();
 		width = map.GetMapSize ();
 		timer = 0;
-		beatTime = 1.0f;
+		beatTime = 2.50f;
 	}
 	
 	// Update is called once per frame
@@ -26,7 +26,7 @@ public class EnemyScript : MonoBehaviour {
 		timer += Time.deltaTime;
 
 		if (timer > beatTime) {
-			//RandomMove();
+			RandomMove();
 			timer = 0;
 		}
 

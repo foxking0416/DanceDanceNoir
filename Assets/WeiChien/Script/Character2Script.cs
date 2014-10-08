@@ -306,8 +306,8 @@ public class Character2Script : MonoBehaviour {
 		}
 	}
 	
-	void PickUpSuperEnergy(int objectType){
-		if (objectType == 2) {
+	void PickUpSuperEnergy(){
+		if (globalObjectType == 2) {
 			Debug.Log ("Pick up Super energy");
 			GameObject objSuperEnergy = GameObject.FindGameObjectWithTag ("SuperEnergy");
 			SuperEnergyScript superEnergy = objSuperEnergy.GetComponent<SuperEnergyScript> ();
