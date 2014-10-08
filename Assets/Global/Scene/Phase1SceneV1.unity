@@ -672,6 +672,7 @@ MonoBehaviour:
   beatBarBg: {fileID: 393918747}
   musicCamera: {fileID: 1500500513}
   player2: {fileID: 0}
+  player1: {fileID: 0}
 --- !u!114 &836956550
 MonoBehaviour:
   m_ObjectHideFlags: 0
