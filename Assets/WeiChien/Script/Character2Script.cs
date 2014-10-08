@@ -17,6 +17,7 @@ public class Character2Script : MonoBehaviour {
 	int holdKeyStatus;//0:no key; 31:blue key; 32:Yellow key; 33:Red Key; 34:Green Key; 35:Orange Key 
 	ArrayList obstacleArray1 = new ArrayList();
 	ArrayList obstacleArray2 = new ArrayList();
+	int globalObjectType;
 	// Use this for initialization
 
 	void Start () {
@@ -37,11 +38,13 @@ public class Character2Script : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		int objectType = map.GetObjectTypeOnMap (positionX, positionZ);
-		if (objectType == 11) {
+		globalObjectType = map.GetObjectTypeOnMap (positionX, positionZ);
+		if (globalObjectType == 11) {
 			//Game Over
 			Debug.Log("You are caught by enemy!!!!!!");
-		}/*
+		}
+
+		/*
 		if (Input.GetKeyDown ("r")) {
 			Vector3 oldRotation = player2Camera.transform.localRotation.eulerAngles;
 			oldRotation += new Vector3 (0, 5, 0);
@@ -216,41 +219,41 @@ public class Character2Script : MonoBehaviour {
 		return false;
 	}
 
-	public void PickUpKey(int objectType){
-		switch(objectType){
+	public void PickUpKey(){
+		switch(globalObjectType){
 		case 31://Pick up Blue key
 			GameObject objKeyBlue = GameObject.FindGameObjectWithTag("BlueKey");
 			KeyScript keyBlue = objKeyBlue.GetComponent<KeyScript>();
 			keyBlue.Pick();
-			holdKeyStatus = objectType;
+			holdKeyStatus = globalObjectType;
 			Debug.Log ("Pick up Blue key");
 			break;
 		case 32://Pick up Yellow Key
 			GameObject objKeyYellow = GameObject.FindGameObjectWithTag("YellowKey");
 			KeyScript keyYellow = objKeyYellow.GetComponent<KeyScript>();
 			keyYellow.Pick();
-			holdKeyStatus = objectType;
+			holdKeyStatus = globalObjectType;
 			Debug.Log ("Pick up Yellow key");
 			break;
 		case 33://Pick up Red Key
 			GameObject objKeyRed = GameObject.FindGameObjectWithTag("RedKey");
 			KeyScript keyRed = objKeyRed.GetComponent<KeyScript>();
 			keyRed.Pick();
-			holdKeyStatus = objectType;
+			holdKeyStatus = globalObjectType;
 			Debug.Log ("Pick up Red key");
 			break;
 		case 34://Pick up Green Key
 			GameObject objKeyGreen = GameObject.FindGameObjectWithTag("GreenKey");
 			KeyScript keyGreen = objKeyGreen.GetComponent<KeyScript>();
 			keyGreen.Pick();
-			holdKeyStatus = objectType;
+			holdKeyStatus = globalObjectType;
 			Debug.Log ("Pick up Green key");
 			break;
 		case 35://Pick up Orange Key
 			GameObject objKeyOrange = GameObject.FindGameObjectWithTag("OrangeKey");
 			KeyScript keyOrange = objKeyOrange.GetComponent<KeyScript>();
 			keyOrange.Pick();
-			holdKeyStatus = objectType;
+			holdKeyStatus = globalObjectType;
 			Debug.Log ("Pick up Orange key");
 			break;
 		}
