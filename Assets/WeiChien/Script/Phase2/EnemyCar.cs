@@ -7,6 +7,11 @@ public class EnemyCar : MonoBehaviour {
 	float beatTime;
 	int moveDir;
 
+
+	private float currentLocation;
+	float temp;
+	bool accelerate;
+
 	// Use this for initialization
 	void Start () {
 		gameObject.transform.localPosition = new Vector3 (3, 0.0f, 0.0f);
@@ -22,17 +27,16 @@ public class EnemyCar : MonoBehaviour {
 	void Update () {
 		timer += Time.deltaTime;
 		
-		if (timer > beatTime) {
+		/*if (timer > beatTime) {
 			RandomMove((moveDir++ / 10) % 2);
 			timer = 0;
-		}
+		}*/
 
-
+		ComputeCarPosition (timer);
+		timer = 0;
 	}
 
 	void RandomMove(int dir){
-		//int moveDir = Random.Range (1, 3);
-		//MoveForward();
 		switch (dir) {
 		case 0:
 				MoveForward ();
@@ -41,6 +45,26 @@ public class EnemyCar : MonoBehaviour {
 				MoveBackward ();
 				break;
 		}
+	}
+
+	void ComputeCarPosition(float l){
+		
+		currentLocation += l;
+		
+		float angleY;
+		float coordX;
+		float coordZ;
+		
+		if (currentLocation < 65) {
+			
+		} else if (currentLocation >= 65 && currentLocation <= 80) {
+			
+		}
+		coordX = currentLocation;
+		//coordZ = -0.8f;
+		gameObject.transform.localPosition = new Vector3 (3 + coordX, 0.0f, 0.0f);
+
+		
 	}
 
 	public void MoveForward(){
