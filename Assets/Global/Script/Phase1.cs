@@ -136,9 +136,6 @@ public class Phase1 : MonoBehaviour {
 
 	public bool player1KeyPressDetection()
 	{
-		if (!Input.anyKey)
-			return false;
-
 		if (Input.GetKeyDown (KeyCode.A)) {
 			if (keySequence.Length != 0)
 				isToClear = true;
@@ -160,7 +157,8 @@ public class Phase1 : MonoBehaviour {
 			keySequence += " W";
 		}
 		else{
-			isToClear = true;
+			//isToClear = true;
+			return false;
 		}
 		
 		if (keySequence.Length >= 6)
@@ -201,8 +199,8 @@ public class Phase1 : MonoBehaviour {
 
 	public bool player2KeyPressDetection()
 	{
-		if (!Input.anyKey)
-			return false;
+//		if (!Input.anyKey)
+//			return false;
 		
 		if (Input.GetKeyDown(KeyCode.LeftArrow)){
 			signal2 = (int)Action.Left;
@@ -230,6 +228,7 @@ public class Phase1 : MonoBehaviour {
 		}
 		else {
 			signal2 = (int)Action.None;
+			return false;
 		}
 		
 		PlayerPrefs.SetInt ("Signal2", signal2);
