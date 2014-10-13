@@ -18,15 +18,15 @@ public class GridMap : MonoBehaviour {
 	public Shader wallTransparentShader;
 	public Shader wallNormalShader;
 
-	//public GameObject gameObjCharacter;
+
+	public GameObject gameObjCharacter;
 
 	private GameObject gameObjObstacleGenerated;
 	
 	int[] map;// = new int[400]; 
 	GameObject[] objectMap;
 	int width = 20;
-
-	//enum objType{Enemy, Obstacle, BlueCabinet, YellowCabinet, RedCabinet, GreenCabinet, OrangeCabinet, BlueKey, YellowKey, RedKey, GreenKey, OrangeKey};
+	
 
 	// Use this for initialization
 	void Start () {
@@ -91,8 +91,9 @@ public class GridMap : MonoBehaviour {
 
 		GenerateEnvironment ();
 
-		//GameObject objCharacter = Instantiate (gameObjCharacter, ComputePosition(10, 0,  9), Quaternion.identity) as GameObject;
-
+		GameObject objCharacter = Instantiate (gameObjCharacter, ComputePosition(10, 0, 10), Quaternion.identity) as GameObject;
+		objCharacter.transform.localScale = new Vector3 (10, 10, 10);
+		objCharacter.tag = "Player2";
 	}
 
 	void Initial(){

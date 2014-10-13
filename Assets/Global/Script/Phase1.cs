@@ -30,6 +30,7 @@ public class Phase1 : MonoBehaviour {
 	int eSamples = 44;
 	int subbands = 32;
 	int eId = -1;
+	public int numberOfCollectedEvidence;
 	
 	private float[] samples ; // audio samples
 	private float[] spectrum; // audio spectrum
@@ -66,7 +67,7 @@ public class Phase1 : MonoBehaviour {
 		actionPatterns = new string[3];
 		actionPatterns[0] = " A D D";	actionPatterns[1] = " A W D";	actionPatterns[2] = " A S D";
 
-		player2 = GameObject.Find ("Player").GetComponent<Character2Script>();
+		player2 = GameObject.FindGameObjectWithTag ("Player2").GetComponent<Character2Script>();
 		//player1 = GameObject.Find ("player_one(Clone)").GetComponent<PlayerOne> ();
 
 		PlayerPrefs.SetInt ("Signal1", (int)Action.None);
@@ -82,6 +83,8 @@ public class Phase1 : MonoBehaviour {
 		fSample = AudioSettings.outputSampleRate;
 		E = new float[eSamples];
 		Es = new float[subbands];
+
+		numberOfCollectedEvidence = 0;
 	}
 	
 	// Update is called once per frame
@@ -104,6 +107,9 @@ public class Phase1 : MonoBehaviour {
 		}
 		PlayerPrefs.SetInt ("Signal1", (int)Action.None);
 		PlayerPrefs.SetInt ("Signal2", (int)Action.None);
+
+		if(	numberOfCollectedEvidence >= 5)
+			Application.LoadLevel("Phase2SceneV1");//Win
 	}
 
 	void preGenerateMusicNote()
@@ -119,11 +125,11 @@ public class Phase1 : MonoBehaviour {
 
 	void generateNewNote(float posX)
 	{
-		GameObject p1 = Instantiate(notetoSpwan, new Vector3(posX, 0.0f, 50.0f), 
+		GameObject p1 = Instantiate(notetoSpwan, new Vector3(posX, 0.0f, 51.95f), 
 		                            Quaternion.Euler(new Vector3(0.0f, 90.0f, 90.0f))) as GameObject;
 		p1.tag = "P1P1Note";
 		
-		GameObject p2 = Instantiate(notetoSpwan, new Vector3(posX, 0.0f, 50.0f), 
+		GameObject p2 = Instantiate(notetoSpwan, new Vector3(posX, 0.0f, 51.95f), 
 		                            Quaternion.Euler(new Vector3(0.0f, 90.0f, 90.0f))) as GameObject;
 		p2.tag = "P1P2Note";
 	}
@@ -232,7 +238,7 @@ public class Phase1 : MonoBehaviour {
 
 	void OnGUI()
 	{
-		GUILayout.BeginArea(new Rect(0, (Screen.height-beatBarHeight)/2, actionBarWidth, beatBarHeight));
+		GUILayout.BeginArea(new Rect(0, (Screen.height-beatBarHeight)*0.32f, actionBarWidth, beatBarHeight));
 		GUILayout.BeginHorizontal ();
 		
 		GUI.skin.button.fontSize = 15;

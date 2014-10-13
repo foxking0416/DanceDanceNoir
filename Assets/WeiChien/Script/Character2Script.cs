@@ -5,11 +5,17 @@ public class Character2Script : MonoBehaviour {
 
 	public Shader transparentShader;
 	public Shader normalShader;
+	public AudioClip audioPickUpKey;
+	public AudioClip audioOpenCase;
+	public GameObject gameObjCamera;
+	public GameObject gameObjTextEvidence;
+
 	private GameObject gameObjGridMap;
 	private GridMap map;
 	private GameObject player2Camera;
-
-
+	private GameObject gameObjPhase1;
+	private GameObject objTextEvidence;
+	private Phase1 phase1;
 
 	int positionX;
 	int positionZ;
@@ -24,15 +30,21 @@ public class Character2Script : MonoBehaviour {
 
 		gameObjGridMap = GameObject.Find ("Map");
 		map = gameObjGridMap.GetComponent< GridMap >();
-		player2Camera= GameObject.Find ("Player2Camera2");
+
+	
+		gameObjPhase1 = GameObject.Find("Phase1");
+		phase1 = gameObjPhase1.GetComponent< Phase1 > ();
 		width = map.GetMapSize ();
 
 		positionX = 10;
-		positionZ = 10;
+		positionZ = 6;
 		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
-		player2Camera.transform.localRotation = Quaternion.Euler (new Vector3 (45, 45, 0));//(30, 45, 0)
-		player2Camera.transform.position = ComputeCameraPosition(positionX,0 ,positionZ, 45);
-		player2Camera.camera.orthographicSize = 20;
+
+		player2Camera = Instantiate (gameObjCamera, ComputeCameraPosition(positionX,0 ,positionZ, 45), Quaternion.Euler (new Vector3 (45, 45, 0))) as GameObject;	
+		player2Camera.camera.orthographicSize = 40;
+
+		objTextEvidence = Instantiate (gameObjTextEvidence, new Vector3(0,0,0), Quaternion.identity) as GameObject;	
+
 		holdKeyStatus = 0;
 	}
 	
@@ -121,7 +133,43 @@ public class Character2Script : MonoBehaviour {
 		MakeObjectNormal (obstacleArray1);
 		ComputeObstructViewObject (positionX, positionZ);
 		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
+		gameObject.transform.localRotation = Quaternion.Euler (new Vector3 (0, 0, 0));
 		player2Camera.transform.position = ComputeCameraPosition(positionX,0 ,positionZ, player2Camera.transform.localRotation.eulerAngles.y);
+	}
+
+	public void MoveRight(){
+		
+		++positionX;
+		if (positionX > width) {
+			--positionX;		
+		}
+		int objectType = map.GetObjectTypeOnMap (positionX, positionZ);
+		if (!CanWalkThrough(objectType)) {
+			--positionX;		
+		}
+		MakeObjectNormal (obstacleArray1);
+		ComputeObstructViewObject (positionX, positionZ);
+		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
+		gameObject.transform.localRotation = Quaternion.Euler (new Vector3 (0, 90, 0));
+		player2Camera.transform.position = ComputeCameraPosition (positionX, 0, positionZ, player2Camera.transform.localRotation.eulerAngles.y);
+	}
+
+	public void MoveDown(){
+		
+		--positionZ;
+		
+		if (positionZ < 1) {
+			++positionZ;		
+		}
+		int objectType = map.GetObjectTypeOnMap (positionX, positionZ);
+		if (!CanWalkThrough(objectType)) {
+			++positionZ;		
+		}
+		MakeObjectNormal (obstacleArray1);
+		ComputeObstructViewObject (positionX, positionZ);
+		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
+		gameObject.transform.localRotation = Quaternion.Euler (new Vector3 (0, 180, 0));
+		player2Camera.transform.position = ComputeCameraPosition (positionX, 0, positionZ, player2Camera.transform.localRotation.eulerAngles.y);
 	}
 
 	public void MoveLeft(){
@@ -139,41 +187,13 @@ public class Character2Script : MonoBehaviour {
 		MakeObjectNormal (obstacleArray1);
 		ComputeObstructViewObject (positionX, positionZ);
 		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
+		gameObject.transform.localRotation = Quaternion.Euler (new Vector3 (0, 270, 0));
 		player2Camera.transform.position = ComputeCameraPosition (positionX, 0, positionZ, player2Camera.transform.localRotation.eulerAngles.y);
 	}
 
-	public void MoveDown(){
 
-		--positionZ;
 
-		if (positionZ < 1) {
-			++positionZ;		
-		}
-		int objectType = map.GetObjectTypeOnMap (positionX, positionZ);
-		if (!CanWalkThrough(objectType)) {
-			++positionZ;		
-		}
-		MakeObjectNormal (obstacleArray1);
-		ComputeObstructViewObject (positionX, positionZ);
-		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
-		player2Camera.transform.position = ComputeCameraPosition (positionX, 0, positionZ, player2Camera.transform.localRotation.eulerAngles.y);
-	}
 
-	public void MoveRight(){
-
-		++positionX;
-		if (positionX > width) {
-			--positionX;		
-		}
-		int objectType = map.GetObjectTypeOnMap (positionX, positionZ);
-		if (!CanWalkThrough(objectType)) {
-			--positionX;		
-		}
-		MakeObjectNormal (obstacleArray1);
-		ComputeObstructViewObject (positionX, positionZ);
-		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
-		player2Camera.transform.position = ComputeCameraPosition (positionX, 0, positionZ, player2Camera.transform.localRotation.eulerAngles.y);
-	}
 
 
 	Vector3 ComputePosition(int x, int y, int z){
@@ -182,7 +202,7 @@ public class Character2Script : MonoBehaviour {
 	}
 
 	Vector3 ComputeCameraPosition(int x, int y, int z, float angle){
-		Vector3 pos = new Vector3 (-2.5f + x * 5.0f - 50.0f * Mathf.Cos(angle), 40.0f, -2.5f + z * 5.0f - 50.0f * Mathf.Cos(angle));
+		Vector3 pos = new Vector3 (-2.5f + x * 5.0f - 100.0f * Mathf.Cos(angle), 80.0f, -2.5f + z * 5.0f - 100.0f * Mathf.Cos(angle));
 		//Vector3 pos = new Vector3 (-2.5f + x * 5.0f , 1.0f, -2.5f + z * 5.0f );
 		return pos;
 	}
@@ -226,6 +246,7 @@ public class Character2Script : MonoBehaviour {
 			KeyScript keyBlue = objKeyBlue.GetComponent<KeyScript>();
 			keyBlue.Pick();
 			holdKeyStatus = globalObjectType;
+			AudioSource.PlayClipAtPoint (audioPickUpKey, gameObject.transform.position);
 			Debug.Log ("Pick up Blue key");
 			break;
 		case 32://Pick up Yellow Key
@@ -233,6 +254,7 @@ public class Character2Script : MonoBehaviour {
 			KeyScript keyYellow = objKeyYellow.GetComponent<KeyScript>();
 			keyYellow.Pick();
 			holdKeyStatus = globalObjectType;
+			AudioSource.PlayClipAtPoint (audioPickUpKey, gameObject.transform.position);
 			Debug.Log ("Pick up Yellow key");
 			break;
 		case 33://Pick up Red Key
@@ -240,6 +262,7 @@ public class Character2Script : MonoBehaviour {
 			KeyScript keyRed = objKeyRed.GetComponent<KeyScript>();
 			keyRed.Pick();
 			holdKeyStatus = globalObjectType;
+			AudioSource.PlayClipAtPoint (audioPickUpKey, gameObject.transform.position);
 			Debug.Log ("Pick up Red key");
 			break;
 		case 34://Pick up Green Key
@@ -247,6 +270,7 @@ public class Character2Script : MonoBehaviour {
 			KeyScript keyGreen = objKeyGreen.GetComponent<KeyScript>();
 			keyGreen.Pick();
 			holdKeyStatus = globalObjectType;
+			AudioSource.PlayClipAtPoint (audioPickUpKey, gameObject.transform.position);
 			Debug.Log ("Pick up Green key");
 			break;
 		case 35://Pick up Orange Key
@@ -254,6 +278,7 @@ public class Character2Script : MonoBehaviour {
 			KeyScript keyOrange = objKeyOrange.GetComponent<KeyScript>();
 			keyOrange.Pick();
 			holdKeyStatus = globalObjectType;
+			AudioSource.PlayClipAtPoint (audioPickUpKey, gameObject.transform.position);
 			Debug.Log ("Pick up Orange key");
 			break;
 		}
@@ -265,6 +290,8 @@ public class Character2Script : MonoBehaviour {
 			CabinetScript cabinetBlue = objCabinetBlue.GetComponent<CabinetScript> ();
 			cabinetBlue.OpenCabinet ();
 			holdKeyStatus = 0;
+			phase1.numberOfCollectedEvidence++;
+			AudioSource.PlayClipAtPoint (audioOpenCase, gameObject.transform.position);
 			Debug.Log("Open Blue Cabinet");
 		}
 		else if(holdKeyStatus == 32 && CheckAround(positionX, positionZ, 22)){
@@ -272,6 +299,8 @@ public class Character2Script : MonoBehaviour {
 			CabinetScript cabinetYellow = objCabinetYellow.GetComponent<CabinetScript> ();
 			cabinetYellow.OpenCabinet ();
 			holdKeyStatus = 0;
+			phase1.numberOfCollectedEvidence++;
+			AudioSource.PlayClipAtPoint (audioOpenCase, gameObject.transform.position);
 			Debug.Log("Open Yellow Cabinet");
 		}
 		else if(holdKeyStatus == 33 && CheckAround(positionX, positionZ, 23)){
@@ -279,6 +308,8 @@ public class Character2Script : MonoBehaviour {
 			CabinetScript cabinetRed = objCabinetRed.GetComponent<CabinetScript> ();
 			cabinetRed.OpenCabinet ();
 			holdKeyStatus = 0;
+			phase1.numberOfCollectedEvidence++;
+			AudioSource.PlayClipAtPoint (audioOpenCase, gameObject.transform.position);
 			Debug.Log("Open Red Cabinet");
 		}
 		else if(holdKeyStatus == 34 && CheckAround(positionX, positionZ, 24)){
@@ -286,6 +317,8 @@ public class Character2Script : MonoBehaviour {
 			CabinetScript cabinetGreen = objCabinetGreen.GetComponent<CabinetScript> ();
 			cabinetGreen.OpenCabinet ();
 			holdKeyStatus = 0;
+			phase1.numberOfCollectedEvidence++;
+			AudioSource.PlayClipAtPoint (audioOpenCase, gameObject.transform.position);
 			Debug.Log("Open Green Cabinet");
 		}
 		else if(holdKeyStatus == 35 && CheckAround(positionX, positionZ, 25)){
@@ -293,6 +326,8 @@ public class Character2Script : MonoBehaviour {
 			CabinetScript cabinetOrange = objCabinetOrange.GetComponent<CabinetScript> ();
 			cabinetOrange.OpenCabinet ();
 			holdKeyStatus = 0;
+			phase1.numberOfCollectedEvidence++;
+			AudioSource.PlayClipAtPoint (audioOpenCase, gameObject.transform.position);
 			Debug.Log("Open Orange Cabinet");
 		}
 	}
@@ -306,7 +341,7 @@ public class Character2Script : MonoBehaviour {
 		}
 	}
 	
-	void PickUpSuperEnergy(){
+	public void PickUpSuperEnergy(){
 		if (globalObjectType == 2) {
 			Debug.Log ("Pick up Super energy");
 			GameObject objSuperEnergy = GameObject.FindGameObjectWithTag ("SuperEnergy");

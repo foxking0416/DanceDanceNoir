@@ -19,7 +19,7 @@ public class TitleScript : MonoBehaviour {
 		// Load the main scene
 		// The scene needs to be added into build setting to be loaded!
 		if (GUILayout.Button("New Game")) {
-			Application.LoadLevel("GameplayScene");
+			Application.LoadLevel("Phase1SceneV2");
 		}
 
 		if (GUILayout.Button("Introduction")) {
