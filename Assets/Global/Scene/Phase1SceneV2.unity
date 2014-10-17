@@ -2090,6 +2090,7 @@ MonoBehaviour:
   player: {fileID: 100000, guid: ff712985bae36a34f92eadc3801afecb, type: 2}
   obstacleManager: {fileID: 100000, guid: 35e0cc6a61187994d84b78dab10f6401, type: 2}
   obstacleGenerator: {fileID: 100000, guid: 3cf39ed700115c046897012d7262acbf, type: 2}
+  grid: {fileID: 100000, guid: 6318e25fa3a57d04bb6a6357447f1db2, type: 2}
 --- !u!1 &837266179
 GameObject:
   m_ObjectHideFlags: 0

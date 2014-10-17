@@ -2,7 +2,13 @@ fileFormatVersion: 2
 guid: b9ffa51a5bb2d2f4ab2a767ca53dd38f
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - camera: {instanceID: 0}
+  - background: {instanceID: 0}
+  - player: {instanceID: 0}
+  - obstacleManager: {instanceID: 0}
+  - obstacleGenerator: {instanceID: 0}
+  - grid: {fileID: 100000, guid: 6318e25fa3a57d04bb6a6357447f1db2, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

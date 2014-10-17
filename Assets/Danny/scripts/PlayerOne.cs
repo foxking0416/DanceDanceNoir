@@ -32,20 +32,37 @@ public class PlayerOne : MonoBehaviour
 	// Temporary variables used for development and testing.
 	private float slideTranslation = 1.0f;
 	private float jumpingStep = 4.0f;
+	private int jumpBeat = 0;
+	private int slideBeat = 0;
+	private int sprintBeat = 0;
 
+	public int playerInitialX;
+	public int playerInitialY;
+	private GameObject gameObjGrid;
+	private Grid grid;
 
 	////////////////////////////////////////////////////
 	// Game object initialization.
 	////////////////////////////////////////////////////
 	void Start()
 	{
+
+
+
+		gameObjGrid = GameObject.FindGameObjectWithTag ("Grid");
+		grid = gameObjGrid.GetComponent< Grid > ();
+
+		playerInitialX = 15;
+		playerInitialY = 1;
+		gameObject.transform.position = new Vector3 (400, -4, -1);// grid.computePlayerPosition (playerInitialX, playerInitialY);
+
 		isColliding = false;
 		isJumping = false;
 		isFalling = false;
 		isSprinting = false;
 		isSliding = false;
 
-		playerSpeedHorizontal = -idlePenalty;
+		playerSpeedHorizontal = 0.0f;//-idlePenalty;
 		playerSpeedVertical = 0.0f;
 
 		verticalRestPosition = transform.position.y;
@@ -63,7 +80,7 @@ public class PlayerOne : MonoBehaviour
 			GameOver();
 		}
 		else {
-			UpdatePlayerState();
+			//UpdatePlayerState();
 			UpdatePlayerPosition();
 		}
 	}
@@ -128,54 +145,6 @@ public class PlayerOne : MonoBehaviour
 	}
 
 
-	////////////////////////////////////////////////////
-	// Method to determine speed of incoming obstacles.
-	////////////////////////////////////////////////////
-	private float getObstacleSpeed()
-	{
-		var crate = ( TranslateLeftAtConstantSpeed )FindObjectOfType( typeof( TranslateLeftAtConstantSpeed ) );
-		if ( crate != null ) {
-			return crate.getTranslationSpeed();
-		}
-		else {
-			return 0.0f;
-		}
-	}
-
-
-	////////////////////////////////////////////////////
-	// Method to change player state based on game conditions.
-	////////////////////////////////////////////////////
-	private void UpdatePlayerState()
-	{
-		if ( isJumping ) {
-			if ( transform.position.y >= ( verticalRestPosition + jumpHeight ) ) {
-				isJumping = false;
-				isFalling = true;
-			}
-		}
-		else if ( isFalling ) {
-			if ( transform.position.y <= verticalRestPosition ) {
-				isFalling = false;
-			}
-		}
-		else if ( isSliding ) {
-			if ( timeSliding >= slideDuration ) {
-				isSliding = false;
-				
-				// Undo the translation performed for sliding visualization.
-				transform.Translate( new Vector3 ( 0.0f, slideTranslation, 0.0f ) );
-			}
-			timeSliding += Time.deltaTime;
-		}
-		else if ( isSprinting ) {
-			if ( timeSprinting >= sprintDuration ) {
-				isSprinting = false;
-			}
-			timeSprinting += Time.deltaTime;
-		}
-	}
-
 
 	////////////////////////////////////////////////////
 	// Method to determine horizontal and vertical speed of player,
@@ -185,7 +154,7 @@ public class PlayerOne : MonoBehaviour
 	{
 		// Determine player horizontal speed.
 		if ( isColliding ) {
-			playerSpeedHorizontal = -getObstacleSpeed();
+			//playerSpeedHorizontal = -getObstacleSpeed();
 		}
 		else {
 			if ( isSliding ) {
@@ -201,58 +170,132 @@ public class PlayerOne : MonoBehaviour
 				playerSpeedHorizontal = -idlePenalty;
 			}
 		}
-		
-		// Determine player vertical speed.
-		if ( isJumping ) {
-			playerSpeedVertical = jumpingStep;
-		}
-		else if ( isFalling ) {
-			playerSpeedVertical = -jumpingStep;
-		}
-		else {
-			playerSpeedVertical = 0.0f;
-		}
-		
-		// Update player position.
-		transform.Translate( new Vector3( playerSpeedHorizontal * Time.deltaTime, 0.0f, 0.0f ) );
-		transform.Translate( new Vector3( 0.0f, playerSpeedVertical * Time.deltaTime, 0.0f ) );
 	}
 
+	public void trigger(int actionType){
 
+
+		if (actionType == 1) {
+			if( !isSprinting && !isSliding && !isFalling && !isJumping ){
+				isJumping = true;
+				jump();
+
+			}	
+		}
+
+		if(actionType == 2) {
+			if( !isSprinting && !isSliding && !isFalling && !isJumping ){
+				isSliding = true;
+				slide();
+				
+			}	
+		}
+
+		if(actionType == 3) {
+			if( !isSprinting && !isSliding && !isFalling && !isJumping ){
+				isSprinting = true;
+				sprint();	
+			}	
+		}
+
+
+		if (isJumping) {
+			jumpBeat++;	
+		}
+		if (jumpBeat >= 2 && isColliding == false) {
+			jumpBeat = 0;
+			jumpFall();
+			isJumping = false;
+		}
+
+		if (isSliding) {
+			slideBeat++;	
+		}
+		if (slideBeat >= 2 && isColliding == false) {
+			slideBeat = 0;
+			slideUp();
+			isSliding = false;
+		}
+
+		if (isSprinting) {
+			sprintBeat++;	
+		}
+		if (sprintBeat >= 2 && isColliding == false) {
+			sprintBeat = 0;
+			isSprinting = false;
+		}
+
+		GameObject[] crates = GameObject.FindGameObjectsWithTag("Crate");
+		foreach(GameObject obj in crates){
+			TranslateLeftAtConstantSpeed crate = obj.GetComponent<TranslateLeftAtConstantSpeed>();
+			crate.MoveObstacle();
+
+			if(grid.hasObstacle(playerInitialX, playerInitialY) == true)
+				pushBack();
+		}
+
+	}
+
+	public void pushBack(){
+		grid.setObjectInGrid (playerInitialX, playerInitialY, -1);
+		playerInitialX--;
+		grid.setObjectInGrid (playerInitialX, playerInitialY, 0);
+		transform.position = grid.computePlayerPosition (playerInitialX, playerInitialY);
+	}
 	////////////////////////////////////////////////////
 	// Player should jump.
 	////////////////////////////////////////////////////
-	public void jump()
-	{
-		if ( !isSprinting && !isSliding && !isFalling && !isJumping ) {
-			isJumping = true;
-		}
+	public void jump(){
+		grid.setObjectInGrid (playerInitialX, playerInitialY, -1);
+		playerInitialY++;
+		grid.setObjectInGrid (playerInitialX, playerInitialY, 0);
+		transform.position = grid.computePlayerPosition (playerInitialX, playerInitialY);
+
+		//transform.Translate( new Vector3( 0.0f, computePositionY(1), 0.0f ) );
 	}
 
+	public void jumpFall(){
+		grid.setObjectInGrid (playerInitialX, playerInitialY, -1);
+		playerInitialY--;
+		grid.setObjectInGrid (playerInitialX, playerInitialY, 0);
+		transform.position = grid.computePlayerPosition (playerInitialX, playerInitialY);
+		//transform.Translate( new Vector3( 0.0f, -computePositionY(1), 0.0f ) );
+	}
 
 	////////////////////////////////////////////////////
 	// Player should slide.
 	////////////////////////////////////////////////////
-	public void slide()
-	{
-		if ( !isSprinting && !isJumping && !isFalling && !isSliding ) {
-			isSliding = true;
-			timeSliding = 0.0f;
+	public void slide(){
+		grid.setObjectInGrid (playerInitialX, playerInitialY, -1);
+		playerInitialY--;
+		grid.setObjectInGrid (playerInitialX, playerInitialY, 0);
+		transform.position = grid.computePlayerPosition (playerInitialX, playerInitialY);
+		//transform.Translate( new Vector3 ( 0.0f, -computePositionY(1), 0.0f ) );
+	}
 
-			// Translate player sprite down to temporarily visualize sliding.
-			transform.Translate( new Vector3 ( 0.0f, -slideTranslation, 0.0f ) );
-		}
+	public void slideUp(){
+		grid.setObjectInGrid (playerInitialX, playerInitialY, -1);
+		playerInitialY++;
+		grid.setObjectInGrid (playerInitialX, playerInitialY, 0);
+		transform.position = grid.computePlayerPosition (playerInitialX, playerInitialY);
+		//transform.Translate( new Vector3 ( 0.0f, computePositionY(1), 0.0f ) );
 	}
 
 
 	////////////////////////////////////////////////////
 	// Player should sprint.
 	////////////////////////////////////////////////////
-	public void sprint()
-	{
-		if ( !isJumping && !isSliding && !isFalling && !isColliding && !isSprinting ) {
-			isSprinting = true;
-			timeSprinting = 0.0f;
-		}
+	public void sprint(){
+
+		transform.Translate( new Vector3( computePositionX(1), 0.0f, 0.0f ) );
+
+	}
+
+	public float computePositionX(int x){
+		return 24.0f / 29.0f * x;
+	}
+
+	public float computePositionY(int y){
+		return 24.0f / 29.0f * y;
 	}
 }

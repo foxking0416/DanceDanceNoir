@@ -22,9 +22,9 @@ public class PlayerCar : MonoBehaviour {
 		combo = false;
 		temp = 0;
 		gameObjCamera = GameObject.FindGameObjectWithTag("MainCamera");
-		//gameObjCamera.camera.orthographic = false;
-		//gameObjCamera.camera.transform.localPosition = gameObject.transform.localPosition + new Vector3(0,10,0);
-		//gameObjCamera.camera.transform.localRotation = gameObject.transform.localRotation;
+		gameObjCamera.camera.orthographic = false;
+		gameObjCamera.camera.transform.localPosition = gameObject.transform.localPosition + new Vector3(0,10,0);
+		gameObjCamera.camera.transform.localRotation = gameObject.transform.localRotation;
 	}
 	
 	// Update is called once per frame
@@ -44,7 +44,7 @@ public class PlayerCar : MonoBehaviour {
 		if(combo == true)
 			ComputeCarPosition (timer * 4);
 		else if(accelerate == true)
-			ComputeCarPosition (timer * 10);
+			ComputeCarPosition (timer * 2);
 		else
 			ComputeCarPosition (timer);
 
@@ -74,8 +74,8 @@ public class PlayerCar : MonoBehaviour {
 		//coordX = currentLocation;
 		//coordZ = -0.8f;
 		gameObject.transform.localPosition = new Vector3 (coordX, 0.0f, coordZ);
-		//gameObjCamera.camera.transform.localPosition = gameObject.transform.localPosition + new Vector3(0,1,0);
-		//gameObjCamera.camera.transform.localRotation = gameObject.transform.localRotation;//Quaternion.Euler(gameObject.transform.localRotation.eulerAngles + new Vector3(40,0,0));
+		gameObjCamera.camera.transform.localPosition = gameObject.transform.localPosition + new Vector3(0,1,0);
+		gameObjCamera.camera.transform.localRotation = gameObject.transform.localRotation;//Quaternion.Euler(gameObject.transform.localRotation.eulerAngles + new Vector3(40,0,0));
 
 	}
 

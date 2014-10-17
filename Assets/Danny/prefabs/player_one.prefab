@@ -15,7 +15,7 @@ GameObject:
   - 114: {fileID: 11400000}
   m_Layer: 0
   m_Name: player_one
-  m_TagString: Untagged
+  m_TagString: Player1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -85,6 +85,8 @@ MonoBehaviour:
   sprintDuration: .5
   jumpHeight: 4
   slideDuration: 1.5
+  playerInitialX: 0
+  playerInitialY: 0
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

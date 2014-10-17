@@ -12,15 +12,27 @@ public class ObstacleManager : MonoBehaviour
 
 	private float _timeSinceLastObstacle;
 	private float _timeSinceGameStarted;
+	//private float _timeMoveObstacle;
+	//private float periodMoveObstacle;
 
+	//private int initialX;
+
+	private GameObject gameObjGrid;
+	private Grid grid;
 
 	////////////////////////////////////////////////////
 	// Game object initialization.
 	////////////////////////////////////////////////////
 	void Start()
 	{
+		gameObjGrid = GameObject.FindGameObjectWithTag ("Grid");
+		grid = gameObjGrid.GetComponent< Grid > ();
+
 		_timeSinceLastObstacle = 0.0f;
 		_timeSinceGameStarted = 0.0f;
+		//_timeMoveObstacle = 0.0f;
+		//periodMoveObstacle = 1.0f;
+		//initialX = 29;
 	}
 
 
@@ -40,6 +52,7 @@ public class ObstacleManager : MonoBehaviour
 			_timeSinceLastObstacle = 0.0f;
 			CreateCrate();
 		}
+
 	}
 
 
