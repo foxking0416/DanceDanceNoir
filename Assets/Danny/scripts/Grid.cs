@@ -27,6 +27,10 @@ public class Grid : MonoBehaviour {
 			return false;
 	}
 
+	public int hasKeys(int x, int y){
+		return map [y * width + x];
+	}
+
 	public Vector3 computeCratePosition(int x, int y){
 		return new Vector3( 400 - 12 + 24.0f / 29.0f * x, 0 - 4.2f + y * 1.6f, -1);
 	}

@@ -10,8 +10,8 @@ GameObject:
   - 4: {fileID: 400000}
   - 114: {fileID: 11400000}
   m_Layer: 0
-  m_Name: obstacle_generator
-  m_TagString: Untagged
+  m_Name: keyGen
+  m_TagString: KeyGen
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23,7 +23,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 27.7566948, y: -33.7492065, z: -18.6658173}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -36,11 +36,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43d7aa588629c8e4d832b57d39132cd3, type: 3}
+  m_Script: {fileID: 11500000, guid: 6a479841cd17ff0458775a82a455376a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crate: {fileID: 100000, guid: 255896545041d6741904494d3dfcdd85, type: 2}
-  height: 0
+  key: {fileID: 100000, guid: 642bfef3300e84b4aaf3eee37a304974, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -30,9 +30,9 @@ TagManager:
   - Grid
   - Player1
   - Crate
-  - 
-  - 
-  - 
+  - HighCrateGen
+  - LowCrateGen
+  - KeyGen
   - 
   - 
   - 

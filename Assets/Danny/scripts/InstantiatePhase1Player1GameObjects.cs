@@ -13,6 +13,7 @@ public class InstantiatePhase1Player1GameObjects : MonoBehaviour
 	public GameObject obstacleManager;
 	public GameObject obstacleGenerator;
 	public GameObject gameObjGrid;
+	public GameObject keyGenerator;
 
 	private Vector3 basePosition;
 	////////////////////////////////////////////////////
@@ -48,6 +49,8 @@ public class InstantiatePhase1Player1GameObjects : MonoBehaviour
 		highCrate.tag = "HighCrateGen";
 		ObstacleGenerator highCrateObj = highCrate.GetComponent< ObstacleGenerator > ();
 		highCrateObj.height = 2;
+
+		Instantiate( keyGenerator, new Vector3(0,0,0), transform.rotation );
 	}
 
 

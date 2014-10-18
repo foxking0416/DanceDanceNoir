@@ -16,6 +16,7 @@ public class Character2Script : MonoBehaviour {
 	private GameObject gameObjPhase1;
 	private GameObject objTextEvidence;
 	private Phase1 phase1;
+	private GlobalScript global;
 
 	int positionX;
 	int positionZ;
@@ -34,6 +35,7 @@ public class Character2Script : MonoBehaviour {
 	
 		gameObjPhase1 = GameObject.Find("Phase1");
 		phase1 = gameObjPhase1.GetComponent< Phase1 > ();
+		global = gameObjPhase1.GetComponent<GlobalScript> ();
 		width = map.GetMapSize ();
 
 		positionX = 10;

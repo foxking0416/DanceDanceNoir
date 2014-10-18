@@ -9,7 +9,7 @@ public class PlayerOne : MonoBehaviour
 	// Game object members.
 	////////////////////////////////////////////////////
 
-
+	private GameObject gameObjPhase1;
 
 	// Player states.
 	private bool isColliding;
@@ -36,12 +36,18 @@ public class PlayerOne : MonoBehaviour
 	public int playerPositionDiscreteY;
 	private GameObject gameObjGrid;
 	private Grid grid;
+	private Phase1 phase1;
+	private GlobalScript global;
 
 	////////////////////////////////////////////////////
 	// Game object initialization.
 	////////////////////////////////////////////////////
 	void Start()
 	{
+		gameObjPhase1 = GameObject.Find("Phase1");
+		phase1 = gameObjPhase1.GetComponent< Phase1 > ();
+		global = gameObjPhase1.GetComponent<GlobalScript> ();
+
 		gameObjGrid = GameObject.FindGameObjectWithTag ("Grid");
 		grid = gameObjGrid.GetComponent< Grid > ();
 
@@ -112,6 +118,11 @@ public class PlayerOne : MonoBehaviour
 		}
 		if (keyGenBeatCount > 4) {
 			keyGenBeatCount = 0;	
+			GameObject gameObjKeyGen = GameObject.FindGameObjectWithTag("KeyGen");
+			KeyGenerate keyGen = gameObjKeyGen.GetComponent<KeyGenerate>();
+			keyGen.createKey();
+			//grid.setObjectInGrid (29, 1, 1);
+			//GameObject objKey = Instantiate( crate, grid.computeCratePosition(29, 2), transform.rotation ) as GameObject; 
 		}
 
 
@@ -165,6 +176,11 @@ public class PlayerOne : MonoBehaviour
 			isSliding = false;
 		}
 
+		int keyStatus = grid.hasKeys (playerPositionDiscreteX, playerPositionDiscreteY);
+		if (keyStatus == 0 || keyStatus == 1 || keyStatus == 2 || keyStatus == 3 || keyStatus == 4) {
+			global.holdKeyStatus = keyStatus;
+					
+		}
 	}
 
 	private void pushBack(){
