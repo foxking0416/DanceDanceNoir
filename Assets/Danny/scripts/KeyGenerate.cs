@@ -73,10 +73,12 @@ public class KeyGenerate : MonoBehaviour {
 			break;
 		}
 
-		grid.setObjectInGrid (29, 2, keyColor);
+		int grid_width = grid.getWidth();
+
+		grid.setObjectInGrid ( grid_width - 1, 2, keyColor);
 
 		Key keyScript = objKey.GetComponent<Key> ();
-		keyScript.keyPositionDiscreteX = 29;
+		keyScript.keyPositionDiscreteX = grid_width - 1;
 		keyScript.keyPositionDiscreteY = 2;
 		keyScript.keyColor = keyColor;
 		keyScript.SetColor (keyColor);
