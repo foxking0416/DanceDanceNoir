@@ -26,19 +26,29 @@ public class ObstacleGenerator : MonoBehaviour
 		if (height == 2) {
 			grid.setObjectInGrid (29, 2, 1);
 			grid.setObjectInGrid (29, 1, 1);
-			GameObject objCrate = Instantiate( crate, grid.computeCratePosition(29, 2), transform.rotation ) as GameObject;
-			objCrate.tag = "Crate";
-			TranslateLeftAtConstantSpeed translateScript = objCrate.GetComponent< TranslateLeftAtConstantSpeed >();
-			translateScript.obstacleInitialX = 29;
-			translateScript.obstacleInitialY = 2;
+			GameObject objCrate1 = Instantiate( crate, grid.computeCratePosition(29, 2), transform.rotation ) as GameObject;
+			GameObject objCrate2 = Instantiate( crate, grid.computeCratePosition(29, 1), transform.rotation ) as GameObject;
+			objCrate1.tag = "Crate";
+			objCrate2.tag = "Crate";
+			TranslateLeftAtConstantSpeed translateScript1 = objCrate1.GetComponent< TranslateLeftAtConstantSpeed >();
+			TranslateLeftAtConstantSpeed translateScript2 = objCrate2.GetComponent< TranslateLeftAtConstantSpeed >();
+			translateScript1.obstaclePositionDiscreteX = 29;
+			translateScript1.obstaclePositionDiscreteY = 2;
+			translateScript2.obstaclePositionDiscreteX = 29;
+			translateScript2.obstaclePositionDiscreteY = 1;
 		} else if (height == 0) {
 			grid.setObjectInGrid (29, 1, 1);
 			grid.setObjectInGrid (29, 0, 1);
-			GameObject objCrate = Instantiate( crate, grid.computeCratePosition(29, 0), transform.rotation ) as GameObject;
-			objCrate.tag = "Crate";
-			TranslateLeftAtConstantSpeed translateScript = objCrate.GetComponent< TranslateLeftAtConstantSpeed >();
-			translateScript.obstacleInitialX = 29;
-			translateScript.obstacleInitialY = 0;
+			GameObject objCrate1 = Instantiate( crate, grid.computeCratePosition(29, 0), transform.rotation ) as GameObject;
+			GameObject objCrate2 = Instantiate( crate, grid.computeCratePosition(29, 1), transform.rotation ) as GameObject;
+			objCrate1.tag = "Crate";
+			objCrate2.tag = "Crate";
+			TranslateLeftAtConstantSpeed translateScript1 = objCrate1.GetComponent< TranslateLeftAtConstantSpeed >();
+			TranslateLeftAtConstantSpeed translateScript2 = objCrate2.GetComponent< TranslateLeftAtConstantSpeed >();
+			translateScript1.obstaclePositionDiscreteX = 29;
+			translateScript1.obstaclePositionDiscreteY = 0;
+			translateScript2.obstaclePositionDiscreteX = 29;
+			translateScript2.obstaclePositionDiscreteY = 1;
 		}
 
 	}

@@ -28,11 +28,7 @@ public class ObstacleManager : MonoBehaviour
 		gameObjGrid = GameObject.FindGameObjectWithTag ("Grid");
 		grid = gameObjGrid.GetComponent< Grid > ();
 
-		_timeSinceLastObstacle = 0.0f;
-		_timeSinceGameStarted = 0.0f;
-		//_timeMoveObstacle = 0.0f;
-		//periodMoveObstacle = 1.0f;
-		//initialX = 29;
+
 	}
 
 
@@ -41,18 +37,9 @@ public class ObstacleManager : MonoBehaviour
 	////////////////////////////////////////////////////
 	void Update()
 	{
-		_timeSinceLastObstacle += Time.deltaTime;
 
-		if ( _timeSinceGameStarted < timeUntilFirstObject ) {
-			_timeSinceGameStarted += Time.deltaTime;
-		}
-
-		if ( ( _timeSinceLastObstacle >= secondsBetweenObstacles ) &&
-		     ( _timeSinceGameStarted >= timeUntilFirstObject ) ) {
-			_timeSinceLastObstacle = 0.0f;
+		if (Input.GetKeyDown (KeyCode.Alpha1))
 			CreateCrate();
-		}
-
 	}
 
 
@@ -62,12 +49,14 @@ public class ObstacleManager : MonoBehaviour
 	////////////////////////////////////////////////////
 	private void CreateCrate()
 	{
-		var obstacleGeneratorList = FindObjectsOfType( typeof( ObstacleGenerator ) );
+		/*var obstacleGeneratorList = FindObjectsOfType( typeof( ObstacleGenerator ) );
 		if ( obstacleGeneratorList.Length == 0 ) {
 			return;
 		}
 		var anObstacleGenerator = ( ObstacleGenerator )obstacleGeneratorList[Random.Range( 0, obstacleGeneratorList.Length )];
 
-		anObstacleGenerator.CreateCrate();
+		anObstacleGenerator.CreateCrate();*/
 	}
+
+
 }

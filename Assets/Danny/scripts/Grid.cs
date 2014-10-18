@@ -28,10 +28,10 @@ public class Grid : MonoBehaviour {
 	}
 
 	public Vector3 computeCratePosition(int x, int y){
-		return new Vector3( 400 - 12 + 24.0f / 29.0f * x, 0 - 4.4f + y * 0.9f, -1);
+		return new Vector3( 400 - 12 + 24.0f / 29.0f * x, 0 - 4.2f + y * 1.6f, -1);
 	}
 
 	public Vector3 computePlayerPosition(int x, int y){
-		return new Vector3( 400 - 12 + 24.0f / 29.0f * x, 0 - 4.0f + y * 0.9f, -1);
+		return new Vector3( 400 - 12 + 24.0f / 29.0f * x, 0 - 4.0f + y * 1.6f, -1);
 	}
 }

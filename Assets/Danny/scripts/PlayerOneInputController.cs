@@ -23,7 +23,7 @@ public class PlayerOneInputController : MonoBehaviour
 	// Called once per frame of gameplay.
 	////////////////////////////////////////////////////
 	void Update()
-	{
+	{/*
 		if ( Input.GetKeyDown( KeyCode.UpArrow ) ) {
 			Debug.Log( "Player 1 jump." );
 			player.jump();
@@ -35,6 +35,6 @@ public class PlayerOneInputController : MonoBehaviour
 		else if ( Input.GetKeyDown( KeyCode.RightArrow ) ) {
 			Debug.Log( "Player 1 sprint." );
 			player.sprint();
-		}
+		}*/
 	}
 }

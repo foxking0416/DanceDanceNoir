@@ -7,6 +7,9 @@ public class GlobalScript : MonoBehaviour {
 	public int superEnergy;
 
 
+	public int holdKeyStatus;
+	public int openCabinetStatus;
+
 	// Use this for initialization
 	void Start () {
 		collectedEvidence = 0;
