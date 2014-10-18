@@ -2046,7 +2046,6 @@ MonoBehaviour:
   collectedEvidence: 0
   superEnergy: 0
   holdKeyStatus: 0
-  openCabinetStatus: 0
 --- !u!4 &836956548
 Transform:
   m_ObjectHideFlags: 0

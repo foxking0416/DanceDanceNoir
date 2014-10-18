@@ -287,61 +287,76 @@ public class Character2Script : MonoBehaviour {
 	}
 	
 	public void OpenCabinet(){
-		if(holdKeyStatus == 31 && CheckAround(positionX, positionZ, 21)){
+		if(global.holdKeyStatus == 31 && CheckAround(positionX, positionZ, 21)){
+		//if(holdKeyStatus == 31 && CheckAround(positionX, positionZ, 21)){
 			GameObject objCabinetBlue = GameObject.FindGameObjectWithTag ("BlueCabinet");
 			CabinetScript cabinetBlue = objCabinetBlue.GetComponent<CabinetScript> ();
 			cabinetBlue.OpenCabinet ();
-			holdKeyStatus = 0;
+			//holdKeyStatus = 0;
+			global.holdKeyStatus = 0;
+			global.CollectEvidence(31);
 			phase1.numberOfCollectedEvidence++;
 			AudioSource.PlayClipAtPoint (audioOpenCase, gameObject.transform.position);
 			Debug.Log("Open Blue Cabinet");
 		}
-		else if(holdKeyStatus == 32 && CheckAround(positionX, positionZ, 22)){
+		else if(global.holdKeyStatus == 32 && CheckAround(positionX, positionZ, 22)){
+		//else if(holdKeyStatus == 32 && CheckAround(positionX, positionZ, 22)){
 			GameObject objCabinetYellow = GameObject.FindGameObjectWithTag ("YellowCabinet");
 			CabinetScript cabinetYellow = objCabinetYellow.GetComponent<CabinetScript> ();
 			cabinetYellow.OpenCabinet ();
-			holdKeyStatus = 0;
+			//holdKeyStatus = 0;
+			global.holdKeyStatus = 0;
+			global.CollectEvidence(32);
 			phase1.numberOfCollectedEvidence++;
 			AudioSource.PlayClipAtPoint (audioOpenCase, gameObject.transform.position);
 			Debug.Log("Open Yellow Cabinet");
 		}
-		else if(holdKeyStatus == 33 && CheckAround(positionX, positionZ, 23)){
+		else if(global.holdKeyStatus == 33 && CheckAround(positionX, positionZ, 23)){
+		//else if(holdKeyStatus == 33 && CheckAround(positionX, positionZ, 23)){
 			GameObject objCabinetRed = GameObject.FindGameObjectWithTag ("RedCabinet");
 			CabinetScript cabinetRed = objCabinetRed.GetComponent<CabinetScript> ();
 			cabinetRed.OpenCabinet ();
-			holdKeyStatus = 0;
+			//holdKeyStatus = 0;
+			global.holdKeyStatus = 0;
+			global.CollectEvidence(33);
 			phase1.numberOfCollectedEvidence++;
 			AudioSource.PlayClipAtPoint (audioOpenCase, gameObject.transform.position);
 			Debug.Log("Open Red Cabinet");
 		}
-		else if(holdKeyStatus == 34 && CheckAround(positionX, positionZ, 24)){
+		else if(global.holdKeyStatus == 34 && CheckAround(positionX, positionZ, 24)){
+		//else if(holdKeyStatus == 34 && CheckAround(positionX, positionZ, 24)){
 			GameObject objCabinetGreen = GameObject.FindGameObjectWithTag ("GreenCabinet");
 			CabinetScript cabinetGreen = objCabinetGreen.GetComponent<CabinetScript> ();
 			cabinetGreen.OpenCabinet ();
-			holdKeyStatus = 0;
+			//holdKeyStatus = 0;
+			global.holdKeyStatus = 0;
+			global.CollectEvidence(34);
 			phase1.numberOfCollectedEvidence++;
 			AudioSource.PlayClipAtPoint (audioOpenCase, gameObject.transform.position);
 			Debug.Log("Open Green Cabinet");
 		}
-		else if(holdKeyStatus == 35 && CheckAround(positionX, positionZ, 25)){
+		else if(global.holdKeyStatus == 35 && CheckAround(positionX, positionZ, 25)){
+		//else if(holdKeyStatus == 35 && CheckAround(positionX, positionZ, 25)){
 			GameObject objCabinetOrange = GameObject.FindGameObjectWithTag ("OrangeCabinet");
 			CabinetScript cabinetOrange = objCabinetOrange.GetComponent<CabinetScript> ();
 			cabinetOrange.OpenCabinet ();
-			holdKeyStatus = 0;
+			//holdKeyStatus = 0;
+			global.holdKeyStatus = 0;
+			global.CollectEvidence(35);
 			phase1.numberOfCollectedEvidence++;
 			AudioSource.PlayClipAtPoint (audioOpenCase, gameObject.transform.position);
 			Debug.Log("Open Orange Cabinet");
 		}
 	}
 	
-	void CollectEvidence(int objectType){
+	/*void CollectEvidence(int objectType){
 		if (objectType == 3) {
 			Debug.Log ("Collect the evidence");
 			GameObject objEvidence = GameObject.FindGameObjectWithTag ("Evidence");
 			EvidenceScript evidence = objEvidence.GetComponent<EvidenceScript> ();
 			evidence.Collect ();
 		}
-	}
+	}*/
 	
 	public void PickUpSuperEnergy(){
 		if (globalObjectType == 2) {

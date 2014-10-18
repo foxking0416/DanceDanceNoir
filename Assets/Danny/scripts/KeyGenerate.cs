@@ -4,11 +4,15 @@ using System.Collections;
 public class KeyGenerate : MonoBehaviour {
 
 	public GameObject key;
+	private GameObject gameObjPhase1;
 	private GameObject gameObjGrid;
+	private GlobalScript global;
 	private Grid grid;
 
 	// Use this for initialization
 	void Start () {
+		gameObjPhase1 = GameObject.Find("Phase1");
+		global = gameObjPhase1.GetComponent<GlobalScript> ();
 		gameObjGrid = GameObject.FindGameObjectWithTag ("Grid");
 		grid = gameObjGrid.GetComponent< Grid > ();
 	}
@@ -19,6 +23,62 @@ public class KeyGenerate : MonoBehaviour {
 	}
 
 	public void createKey(){
+
+		int keyColor = 0;
+
+		bool iter = true;
+		while(iter){
+			iter = false;
+			keyColor = Random.Range (31, 36);
+
+			GameObject objKeyBlue = GameObject.FindGameObjectWithTag("BlueKey");
+			if(objKeyBlue != null && keyColor == 31)
+				iter = true;
+			GameObject objKeyYellow = GameObject.FindGameObjectWithTag("YellowKey");
+			if(objKeyYellow != null && keyColor == 32)
+				iter = true;
+			GameObject objKeyRed = GameObject.FindGameObjectWithTag("RedKey");
+			if(objKeyRed != null && keyColor == 33)
+				iter = true;
+			GameObject objKeyGreen = GameObject.FindGameObjectWithTag("GreenKey");
+			if(objKeyGreen != null && keyColor == 34)
+				iter = true;
+			GameObject objKeyOrange = GameObject.FindGameObjectWithTag("OrangeKey");
+			if(objKeyOrange != null && keyColor == 35)
+				iter = true;
+
+			if(objKeyBlue != null && objKeyYellow != null && objKeyRed != null && objKeyGreen != null && objKeyOrange != null)
+				return;
+		}
+
+
+
+
 		GameObject objKey = Instantiate( key, grid.computeCratePosition(29, 2), transform.rotation ) as GameObject;
+		switch (keyColor) {
+		case 31:
+			objKey.tag = "BlueKey";
+			break;
+		case 32:
+			objKey.tag = "YellowKey";
+			break;
+		case 33:
+			objKey.tag = "RedKey";
+			break;
+		case 34:
+			objKey.tag = "GreenKey";
+			break;
+		case 35:
+			objKey.tag = "OrangeKey";
+			break;
+		}
+
+		grid.setObjectInGrid (29, 2, keyColor);
+
+		Key keyScript = objKey.GetComponent<Key> ();
+		keyScript.keyPositionDiscreteX = 29;
+		keyScript.keyPositionDiscreteY = 2;
+		keyScript.keyColor = keyColor;
+		keyScript.SetColor (keyColor);
 	}
 }

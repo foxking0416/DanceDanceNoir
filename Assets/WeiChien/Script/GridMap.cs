@@ -79,11 +79,11 @@ public class GridMap : MonoBehaviour {
 		UpdateObjectsStatus ( 14,  10, 25);//orange cabinet
 		
 		
-		UpdateObjectsStatus ( 5,  3, 31);//blue key
+		/*UpdateObjectsStatus ( 5,  3, 31);//blue key
 		UpdateObjectsStatus ( 3, 16, 32);//yellow key
 		UpdateObjectsStatus (18,  4, 33);//red key
 		UpdateObjectsStatus (19, 18, 34);//green key
-		UpdateObjectsStatus (10, 20, 35);//orange key
+		UpdateObjectsStatus (10, 20, 35);//orange key*/
 
 
 		gameObject.transform.position = new Vector3 ((float)width / 2 * 5.0f, 0.0f, (float)width / 2 * 5.0f);

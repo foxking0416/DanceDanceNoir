@@ -197,8 +197,8 @@ public class Phase1 : MonoBehaviour {
 			else {
 				isToClear = true;
 				signal1 = (int)Action.None;
-				if (player1 != null)
-					player1.trigger(signal1);
+				//if (player1 != null)
+					//player1.trigger(signal1);
 			}
 			
 			isToClear = true;

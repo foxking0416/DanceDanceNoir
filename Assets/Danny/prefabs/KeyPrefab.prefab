@@ -14,7 +14,7 @@ GameObject:
   - 114: {fileID: 11400000}
   m_Layer: 0
   m_Name: KeyPrefab
-  m_TagString: Untagged
+  m_TagString: Key
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -71,6 +71,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keyPositionDiscreteX: 0
   keyPositionDiscreteY: 0
+  keyColor: 0
+  materialBlue: {fileID: 2100000, guid: f788c2178a088604f8cdf95c7a5920f0, type: 2}
+  materialYellow: {fileID: 2100000, guid: ca8deffa53e11e24b8ed8796c9a04b63, type: 2}
+  materialRed: {fileID: 2100000, guid: 60c6b9ac68bc2374d9e5f3d51443c3e6, type: 2}
+  materialGreen: {fileID: 2100000, guid: a988abe8aa9e829478914973726b2699, type: 2}
+  materialOrange: {fileID: 2100000, guid: d08a2a44a26a8d84d85a7336941b05ec, type: 2}
 --- !u!135 &13500000
 SphereCollider:
   m_ObjectHideFlags: 1

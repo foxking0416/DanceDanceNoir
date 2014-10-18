@@ -23,7 +23,7 @@ public class PlayerOne : MonoBehaviour
 
 	// Temporary variables used for development and testing.
 	private int generateObstaclePeriod;
-	private int generateObstaclePeriodMax = 9;
+	private int generateObstaclePeriodMax = 20;
 	private int generateObstaclePeriodMin = 6;
 	private int jumpBeat = 0;
 	private int slideBeat = 0;
@@ -101,6 +101,8 @@ public class PlayerOne : MonoBehaviour
 
 		obsGenBeatCount++;
 		keyGenBeatCount++;
+
+		//Generate objstacles every certain beat
 		if(obsGenBeatCount > generateObstaclePeriod){
 			generateObstaclePeriod = (int)Random.Range (generateObstaclePeriodMin, generateObstaclePeriodMax);
 			obsGenBeatCount = 0;
@@ -116,24 +118,68 @@ public class PlayerOne : MonoBehaviour
 			ObstacleGenerator obsGen = gameObjCrate.GetComponent<ObstacleGenerator>();
 			obsGen.CreateCrate();
 		}
-		if (keyGenBeatCount > 4) {
-			keyGenBeatCount = 0;	
-			GameObject gameObjKeyGen = GameObject.FindGameObjectWithTag("KeyGen");
-			KeyGenerate keyGen = gameObjKeyGen.GetComponent<KeyGenerate>();
-			keyGen.createKey();
-			//grid.setObjectInGrid (29, 1, 1);
-			//GameObject objKey = Instantiate( crate, grid.computeCratePosition(29, 2), transform.rotation ) as GameObject; 
+
+		//Generate ket every certain beat
+		if (keyGenBeatCount > 2) {
+			if(grid.hasObstacle(29,2) != true){
+
+				keyGenBeatCount = 0;	
+				GameObject gameObjKeyGen = GameObject.FindGameObjectWithTag("KeyGen");
+				KeyGenerate keyGen = gameObjKeyGen.GetComponent<KeyGenerate>();
+				keyGen.createKey();
+			}
 		}
 
 
-		if (actionType == 1) {
+		//Move all the keys in the current scene
+		GameObject objKeyBlue = GameObject.FindGameObjectWithTag("BlueKey");
+		if (objKeyBlue != null) {
+			Key keyBlue = objKeyBlue.GetComponent<Key>();
+			keyBlue.MoveKey();
+		}
+
+		GameObject objKeyYellow = GameObject.FindGameObjectWithTag("YellowKey");
+		if (objKeyYellow != null) {
+			Key keyYellow = objKeyYellow.GetComponent<Key>();
+			keyYellow.MoveKey();
+		}
+
+		GameObject objKeyRed = GameObject.FindGameObjectWithTag("RedKey");
+		if (objKeyRed != null) {
+			Key keyRed = objKeyRed.GetComponent<Key>();
+			keyRed.MoveKey();
+		}
+
+		GameObject objKeyGreen = GameObject.FindGameObjectWithTag("GreenKey");
+		if (objKeyGreen != null) {
+			Key keyGreen = objKeyGreen.GetComponent<Key>();
+			keyGreen.MoveKey();
+		}
+
+		GameObject objKeyOrange = GameObject.FindGameObjectWithTag("OrangeKey");
+		if (objKeyOrange != null) {
+			Key keyOrange = objKeyOrange.GetComponent<Key>();
+			keyOrange.MoveKey();
+		}
+		
+		//Action: Sprint
+		if(actionType == 1) {
+			if( !isSliding && !isUping && !isFalling && !isJumping 
+			   && grid.hasObstacle(playerPositionDiscreteX+1, playerPositionDiscreteY) == false){
+				sprint();	
+			}	
+		}
+
+		//Action: Jump
+		if (actionType == 2) {
 			if(!isSliding && !isUping && !isFalling && !isJumping ){
 				isJumping = true;
 				jump();
 			}	
 		}
 
-		if(actionType == 2) {
+		//Action: Slide
+		if(actionType == 3) {
 			if( !isSliding && !isUping && !isFalling && !isJumping ){
 				isSliding = true;
 				slide();
@@ -141,14 +187,9 @@ public class PlayerOne : MonoBehaviour
 			}	
 		}
 
-		if(actionType == 3) {
-			if( !isSliding && !isUping && !isFalling && !isJumping 
-			   && grid.hasObstacle(playerPositionDiscreteX+1, playerPositionDiscreteY) == false){
-				sprint();	
-			}	
-		}
 
 
+		//Move all the crates every beat
 		GameObject[] crates = GameObject.FindGameObjectsWithTag("Crate");
 		foreach(GameObject obj in crates){
 			TranslateLeftAtConstantSpeed crate = obj.GetComponent<TranslateLeftAtConstantSpeed>();
@@ -176,15 +217,40 @@ public class PlayerOne : MonoBehaviour
 			isSliding = false;
 		}
 
+		//If player collide with keys, then collect the key
 		int keyStatus = grid.hasKeys (playerPositionDiscreteX, playerPositionDiscreteY);
-		if (keyStatus == 0 || keyStatus == 1 || keyStatus == 2 || keyStatus == 3 || keyStatus == 4) {
+		switch (keyStatus) {
+		case 31:
+			Key keyBlue = objKeyBlue.GetComponent<Key>();
+			keyBlue.Pick();
 			global.holdKeyStatus = keyStatus;
-					
+			break;
+		case 32:
+			Key keyYellow = objKeyYellow.GetComponent<Key>();
+			keyYellow.Pick();
+			global.holdKeyStatus = keyStatus;
+			break;
+		case 33:
+			Key keyRed = objKeyRed.GetComponent<Key>();
+			keyRed.Pick();
+			global.holdKeyStatus = keyStatus;
+			break;
+		case 34:
+			Key keyGreen = objKeyGreen.GetComponent<Key>();
+			keyGreen.Pick();
+			global.holdKeyStatus = keyStatus;
+			break;
+		case 35:
+			Key keyOrange = objKeyOrange.GetComponent<Key>();
+			keyOrange.Pick();
+			global.holdKeyStatus = keyStatus;
+			break;
 		}
+
 	}
 
 	private void pushBack(){
-		grid.setObjectInGrid (playerPositionDiscreteX, playerPositionDiscreteY, -1);
+		//grid.setObjectInGrid (playerPositionDiscreteX, playerPositionDiscreteY, -1);
 
 		playerPositionDiscreteX--;
 		if (playerPositionDiscreteX < 0) {
@@ -192,7 +258,7 @@ public class PlayerOne : MonoBehaviour
 			Destroy (gameObject);
 		} 
 		else {
-			grid.setObjectInGrid (playerPositionDiscreteX, playerPositionDiscreteY, 0);
+			//grid.setObjectInGrid (playerPositionDiscreteX, playerPositionDiscreteY, 0);
 			transform.position = grid.computePlayerPosition (playerPositionDiscreteX, playerPositionDiscreteY);
 		}
 
@@ -201,37 +267,34 @@ public class PlayerOne : MonoBehaviour
 	// Player should jump.
 	////////////////////////////////////////////////////
 	private void jump(){
-		grid.setObjectInGrid (playerPositionDiscreteX, playerPositionDiscreteY, -1);
+		//grid.setObjectInGrid (playerPositionDiscreteX, playerPositionDiscreteY, -1);
 		playerPositionDiscreteY++;
-		grid.setObjectInGrid (playerPositionDiscreteX, playerPositionDiscreteY, 0);
+		//grid.setObjectInGrid (playerPositionDiscreteX, playerPositionDiscreteY, 0);
 		transform.position = grid.computePlayerPosition (playerPositionDiscreteX, playerPositionDiscreteY);
-
-		//transform.Translate( new Vector3( 0.0f, computePositionY(1), 0.0f ) );
 	}
 
 	private void jumpFall(){
-		grid.setObjectInGrid (playerPositionDiscreteX, playerPositionDiscreteY, -1);
+		//grid.setObjectInGrid (playerPositionDiscreteX, playerPositionDiscreteY, -1);
 		playerPositionDiscreteY--;
-		grid.setObjectInGrid (playerPositionDiscreteX, playerPositionDiscreteY, 0);
+		//grid.setObjectInGrid (playerPositionDiscreteX, playerPositionDiscreteY, 0);
 		transform.position = grid.computePlayerPosition (playerPositionDiscreteX, playerPositionDiscreteY);
-		//transform.Translate( new Vector3( 0.0f, -computePositionY(1), 0.0f ) );
 	}
 
 	////////////////////////////////////////////////////
 	// Player should slide.
 	////////////////////////////////////////////////////
 	private void slide(){
-		grid.setObjectInGrid (playerPositionDiscreteX, playerPositionDiscreteY, -1);
+		//grid.setObjectInGrid (playerPositionDiscreteX, playerPositionDiscreteY, -1);
 		playerPositionDiscreteY--;
-		grid.setObjectInGrid (playerPositionDiscreteX, playerPositionDiscreteY, 0);
+		//grid.setObjectInGrid (playerPositionDiscreteX, playerPositionDiscreteY, 0);
 		transform.position = grid.computePlayerPosition (playerPositionDiscreteX, playerPositionDiscreteY);
 
 	}
 
 	private void slideUp(){
-		grid.setObjectInGrid (playerPositionDiscreteX, playerPositionDiscreteY, -1);
+		//grid.setObjectInGrid (playerPositionDiscreteX, playerPositionDiscreteY, -1);
 		playerPositionDiscreteY++;
-		grid.setObjectInGrid (playerPositionDiscreteX, playerPositionDiscreteY, 0);
+		//grid.setObjectInGrid (playerPositionDiscreteX, playerPositionDiscreteY, 0);
 		transform.position = grid.computePlayerPosition (playerPositionDiscreteX, playerPositionDiscreteY);
 
 	}
@@ -241,9 +304,9 @@ public class PlayerOne : MonoBehaviour
 	// Player should sprint.
 	////////////////////////////////////////////////////
 	private void sprint(){
-		grid.setObjectInGrid (playerPositionDiscreteX, playerPositionDiscreteY, -1);
+		//grid.setObjectInGrid (playerPositionDiscreteX, playerPositionDiscreteY, -1);
 		playerPositionDiscreteX++;
-		grid.setObjectInGrid (playerPositionDiscreteX, playerPositionDiscreteY, 0);
+		//grid.setObjectInGrid (playerPositionDiscreteX, playerPositionDiscreteY, 0);
 		transform.position = grid.computePlayerPosition (playerPositionDiscreteX, playerPositionDiscreteY);
 	}
 	

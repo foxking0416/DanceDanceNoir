@@ -8,10 +8,11 @@ public class GlobalScript : MonoBehaviour {
 
 
 	public int holdKeyStatus;
-	public int openCabinetStatus;
+	public ArrayList openCabinetStatus;
 
 	// Use this for initialization
 	void Start () {
+		openCabinetStatus = new ArrayList ();
 		collectedEvidence = 0;
 	}
 	
@@ -20,9 +21,18 @@ public class GlobalScript : MonoBehaviour {
 	
 	}
 
-	public void CollectEvidence(){
-		collectedEvidence++;
+	public bool CompareColor(int color){
+		for (int i = 0; i < openCabinetStatus.Count; ++i) {
+			if(color == (int)openCabinetStatus[i])
+				return true;
+		}
 
+		return false;
+	}
+
+	public void CollectEvidence(int color){
+		collectedEvidence++;
+		openCabinetStatus.Add (color);
 		if(collectedEvidence == 5)
 			Application.LoadLevel("Phase2Scene");//Win
 	}
