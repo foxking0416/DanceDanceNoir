@@ -36,30 +36,34 @@ public class MusicNote : MonoBehaviour {
 			if (gameObject.renderer.material != blinnOrange)
 				gameObject.renderer.material = blinnOrange;
 
-			phase1 = GameObject.Find("Phase1").GetComponent<Phase1>();
+//			phase1 = GameObject.Find("Phase1").GetComponent<Phase1>();
+//
+//
+//			if (player1 == null)
+//				player1 = (PlayerOne)FindObjectOfType (typeof(PlayerOne));
 
-
-			if (player1 == null)
-				player1 = (PlayerOne)FindObjectOfType (typeof(PlayerOne));
-
-			if (gameObject.tag == "P1P1Note")
-			{
-				if (phase1.player1KeyPressDetection())
-				{
-					if (player1 != null)
-						player1.trigger(PlayerPrefs.GetInt ("Signal1"));
-					Destroy (gameObject);
-					//Debug.Log(PlayerPrefs.GetInt ("Signal1").ToString());
-				}
-			}
-			if (gameObject.tag == "P1P2Note")
-			{
-				if (phase1.player2KeyPressDetection())
-					Destroy(gameObject);
-			}
+//			if (gameObject.tag == "P1P1Note")
+//			{
+//				if (phase1.player1KeyPressDetection())
+//				{
+//					//if (player1 != null)
+//						//player1.trigger(PlayerPrefs.GetInt ("Signal1"));
+//					Destroy (gameObject);
+//					//Debug.Log(PlayerPrefs.GetInt ("Signal1").ToString());
+//				}
+//			}
+//			if (gameObject.tag == "P1P2Note")
+//			{
+//				if (phase1.player2KeyPressDetection())
+//					Destroy(gameObject);
+//			}
 		}
 	}
 
-
-
+	public bool inBeatingArea()
+	{
+		if (gameObject.transform.position.x < PlayerPrefs.GetFloat ("HittingPos") + hittingRange)
+			return true;
+		return false;
+	}
 }
