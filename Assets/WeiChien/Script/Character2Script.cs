@@ -174,8 +174,8 @@ public class Character2Script : MonoBehaviour {
 		ComputeObstructViewObject (positionX, positionZ);
 		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
 		gameObject.transform.localRotation = Quaternion.Euler (new Vector3 (0, 180, 0));
-		//player2Camera.transform.position = ComputeCameraPosition (positionX, 0, positionZ, player2Camera.transform.localRotation.eulerAngles.y);
-		player2Camera.transform.position = ComputeCameraPosition2 (positionX, 0, positionZ);
+		player2Camera.transform.position = ComputeCameraPosition (positionX, 0, positionZ, player2Camera.transform.localRotation.eulerAngles.y);
+		//player2Camera.transform.position = ComputeCameraPosition2 (positionX, 0, positionZ);
 	}
 
 	public void MoveLeft(){

@@ -49,7 +49,7 @@ Camera:
     height: .63499999
   near clip plane: .300000012
   far clip plane: 1000
-  field of view: 60
+  field of view: 95
   orthographic: 1
   orthographic size: 5
   m_Depth: 1
@@ -76,7 +76,7 @@ Behaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  m_Enabled: 0
+  m_Enabled: 1
 --- !u!124 &12400000
 Behaviour:
   m_ObjectHideFlags: 1
