@@ -133,7 +133,7 @@ public class PlayerOne : MonoBehaviour
 
 		//Generate ket every certain beat
 		if (keyGenBeatCount > 2) {
-			if(grid.hasObstacle(29,2) != true){
+			if(grid.hasObstacle(9,2) != true){
 
 				keyGenBeatCount = 0;	
 				GameObject gameObjKeyGen = GameObject.FindGameObjectWithTag("KeyGen");
