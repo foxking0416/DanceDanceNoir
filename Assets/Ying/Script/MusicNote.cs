@@ -27,6 +27,8 @@ public class MusicNote : MonoBehaviour {
 		{
 			if (gameObject.transform.position.x < PlayerPrefs.GetFloat("HittingPos"))
 			{
+				if (player1 == null)
+					player1 = (PlayerOne)FindObjectOfType (typeof(PlayerOne));
 				if (gameObject.tag == "P1P1Note" && player1 != null)
 					player1.trigger(0);
 				Destroy (gameObject);
