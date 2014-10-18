@@ -21,7 +21,7 @@ public class GlobalScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Color orange = new Vector4 (1, 0.8f, 0, 1);
+		/*Color orange = new Vector4 (1, 0.8f, 0, 1);
 		switch (holdKeyStatus) {
 		case 31:
 			gameObjTextStatus.guiText.text = "You are holding the Blue Key!";
@@ -47,7 +47,7 @@ public class GlobalScript : MonoBehaviour {
 			gameObjTextStatus.guiText.text = "You do not have any key on hand!";
 			gameObjTextStatus.guiText.color = Color.black;
 			break;
-		}
+		}*/
 		//gameObjTextStatus.guiText.
 
 	}
