@@ -95,7 +95,7 @@ public class PlayerOne : MonoBehaviour
 
 		obsGenBeatCount++;
 		keyGenBeatCount++;
-		if(obsGenBeatCount > 4){
+		if(obsGenBeatCount > generateObstaclePeriod){
 			generateObstaclePeriod = (int)Random.Range (generateObstaclePeriodMin, generateObstaclePeriodMax);
 			obsGenBeatCount = 0;
 
