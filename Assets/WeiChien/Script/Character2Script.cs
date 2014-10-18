@@ -42,6 +42,7 @@ public class Character2Script : MonoBehaviour {
 		positionZ = 6;
 		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
 
+		//player2Camera = Instantiate (gameObjCamera, ComputeCameraPosition2(positionX,5 ,positionZ), Quaternion.Euler (new Vector3 (0, 0, 0))) as GameObject;	
 		player2Camera = Instantiate (gameObjCamera, ComputeCameraPosition(positionX,0 ,positionZ, 45), Quaternion.Euler (new Vector3 (45, 45, 0))) as GameObject;	
 		player2Camera.camera.orthographicSize = 40;
 
@@ -137,6 +138,7 @@ public class Character2Script : MonoBehaviour {
 		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
 		gameObject.transform.localRotation = Quaternion.Euler (new Vector3 (0, 0, 0));
 		player2Camera.transform.position = ComputeCameraPosition(positionX,0 ,positionZ, player2Camera.transform.localRotation.eulerAngles.y);
+		//player2Camera.transform.position = ComputeCameraPosition2 (positionX, 0, positionZ);
 	}
 
 	public void MoveRight(){
@@ -154,6 +156,7 @@ public class Character2Script : MonoBehaviour {
 		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
 		gameObject.transform.localRotation = Quaternion.Euler (new Vector3 (0, 90, 0));
 		player2Camera.transform.position = ComputeCameraPosition (positionX, 0, positionZ, player2Camera.transform.localRotation.eulerAngles.y);
+		//player2Camera.transform.position = ComputeCameraPosition2 (positionX, 0, positionZ);
 	}
 
 	public void MoveDown(){
@@ -171,7 +174,8 @@ public class Character2Script : MonoBehaviour {
 		ComputeObstructViewObject (positionX, positionZ);
 		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
 		gameObject.transform.localRotation = Quaternion.Euler (new Vector3 (0, 180, 0));
-		player2Camera.transform.position = ComputeCameraPosition (positionX, 0, positionZ, player2Camera.transform.localRotation.eulerAngles.y);
+		//player2Camera.transform.position = ComputeCameraPosition (positionX, 0, positionZ, player2Camera.transform.localRotation.eulerAngles.y);
+		player2Camera.transform.position = ComputeCameraPosition2 (positionX, 0, positionZ);
 	}
 
 	public void MoveLeft(){
@@ -191,6 +195,7 @@ public class Character2Script : MonoBehaviour {
 		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
 		gameObject.transform.localRotation = Quaternion.Euler (new Vector3 (0, 270, 0));
 		player2Camera.transform.position = ComputeCameraPosition (positionX, 0, positionZ, player2Camera.transform.localRotation.eulerAngles.y);
+		//player2Camera.transform.position = ComputeCameraPosition2 (positionX, 0, positionZ);
 	}
 
 
@@ -200,6 +205,11 @@ public class Character2Script : MonoBehaviour {
 
 	Vector3 ComputePosition(int x, int y, int z){
 		Vector3 pos = new Vector3 (-2.5f + x * 5.0f, 0.0f, -2.5f + z * 5.0f);
+		return pos;
+	}
+
+	Vector3 ComputeCameraPosition2(int x, int y, int z){
+		Vector3 pos = new Vector3 (-2.5f + x * 5.0f, y, -2.5f + z * 5.0f);
 		return pos;
 	}
 

@@ -43,10 +43,10 @@ Camera:
   m_BackGroundColor: {r: .192156866, g: .301960796, b: .474509805, a: .0196078438}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
+    x: .00999999978
     y: .699999988
-    width: 1
-    height: .300000012
+    width: .980000019
+    height: .294999987
   near clip plane: .300000012
   far clip plane: 1000
   field of view: 60

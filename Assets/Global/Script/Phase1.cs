@@ -160,8 +160,8 @@ public class Phase1 : MonoBehaviour {
 			keySequence += " W";
 		}
 		else{
-			//if (player1 != null)
-			//	player1.trigger(0);
+			if (player1 != null)
+				player1.trigger(0);
 			//isToClear = true;
 			return false;
 		}
