@@ -15,6 +15,9 @@ public class Phase1 : MonoBehaviour {
 	string keySequence;
 	string[] actionPatterns;
 
+	int keyMiss2;
+	int maxKeyMiss2;
+
 	float noteStartX;
 	public GUITexture beatBarBg;
 	public Camera musicCamera;
@@ -67,6 +70,9 @@ public class Phase1 : MonoBehaviour {
 		actionPatterns = new string[3];
 		actionPatterns[0] = " A D D";	actionPatterns[1] = " A W D";	actionPatterns[2] = " A S D";
 
+		keyMiss2 = 0;
+		maxKeyMiss2 = 10;
+
 		player2 = GameObject.FindGameObjectWithTag ("Player2").GetComponent<Character2Script>();
 		//player1 = GameObject.Find ("player_one(Clone)").GetComponent<PlayerOne> ();
 
@@ -89,10 +95,7 @@ public class Phase1 : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
 		//AnalyzeSound();
-
-
 		if (timing-- <= 0)
 		{
 			timing = noteSpwanDuration;
@@ -110,6 +113,55 @@ public class Phase1 : MonoBehaviour {
 
 		if(	numberOfCollectedEvidence >= 5)
 			Application.LoadLevel("Phase2SceneV1");//Win
+
+
+		MusicNote[] notes = FindObjectsOfType(typeof(MusicNote))as MusicNote[];
+		MusicNote note1 = null;
+		MusicNote note2 = null;
+		
+		foreach (MusicNote n in notes)
+		{
+			if (n.inBeatingArea())
+			{
+				if (n.tag == "P1P1Note")
+					note1 = n;
+				else if (n.tag == "P1P2Note")
+					note2 = n;
+			}
+		}
+
+		//player one input dectection
+		if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.D))
+		{
+			if (note1 != null)
+			{
+				if (player1KeyPressDetection())
+				{
+					if (player1 == null)
+						player1 = (PlayerOne)FindObjectOfType (typeof(PlayerOne));
+					if (player1 != null)
+						player1.trigger(PlayerPrefs.GetInt ("Signal1"));
+					Destroy(note1.gameObject);
+				}
+			}
+		}
+		//player two input detection
+		if (Input.GetKeyDown(KeyCode.UpArrow) ||  Input.GetKeyDown(KeyCode.DownArrow)||  Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow)|| Input.GetKeyDown(KeyCode.K) || Input.GetKeyDown(KeyCode.U))
+		{
+			if (note2 == null)
+			{
+				if(++keyMiss2 >= maxKeyMiss2)
+				{
+					keyMiss2  = 0;
+					generateObstacle1();
+				}
+			}
+			else
+			{
+				if (player2KeyPressDetection())
+					Destroy(note2.gameObject);
+			}
+		}
 	}
 
 	void preGenerateMusicNote()
@@ -132,6 +184,20 @@ public class Phase1 : MonoBehaviour {
 		GameObject p2 = Instantiate(notetoSpwan, new Vector3(posX, 0.0f, 51.95f), 
 		                            Quaternion.Euler(new Vector3(0.0f, 90.0f, 90.0f))) as GameObject;
 		p2.tag = "P1P2Note";
+	}
+
+	void generateObstacle1()
+	{
+		float randValue = Random.Range(0, 2);
+		GameObject gameObjCrate;
+		if(randValue < 1){
+			gameObjCrate = GameObject.FindGameObjectWithTag("HighCrateGen");
+		}
+		else{
+			gameObjCrate = GameObject.FindGameObjectWithTag("LowCrateGen");
+		}
+		ObstacleGenerator obsGen = gameObjCrate.GetComponent<ObstacleGenerator>();
+		obsGen.CreateCrate();
 	}
 
 	public bool player1KeyPressDetection()
@@ -250,9 +316,12 @@ public class Phase1 : MonoBehaviour {
 	}
 
 	void OnGUI()
-	{
+	{		
 		GUILayout.BeginArea(new Rect(0, (Screen.height-beatBarHeight)*0.32f, actionBarWidth, beatBarHeight));
 		GUILayout.BeginHorizontal ();
+
+		//GUI.skin.box.normal.background = (beatBarBg as Texture2D);
+		//GUI.Box (new Rect (0, 0, 1, 1), "");
 		
 		GUI.skin.button.fontSize = 15;
 		GUI.backgroundColor = Color.white;
@@ -267,6 +336,7 @@ public class Phase1 : MonoBehaviour {
 		
 		GUILayout.EndHorizontal();
 		GUILayout.EndArea();
+
 	}
 
 	void AnalyzeSound(){
