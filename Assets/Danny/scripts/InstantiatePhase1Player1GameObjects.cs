@@ -31,8 +31,8 @@ public class InstantiatePhase1Player1GameObjects : MonoBehaviour
 
 
 
-		int initialPlayerX = 15;
-		int initialPlayerY = 1;
+		int initialPlayerX = ( int )( grid.getWidth() / 2 );
+		int initialPlayerY = ( int )( grid.getHeight() / 2 );
 
 		Instantiate( camera, cameraPosition, transform.rotation );
 		Instantiate( background, backgroundPosition, transform.rotation );

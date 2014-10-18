@@ -9,6 +9,10 @@ public class PlayerOne : MonoBehaviour
 	// Game object members.
 	////////////////////////////////////////////////////
 
+	public Material beatFlashMaterial1;
+	public Material beatFlashMaterial2;
+	private bool beatFlash = true;
+
 	private GameObject gameObjPhase1;
 
 	// Player states.
@@ -98,6 +102,14 @@ public class PlayerOne : MonoBehaviour
 
 
 	public void trigger(int actionType){
+		/*GameObject beatFlashPlane = GameObject.FindGameObjectWithTag ("BeatFlashPlane");
+		if (beatFlash == true) {
+			beatFlashPlane.renderer.material = beatFlashMaterial1;
+			beatFlash = !beatFlash;
+		} else {
+			beatFlashPlane.renderer.material = beatFlashMaterial2;
+			beatFlash = !beatFlash;	
+		}*/
 
 		obsGenBeatCount++;
 		keyGenBeatCount++;
@@ -121,7 +133,8 @@ public class PlayerOne : MonoBehaviour
 
 		//Generate ket every certain beat
 		if (keyGenBeatCount > 2) {
-			if(grid.hasObstacle(29,2) != true){
+			int grid_width = grid.getWidth();
+			if(grid.hasObstacle(grid_width - 1,2) != true){
 
 				keyGenBeatCount = 0;	
 				GameObject gameObjKeyGen = GameObject.FindGameObjectWithTag("KeyGen");

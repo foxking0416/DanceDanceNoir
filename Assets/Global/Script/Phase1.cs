@@ -53,7 +53,7 @@ public class Phase1 : MonoBehaviour {
 
 		beatBarHeight = (int)(Screen.height * 0.06);
 		actionBarWidth = (float)(Screen.width * 0.3);
-		beatBarBg.pixelInset = new Rect(-Screen.width/2,-beatBarHeight/2, Screen.width, beatBarHeight);
+		beatBarBg.pixelInset = new Rect(-Screen.width/2,-beatBarHeight/2, 0,0);
 
 		Vector3 p = musicCamera.ViewportToWorldPoint (new Vector3 (1.0f, 0.5f, musicCamera.nearClipPlane));
 		screenWidth2World = 2*(p.x-musicBarLayerOffset) * musicCamera.transform.position.y / (musicCamera.transform.position.y - p.y);
@@ -226,8 +226,8 @@ public class Phase1 : MonoBehaviour {
 			keySequence += " W";
 		}
 		else{
-			//if (player1 != null)
-			//	player1.trigger(0);
+			if (player1 != null)
+				player1.trigger(0);
 			//isToClear = true;
 			return false;
 		}
