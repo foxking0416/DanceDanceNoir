@@ -9,6 +9,10 @@ public class PlayerOne : MonoBehaviour
 	// Game object members.
 	////////////////////////////////////////////////////
 
+	public Material beatFlashMaterial1;
+	public Material beatFlashMaterial2;
+	private bool beatFlash = true;
+
 	private GameObject gameObjPhase1;
 
 	// Player states.
@@ -98,6 +102,14 @@ public class PlayerOne : MonoBehaviour
 
 
 	public void trigger(int actionType){
+		/*GameObject beatFlashPlane = GameObject.FindGameObjectWithTag ("BeatFlashPlane");
+		if (beatFlash == true) {
+			beatFlashPlane.renderer.material = beatFlashMaterial1;
+			beatFlash = !beatFlash;
+		} else {
+			beatFlashPlane.renderer.material = beatFlashMaterial2;
+			beatFlash = !beatFlash;	
+		}*/
 
 		obsGenBeatCount++;
 		keyGenBeatCount++;

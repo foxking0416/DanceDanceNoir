@@ -27,8 +27,8 @@ public class MusicNote : MonoBehaviour {
 		{
 			if (gameObject.transform.position.x < PlayerPrefs.GetFloat("HittingPos"))
 			{
-				//if (gameObject.tag == "P1P1Note" && player1 != null)
-					//player1.trigger(0);
+				if (gameObject.tag == "P1P1Note" && player1 != null)
+					player1.trigger(0);
 				Destroy (gameObject);
 				//Debug.Log("0");
 			}
@@ -46,8 +46,8 @@ public class MusicNote : MonoBehaviour {
 			{
 				if (phase1.player1KeyPressDetection())
 				{
-					//if (player1 != null)
-						//player1.trigger(PlayerPrefs.GetInt ("Signal1"));
+					if (player1 != null)
+						player1.trigger(PlayerPrefs.GetInt ("Signal1"));
 					Destroy (gameObject);
 					//Debug.Log(PlayerPrefs.GetInt ("Signal1").ToString());
 				}

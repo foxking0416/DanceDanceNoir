@@ -69,8 +69,8 @@ public class GridMap : MonoBehaviour {
 		
 		UpdateObjectsStatus (11, 2, 15);//super energy
 		
-		UpdateObjectsStatus (11, 11, 11);//enemy
-		UpdateObjectsStatus (12, 11, 11);//enemy
+		//UpdateObjectsStatus (11, 11, 11);//enemy
+		//UpdateObjectsStatus (12, 11, 11);//enemy
 
 		UpdateObjectsStatus (20, 14, 21);//blue cabinet
 		UpdateObjectsStatus (17, 12, 22);//yellow cabinet
