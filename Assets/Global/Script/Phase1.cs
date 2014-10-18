@@ -136,8 +136,8 @@ public class Phase1 : MonoBehaviour {
 
 	public bool player1KeyPressDetection()
 	{
-		if (player1 == null)
-			player1 = (PlayerOne)FindObjectOfType (typeof(PlayerOne));
+
+		signal1 = (int)Action.None;
 
 		if (Input.GetKeyDown (KeyCode.A)) {
 			if (keySequence.Length != 0)
@@ -174,20 +174,25 @@ public class Phase1 : MonoBehaviour {
 			if (keySequence == actionPatterns[0])
 			{
 				signal1 = (int)Action.Run;
-				if (player1 != null)
-					player1.trigger(signal1);
+
+//				if (player1 != null)
+//					player1.sprint();
+
 			}
 			else if (keySequence == actionPatterns[1])
 			{
 				signal1 = (int)Action.Jump;
-				if (player1 != null)
-					player1.trigger(signal1);
+
+//				if (player1 != null)
+//					player1.jump();
+
 			}
 			else if (keySequence == actionPatterns[2])
 			{
 				signal1 = (int)Action.Slide;
-				if (player1 != null)
-					player1.trigger(signal1);
+//				if (player1 != null)
+//					player1.slide();
+
 			}
 			else {
 				isToClear = true;
