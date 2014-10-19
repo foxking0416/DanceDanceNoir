@@ -324,6 +324,13 @@ public class Phase1 : MonoBehaviour {
 
 	void OnGUI()
 	{		
+		//one player one part
+		GUI.TextArea(new Rect((int)(0.7*Screen.width),10,(int)(Screen.width*0.25),20),"Obstacl Generator");
+		GUI.backgroundColor = Color.red;
+		if (keyMiss2 > 0)
+			GUI.Button(new Rect((int)(0.7*Screen.width),10,(int)(Screen.width*0.25 * keyMiss2 / (float)maxKeyMiss2), 20), "");
+
+		//on music bar
 		GUILayout.BeginArea(new Rect(0, (Screen.height-beatBarHeight)*0.32f, actionBarWidth, beatBarHeight));
 		GUILayout.BeginHorizontal ();
 		
@@ -336,7 +343,6 @@ public class Phase1 : MonoBehaviour {
 		
 		GUILayout.EndHorizontal();
 		GUILayout.EndArea();
-
 	}
 
 	void AnalyzeSound(){
