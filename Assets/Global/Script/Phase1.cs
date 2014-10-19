@@ -15,18 +15,19 @@ public class Phase1 : MonoBehaviour {
 	string keySequence;
 	string[] actionPatterns;
 
+	bool keyMiss1;
 	int keyMiss2;
 	int maxKeyMiss2;
 
 	float noteStartX;
-	public GUITexture beatBarBg;
+	public Texture2D beatBarBg;
 	public Camera musicCamera;
 	float screenWidth2World;
 	int beatBarHeight;
 	float actionBarWidth;
 
-	public Character2Script player2;
 	public PlayerOne player1;
+	public Character2Script player2;
 
 	//audio
 	int qSamples  = 1024;  // array size
@@ -53,7 +54,7 @@ public class Phase1 : MonoBehaviour {
 
 		beatBarHeight = (int)(Screen.height * 0.06);
 		actionBarWidth = (float)(Screen.width * 0.3);
-		beatBarBg.pixelInset = new Rect(-Screen.width/2,-beatBarHeight/2, 0,0);
+		//beatBarBg.pixelInset = new Rect(-Screen.width/2,-beatBarHeight/2, 0,0);
 
 		Vector3 p = musicCamera.ViewportToWorldPoint (new Vector3 (1.0f, 0.5f, musicCamera.nearClipPlane));
 		screenWidth2World = 2*(p.x-musicBarLayerOffset) * musicCamera.transform.position.y / (musicCamera.transform.position.y - p.y);
@@ -70,16 +71,17 @@ public class Phase1 : MonoBehaviour {
 		actionPatterns = new string[3];
 		actionPatterns[0] = " A D D";	actionPatterns[1] = " A W D";	actionPatterns[2] = " A S D";
 
+		keyMiss1 = false;
 		keyMiss2 = 0;
 		maxKeyMiss2 = 10;
 
-		player2 = GameObject.FindGameObjectWithTag ("Player2").GetComponent<Character2Script>();
 		//player1 = GameObject.Find ("player_one(Clone)").GetComponent<PlayerOne> ();
+		player2 = GameObject.FindGameObjectWithTag ("Player2").GetComponent<Character2Script>();
 
-		PlayerPrefs.SetInt ("Signal1", (int)Action.None);
-		PlayerPrefs.SetInt ("Signal2", (int)Action.None);
+		//PlayerPrefs.SetInt ("Signal1", (int)Action.None);
+		//PlayerPrefs.SetInt ("Signal2", (int)Action.None);
 
-		PlayerPrefs.SetInt ("HittingPeriod", 0);
+		//PlayerPrefs.SetInt ("HittingPeriod", 0);
 
 		preGenerateMusicNote ();
 
@@ -96,6 +98,7 @@ public class Phase1 : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//AnalyzeSound();
+
 		if (timing-- <= 0)
 		{
 			timing = noteSpwanDuration;
@@ -106,10 +109,10 @@ public class Phase1 : MonoBehaviour {
 		{
 			keySequence = "";
 			isToClear = false;
-			PlayerPrefs.SetString ("KeySequence", keySequence);
+			//PlayerPrefs.SetString ("KeySequence", keySequence);
 		}
-		PlayerPrefs.SetInt ("Signal1", (int)Action.None);
-		PlayerPrefs.SetInt ("Signal2", (int)Action.None);
+		//PlayerPrefs.SetInt ("Signal1", (int)Action.None);
+		//PlayerPrefs.SetInt ("Signal2", (int)Action.None);
 
 		if(	numberOfCollectedEvidence >= 5)
 			Application.LoadLevel("Phase2SceneV1");//Win
@@ -140,7 +143,7 @@ public class Phase1 : MonoBehaviour {
 					if (player1 == null)
 						player1 = (PlayerOne)FindObjectOfType (typeof(PlayerOne));
 					if (player1 != null)
-						player1.trigger(PlayerPrefs.GetInt ("Signal1"));
+						player1.trigger(signal1);
 					Destroy(note1.gameObject);
 				}
 			}
@@ -238,41 +241,22 @@ public class Phase1 : MonoBehaviour {
 				player1 = (PlayerOne)FindObjectOfType (typeof(PlayerOne));
 
 			if (keySequence == actionPatterns[0])
-			{
 				signal1 = (int)Action.Run;
-
-//				if (player1 != null)
-//					player1.sprint();
-
-			}
 			else if (keySequence == actionPatterns[1])
-			{
 				signal1 = (int)Action.Jump;
-
-//				if (player1 != null)
-//					player1.jump();
-
-			}
 			else if (keySequence == actionPatterns[2])
-			{
 				signal1 = (int)Action.Slide;
-//				if (player1 != null)
-//					player1.slide();
-
-			}
 			else {
 				isToClear = true;
 				signal1 = (int)Action.None;
-				//if (player1 != null)
-					//player1.trigger(signal1);
 			}
 			
 			isToClear = true;
 		}
 		
-		PlayerPrefs.SetInt ("Signal1", signal1);
-		signal1 = (int)Action.None;
-		PlayerPrefs.SetString ("KeySequence", keySequence);
+		//PlayerPrefs.SetInt ("Signal1", signal1);
+		//signal1 = (int)Action.None;
+		//PlayerPrefs.SetString ("KeySequence", keySequence);
 
 		return true;
 	}
@@ -281,7 +265,8 @@ public class Phase1 : MonoBehaviour {
 	{
 //		if (!Input.anyKey)
 //			return false;
-		
+		signal2 = (int)Action.None;
+
 		if (Input.GetKeyDown(KeyCode.LeftArrow)){
 			signal2 = (int)Action.Left;
 			player2.MoveLeft();
@@ -315,7 +300,7 @@ public class Phase1 : MonoBehaviour {
 			return false;
 		}
 		
-		PlayerPrefs.SetInt ("Signal2", signal2);
+		//PlayerPrefs.SetInt ("Signal2", signal2);
 		return true;
 	}
 
@@ -326,17 +311,17 @@ public class Phase1 : MonoBehaviour {
 
 		//GUI.skin.box.normal.background = (beatBarBg as Texture2D);
 		//GUI.Box (new Rect (0, 0, 1, 1), "");
+		//GUI.DrawTexture(new Rect(screenPos.x,invertedCursorHeight,32,32),cursorTexture,ScaleMode.ScaleToFit,true);
 		
 		GUI.skin.button.fontSize = 15;
 		GUI.backgroundColor = Color.white;
-		GUI.Button (new Rect(0, 0, (float)(actionBarWidth*0.7), beatBarHeight), PlayerPrefs.GetString("KeySequence"));
-		
-		int s2 = PlayerPrefs.GetInt("Signal2");
-		if (PlayerPrefs.GetInt("Signal1") != (int)Action.None || PlayerPrefs.GetInt("Signal2") != (int)Action.None)
+		GUI.Button (new Rect(0, 0, (float)(actionBarWidth*0.7), beatBarHeight), keySequence);
+
+		if (signal1 != (int)Action.None || signal1 != (int)Action.None)
 			GUI.backgroundColor = Color.red;
 		else
 			GUI.backgroundColor = Color.green;
-		GUI.Button (new Rect((float)(actionBarWidth*0.7), 0, (float)(actionBarWidth * 0.3), beatBarHeight), PlayerPrefs.GetInt("Signal2").ToString());
+		//GUI.Button (new Rect((float)(actionBarWidth*0.7), 0, (float)(actionBarWidth * 0.3), beatBarHeight), signal2.ToString());
 		
 		GUILayout.EndHorizontal();
 		GUILayout.EndArea();
