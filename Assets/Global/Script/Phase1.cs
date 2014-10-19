@@ -157,6 +157,8 @@ public class Phase1 : MonoBehaviour {
 				{
 					keyMiss2  = 0;
 					generateObstacle1();
+
+					// TODO: Change this!! Player one should be responsible for all obstacle generation.
 				}
 			}
 			else

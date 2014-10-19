@@ -25,15 +25,9 @@ public class PlayerOne : MonoBehaviour
 
 
 	// Temporary variables used for development and testing.
-	private int generateObstaclePeriod;
-	private int generateObstaclePeriodMax = 20;
-	private int generateObstaclePeriodMin = 6;
 	private int jumpBeat = 0;
 	private int slideBeat = 0;
 	private int sprintBeat = 0;
-
-	private int obsGenBeatCount = 0;
-	private int keyGenBeatCount = 0;
 
 	public int playerPositionDiscreteX;
 	public int playerPositionDiscreteY;
@@ -41,6 +35,23 @@ public class PlayerOne : MonoBehaviour
 	private Grid grid;
 	private Phase1 phase1;
 	private GlobalScript global;
+
+	// Danny was here.
+	private int num_beats_between_obstacle_movement;
+	private int num_beats_since_last_obstacle_movement;
+	private int num_beats_between_obstacle_movement_max;
+
+	// Danny was here.
+	private int num_beats_between_obstacle_generation_min;
+	private int num_beats_between_obstacle_generation_max;
+	private int current_num_beats_between_obstacle_generation;
+	private int num_beats_since_last_obstacle_generation;
+
+	// Danny was here.
+	private int num_beats_between_key_generation_min;
+	private int num_beats_between_key_generation_max;
+	private int current_num_beats_between_key_generation;
+	private int num_beats_since_last_key_generation;
 
 	////////////////////////////////////////////////////
 	// Game object initialization.
@@ -53,15 +64,68 @@ public class PlayerOne : MonoBehaviour
 
 		gameObjGrid = GameObject.FindGameObjectWithTag ("Grid");
 		grid = gameObjGrid.GetComponent< Grid > ();
-
-
+		
 		isColliding = false;
 		isJumping = false;
 		isFalling = false;
 		isSprinting = false;
 		isSliding = false;
 
-		generateObstaclePeriod = (int)Random.Range (generateObstaclePeriodMin, generateObstaclePeriodMax);
+		// Danny was here.
+		num_beats_between_obstacle_movement = 3;
+		num_beats_since_last_obstacle_movement = 0;
+		num_beats_between_obstacle_movement_max = 3;
+
+		// Danny was here.
+		num_beats_between_obstacle_generation_min = 12;
+		num_beats_between_obstacle_generation_max = 36;
+		current_num_beats_between_obstacle_generation = getWaitTimeUntilNextObstacle();
+		num_beats_since_last_obstacle_generation = 0;
+
+		// Danny was here.
+		num_beats_between_key_generation_min = 40;
+		num_beats_between_key_generation_max = 100;
+		current_num_beats_between_key_generation = getWaitTimeUntilNextKey();
+		num_beats_since_last_key_generation = 0;
+	}
+
+
+	// Danny was here.
+	// Generate new number of beats to wait until the next obstacle is generated.
+	private int getWaitTimeUntilNextObstacle()
+	{
+		return ( int )Random.Range( num_beats_between_obstacle_generation_min, num_beats_between_obstacle_generation_max );
+	}
+
+	// Danny was here.
+	// Generate new number of beats to wait until the next key is generated.
+	private int getWaitTimeUntilNextKey()
+	{
+		return ( int )Random.Range( num_beats_between_key_generation_min, num_beats_between_key_generation_max );
+	}
+
+	// Danny was here.
+	public void increaseObstacleSpeed()
+	{
+		if ( num_beats_between_obstacle_movement > 1 ) {
+			--num_beats_between_obstacle_movement;
+		}
+	}
+
+	// Danny was here.
+	public void decreaseObstacleSpeed()
+	{
+		if ( num_beats_between_obstacle_movement < num_beats_between_obstacle_movement_max ) {
+			++num_beats_between_obstacle_movement;
+		}
+	}
+
+	// Danny was here.
+	public void increaseRateOfObstacleGeneration()
+	{
+		if ( num_beats_between_obstacle_generation_max > num_beats_between_obstacle_generation_min ) {
+			num_beats_between_obstacle_generation_max += 4;
+		}
 	}
 
 
@@ -102,72 +166,41 @@ public class PlayerOne : MonoBehaviour
 
 	public void trigger(int actionType){
 
-		obsGenBeatCount++;
-		keyGenBeatCount++;
+		// Danny was here.
+		++num_beats_since_last_obstacle_movement;
+		++num_beats_since_last_obstacle_generation;
+		++num_beats_since_last_key_generation;
 
-		//Generate objstacles every certain beat
-		if(obsGenBeatCount > generateObstaclePeriod){
-			generateObstaclePeriod = (int)Random.Range (generateObstaclePeriodMin, generateObstaclePeriodMax);
-			obsGenBeatCount = 0;
-
-			float randValue = Random.Range(0, 2);
+		// Danny was here.
+		if ( num_beats_since_last_obstacle_generation > current_num_beats_between_obstacle_generation ) {
+			num_beats_since_last_obstacle_generation = 0;
+			current_num_beats_between_obstacle_generation = getWaitTimeUntilNextObstacle();
+			
+			float randValue = Random.Range( 0, 2 );
 			GameObject gameObjCrate;
-			if(randValue < 1){
-				gameObjCrate = GameObject.FindGameObjectWithTag("HighCrateGen");
+			if ( randValue < 1 ){
+				gameObjCrate = GameObject.FindGameObjectWithTag( "HighCrateGen" );
 			}
-			else{
-				gameObjCrate = GameObject.FindGameObjectWithTag("LowCrateGen");
+			else {
+				gameObjCrate = GameObject.FindGameObjectWithTag( "LowCrateGen" );
 			}
 			ObstacleGenerator obsGen = gameObjCrate.GetComponent<ObstacleGenerator>();
 			obsGen.CreateCrate();
 		}
 
-		//Generate ket every certain beat
-		if (keyGenBeatCount > 2) {
-
+		// Danny was here.
+		if ( num_beats_since_last_key_generation > current_num_beats_between_key_generation ) {
 			int grid_width = grid.getWidth();
-			if(grid.hasObstacle(grid_width - 1,2) != true){
+			if( grid.hasObstacle( grid_width - 1, 2 ) != true ) {
+				num_beats_since_last_key_generation = 0;
+				current_num_beats_between_key_generation = getWaitTimeUntilNextKey();
 
-
-				keyGenBeatCount = 0;	
-				GameObject gameObjKeyGen = GameObject.FindGameObjectWithTag("KeyGen");
+				GameObject gameObjKeyGen = GameObject.FindGameObjectWithTag( "KeyGen" );
 				KeyGenerate keyGen = gameObjKeyGen.GetComponent<KeyGenerate>();
 				keyGen.createKey();
 			}
 		}
 
-
-		//Move all the keys in the current scene
-		GameObject objKeyBlue = GameObject.FindGameObjectWithTag("BlueKey");
-		if (objKeyBlue != null) {
-			Key keyBlue = objKeyBlue.GetComponent<Key>();
-			keyBlue.MoveKey();
-		}
-
-		GameObject objKeyYellow = GameObject.FindGameObjectWithTag("YellowKey");
-		if (objKeyYellow != null) {
-			Key keyYellow = objKeyYellow.GetComponent<Key>();
-			keyYellow.MoveKey();
-		}
-
-		GameObject objKeyRed = GameObject.FindGameObjectWithTag("RedKey");
-		if (objKeyRed != null) {
-			Key keyRed = objKeyRed.GetComponent<Key>();
-			keyRed.MoveKey();
-		}
-
-		GameObject objKeyGreen = GameObject.FindGameObjectWithTag("GreenKey");
-		if (objKeyGreen != null) {
-			Key keyGreen = objKeyGreen.GetComponent<Key>();
-			keyGreen.MoveKey();
-		}
-
-		GameObject objKeyOrange = GameObject.FindGameObjectWithTag("OrangeKey");
-		if (objKeyOrange != null) {
-			Key keyOrange = objKeyOrange.GetComponent<Key>();
-			keyOrange.MoveKey();
-		}
-		
 		//Action: Sprint
 		if(actionType == 1) {
 			if( !isSliding && !isUping && !isFalling && !isJumping 
@@ -193,18 +226,53 @@ public class PlayerOne : MonoBehaviour
 			}	
 		}
 
+		GameObject objKeyBlue = GameObject.FindGameObjectWithTag("BlueKey");
+		GameObject objKeyYellow = GameObject.FindGameObjectWithTag("YellowKey");
+		GameObject objKeyRed = GameObject.FindGameObjectWithTag("RedKey");
+		GameObject objKeyGreen = GameObject.FindGameObjectWithTag("GreenKey");
+		GameObject objKeyOrange = GameObject.FindGameObjectWithTag("OrangeKey");
 
+		// Danny was here.
+		if ( num_beats_since_last_obstacle_movement > num_beats_between_obstacle_movement ) {
+			num_beats_since_last_obstacle_movement = 0;
 
-		//Move all the crates every beat
-		GameObject[] crates = GameObject.FindGameObjectsWithTag("Crate");
-		foreach(GameObject obj in crates){
-			TranslateLeftAtConstantSpeed crate = obj.GetComponent<TranslateLeftAtConstantSpeed>();
-			crate.MoveObstacle();
+			//Move all the keys in the current scene
+			if (objKeyBlue != null) {
+				Key keyBlue = objKeyBlue.GetComponent<Key>();
+				keyBlue.MoveKey();
+			}
 
-			if(grid.hasObstacle(playerPositionDiscreteX, playerPositionDiscreteY) == true)
-				pushBack();
+			if (objKeyYellow != null) {
+				Key keyYellow = objKeyYellow.GetComponent<Key>();
+				keyYellow.MoveKey();
+			}
+
+			if (objKeyRed != null) {
+				Key keyRed = objKeyRed.GetComponent<Key>();
+				keyRed.MoveKey();
+			}
+
+			if (objKeyGreen != null) {
+				Key keyGreen = objKeyGreen.GetComponent<Key>();
+				keyGreen.MoveKey();
+			}
+
+			if (objKeyOrange != null) {
+				Key keyOrange = objKeyOrange.GetComponent<Key>();
+				keyOrange.MoveKey();
+			}
+			
+			//Move all the crates every beat
+			GameObject[] crates = GameObject.FindGameObjectsWithTag("Crate");
+			foreach(GameObject obj in crates){
+				TranslateLeftAtConstantSpeed crate = obj.GetComponent<TranslateLeftAtConstantSpeed>();
+				crate.MoveObstacle();
+				
+				if(grid.hasObstacle(playerPositionDiscreteX, playerPositionDiscreteY) == true)
+					pushBack();
+			}
 		}
-
+		
 		if (isJumping) {
 			jumpBeat++;	
 		}
