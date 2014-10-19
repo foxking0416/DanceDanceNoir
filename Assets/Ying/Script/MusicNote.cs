@@ -10,9 +10,11 @@ public class MusicNote : MonoBehaviour {
 
 	public Phase1 phase1;
 	public PlayerOne player1;
+	//private BeatFlashScript beatFlash;
 	
 	// Use this for initialization
 	void Start () {
+		//beatFlash = (BeatFlashScript)FindObjectOfType (typeof(BeatFlashScript));
 		orgPos = gameObject.transform.position;
 		speed = PlayerPrefs.GetFloat("noteSpeed");
 

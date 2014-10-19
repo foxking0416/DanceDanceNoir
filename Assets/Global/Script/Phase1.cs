@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-enum Action {None, Run, Jump, Slide, Left, Right, Up, Down, Key, Unlock};
+enum Action {None, Run, Jump, Slide, Left, Right, Up, Down, TurnLeft, TurnRight, Unlock};
 
 public class Phase1 : MonoBehaviour {
 	float musicBarLayerOffset;
@@ -146,7 +146,7 @@ public class Phase1 : MonoBehaviour {
 			}
 		}
 		//player two input detection
-		if (Input.GetKeyDown(KeyCode.UpArrow) ||  Input.GetKeyDown(KeyCode.DownArrow)||  Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow)|| Input.GetKeyDown(KeyCode.K) || Input.GetKeyDown(KeyCode.U))
+		if (Input.GetKeyDown(KeyCode.UpArrow) ||  Input.GetKeyDown(KeyCode.DownArrow)||  Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow)|| Input.GetKeyDown(KeyCode.K)|| Input.GetKeyDown(KeyCode.L) || Input.GetKeyDown(KeyCode.U))
 		{
 			if (note2 == null)
 			{
@@ -299,8 +299,12 @@ public class Phase1 : MonoBehaviour {
 			player2.MoveDown();
 		}
 		else if (Input.GetKeyDown(KeyCode.K)){
-			signal2 = (int)Action.Key;
-			player2.PickUpKey();
+			signal2 = (int)Action.TurnLeft;
+			player2.TurnLeft();
+		}
+		else if (Input.GetKeyDown(KeyCode.L)){
+			signal2 = (int)Action.TurnRight;
+			player2.TurnRight();
 		}
 		else if (Input.GetKeyDown(KeyCode.U)){
 			signal2 = (int)Action.Unlock;
