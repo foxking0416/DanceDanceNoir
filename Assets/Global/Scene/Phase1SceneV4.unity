@@ -554,7 +554,7 @@ GameObject:
   - 124: {fileID: 202094757}
   - 92: {fileID: 202094756}
   - 81: {fileID: 202094755}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bg Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -897,7 +897,7 @@ GameObject:
   - 23: {fileID: 291412567}
   - 114: {fileID: 291412571}
   m_Layer: 0
-  m_Name: BeatFlashPlane
+  m_Name: 
   m_TagString: BeatFlashPlane
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1129,7 +1129,7 @@ GUITexture:
   m_GameObject: {fileID: 393918746}
   m_Enabled: 1
   m_Texture: {fileID: 2800000, guid: bfc6652d240840141b1ec40888761956, type: 3}
-  m_Color: {r: .5, g: .5, b: .5, a: .5}
+  m_Color: {r: .808823526, g: .808823526, b: .808823526, a: 1}
   m_PixelInset:
     serializedVersion: 2
     x: -64
@@ -2254,6 +2254,8 @@ MonoBehaviour:
   musicCamera: {fileID: 1500500513}
   player1: {fileID: 0}
   player2: {fileID: 0}
+  BeatFlashPlane: {fileID: 291412571}
+  MissBeatFlashPlane: {fileID: 844770565}
   numberOfCollectedEvidence: 0
 --- !u!114 &836956550
 MonoBehaviour:
@@ -2509,7 +2511,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 918036023}
   - 132: {fileID: 918036022}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GUITextStatus
   m_TagString: TextStatus
   m_Icon: {fileID: 0}
@@ -3468,7 +3470,7 @@ AudioSource:
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0

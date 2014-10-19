@@ -15,12 +15,11 @@ public class Phase1 : MonoBehaviour {
 	string keySequence;
 	string[] actionPatterns;
 
-	bool keyMiss1;
 	int keyMiss2;
 	int maxKeyMiss2;
 
 	float noteStartX;
-	public Texture2D beatBarBg;
+	public GUITexture beatBarBg;
 	public Camera musicCamera;
 	float screenWidth2World;
 	int beatBarHeight;
@@ -28,6 +27,10 @@ public class Phase1 : MonoBehaviour {
 
 	public PlayerOne player1;
 	public Character2Script player2;
+
+	//visual effect
+	public BeatFlashScript BeatFlashPlane;
+	public PlayerMissBeatScript MissBeatFlashPlane;
 
 	//audio
 	int qSamples  = 1024;  // array size
@@ -54,7 +57,7 @@ public class Phase1 : MonoBehaviour {
 
 		beatBarHeight = (int)(Screen.height * 0.06);
 		actionBarWidth = (float)(Screen.width * 0.3);
-		//beatBarBg.pixelInset = new Rect(-Screen.width/2,-beatBarHeight/2, 0,0);
+		beatBarBg.pixelInset = new Rect(-Screen.width/2,-beatBarHeight/2, Screen.width, beatBarHeight);
 
 		Vector3 p = musicCamera.ViewportToWorldPoint (new Vector3 (1.0f, 0.5f, musicCamera.nearClipPlane));
 		screenWidth2World = 2*(p.x-musicBarLayerOffset) * musicCamera.transform.position.y / (musicCamera.transform.position.y - p.y);
@@ -71,7 +74,6 @@ public class Phase1 : MonoBehaviour {
 		actionPatterns = new string[3];
 		actionPatterns[0] = " A D D";	actionPatterns[1] = " A W D";	actionPatterns[2] = " A S D";
 
-		keyMiss1 = false;
 		keyMiss2 = 0;
 		maxKeyMiss2 = 10;
 
@@ -86,6 +88,11 @@ public class Phase1 : MonoBehaviour {
 		preGenerateMusicNote ();
 
 		//audio
+		qSamples  = 1024;  // array size
+		eSamples = 44;
+		subbands = 32;
+		eId = -1;
+
 		samples = new float[qSamples];
 		spectrum = new float[qSamples];
 		fSample = AudioSettings.outputSampleRate;
@@ -97,7 +104,7 @@ public class Phase1 : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		//AnalyzeSound();
+		AnalyzeSound();
 
 		if (timing-- <= 0)
 		{
@@ -117,7 +124,13 @@ public class Phase1 : MonoBehaviour {
 		if(	numberOfCollectedEvidence >= 5)
 			Application.LoadLevel("Phase2SceneV1");//Win
 
+		playerKeyPressDectection ();
+	}
 
+
+
+	void playerKeyPressDectection()
+	{
 		MusicNote[] notes = FindObjectsOfType(typeof(MusicNote))as MusicNote[];
 		MusicNote note1 = null;
 		MusicNote note2 = null;
@@ -131,12 +144,16 @@ public class Phase1 : MonoBehaviour {
 				else if (n.tag == "P1P2Note")
 					note2 = n;
 			}
+			if (n.inBeatingCenter() && n.tag == "P1P1Note")
+				BeatFlashPlane.BeatFlash();
 		}
-
+		
 		//player one input dectection
 		if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.D))
 		{
-			if (note1 != null)
+			if (note1 == null)
+				MissBeatFlashPlane.Player1MissBeatFlash();
+			else
 			{
 				if (player1KeyPressDetection())
 				{
@@ -153,6 +170,7 @@ public class Phase1 : MonoBehaviour {
 		{
 			if (note2 == null)
 			{
+				MissBeatFlashPlane.Player2MissBeatFlash();
 				if(++keyMiss2 >= maxKeyMiss2)
 				{
 					keyMiss2  = 0;
@@ -165,42 +183,6 @@ public class Phase1 : MonoBehaviour {
 					Destroy(note2.gameObject);
 			}
 		}
-	}
-
-	void preGenerateMusicNote()
-	{
-		float endPos = PlayerPrefs.GetFloat ("HittingPos");
-		float curPos = noteStartX;
-		while (curPos > endPos)
-		{
-			generateNewNote(curPos);
-			curPos -= noteSpwanDuration * PlayerPrefs.GetFloat("noteSpeed");
-		}
-	}
-
-	void generateNewNote(float posX)
-	{
-		GameObject p1 = Instantiate(notetoSpwan, new Vector3(posX, 0.0f, 51.95f), 
-		                            Quaternion.Euler(new Vector3(0.0f, 90.0f, 90.0f))) as GameObject;
-		p1.tag = "P1P1Note";
-		
-		GameObject p2 = Instantiate(notetoSpwan, new Vector3(posX, 0.0f, 51.95f), 
-		                            Quaternion.Euler(new Vector3(0.0f, 90.0f, 90.0f))) as GameObject;
-		p2.tag = "P1P2Note";
-	}
-
-	void generateObstacle1()
-	{
-		float randValue = Random.Range(0, 2);
-		GameObject gameObjCrate;
-		if(randValue < 1){
-			gameObjCrate = GameObject.FindGameObjectWithTag("HighCrateGen");
-		}
-		else{
-			gameObjCrate = GameObject.FindGameObjectWithTag("LowCrateGen");
-		}
-		ObstacleGenerator obsGen = gameObjCrate.GetComponent<ObstacleGenerator>();
-		obsGen.CreateCrate();
 	}
 
 	public bool player1KeyPressDetection()
@@ -304,24 +286,53 @@ public class Phase1 : MonoBehaviour {
 		return true;
 	}
 
+	void preGenerateMusicNote()
+	{
+		float endPos = PlayerPrefs.GetFloat ("HittingPos");
+		float curPos = noteStartX;
+		while (curPos > endPos)
+		{
+			generateNewNote(curPos);
+			curPos -= noteSpwanDuration * PlayerPrefs.GetFloat("noteSpeed");
+		}
+	}
+	
+	void generateNewNote(float posX)
+	{
+		GameObject p1 = Instantiate(notetoSpwan, new Vector3(posX, 0.0f, 51.95f), 
+		                            Quaternion.Euler(new Vector3(0.0f, 90.0f, 90.0f))) as GameObject;
+		p1.tag = "P1P1Note";
+		
+		GameObject p2 = Instantiate(notetoSpwan, new Vector3(posX, 0.0f, 51.95f), 
+		                            Quaternion.Euler(new Vector3(0.0f, 90.0f, 90.0f))) as GameObject;
+		p2.tag = "P1P2Note";
+	}
+	
+	void generateObstacle1()
+	{
+		float randValue = Random.Range(0, 2);
+		GameObject gameObjCrate;
+		if(randValue < 1){
+			gameObjCrate = GameObject.FindGameObjectWithTag("HighCrateGen");
+		}
+		else{
+			gameObjCrate = GameObject.FindGameObjectWithTag("LowCrateGen");
+		}
+		ObstacleGenerator obsGen = gameObjCrate.GetComponent<ObstacleGenerator>();
+		obsGen.CreateCrate();
+	}
+
 	void OnGUI()
 	{		
 		GUILayout.BeginArea(new Rect(0, (Screen.height-beatBarHeight)*0.32f, actionBarWidth, beatBarHeight));
 		GUILayout.BeginHorizontal ();
-
-		//GUI.skin.box.normal.background = (beatBarBg as Texture2D);
-		//GUI.Box (new Rect (0, 0, 1, 1), "");
-		//GUI.DrawTexture(new Rect(screenPos.x,invertedCursorHeight,32,32),cursorTexture,ScaleMode.ScaleToFit,true);
 		
 		GUI.skin.button.fontSize = 15;
 		GUI.backgroundColor = Color.white;
 		GUI.Button (new Rect(0, 0, (float)(actionBarWidth*0.7), beatBarHeight), keySequence);
 
-		if (signal1 != (int)Action.None || signal1 != (int)Action.None)
-			GUI.backgroundColor = Color.red;
-		else
-			GUI.backgroundColor = Color.green;
-		//GUI.Button (new Rect((float)(actionBarWidth*0.7), 0, (float)(actionBarWidth * 0.3), beatBarHeight), signal2.ToString());
+		GUI.backgroundColor = Color.green;
+		GUI.Button (new Rect((float)(actionBarWidth*0.7), 0, (float)(actionBarWidth * 0.3), beatBarHeight), "");
 		
 		GUILayout.EndHorizontal();
 		GUILayout.EndArea();
@@ -329,48 +340,49 @@ public class Phase1 : MonoBehaviour {
 	}
 
 	void AnalyzeSound(){
-		audio.GetOutputData(samples, 0); // fill array with samples
-		audio.GetSpectrumData(spectrum, 0, FFTWindow.BlackmanHarris); 
+		musicCamera.audio.GetOutputData(samples, 0); // fill array with samples
+		musicCamera.audio.GetSpectrumData(spectrum, 0, FFTWindow.BlackmanHarris); 
 
-		for (int i=0; i < subbands; i++){ 
-			for (int j = i *32; j < (i+1) *32; j++) {
-				Es[i] += spectrum[j] * spectrum[j];
-			}
-			Es[i] /= (float)subbands;
-		}
+		PlayerPrefs.SetFloat ("CurSpectrum", spectrum[5]);
 
-		//S1: instant sound energy
-		float instantE= 0;
-		for (int i=0; i < qSamples; i++){
-			instantE += samples[i]*samples[i]; // sum squared samples
-		}
-		
-		//S2: compute average energy
-		float aveE = 0.0f;
-		for (int i = 0; i < eSamples; i++)
-			aveE += E[i];
-		aveE /= (float)eSamples;
-		
-		//S3: variance of energies in E
-		float V = 0.0f;
-		for (int i = 0; i < eSamples; i++)
-			V += Mathf.Pow(E[i] - aveE, 2.0f);
-		V /= (float)eSamples;
-		
-		//S4:
-		double C = (-0.0025714 * V) + 1.5142857;
-		
-		//S5: repace the old E
-		eId = (++eId == eSamples) ? 0 : eId;
-		E [eId] = instantE;
-		
-		//S6: compare e > C*E
-		if (instantE > C * aveE)
-		{
-			Debug.Log (instantE.ToString() + " time:" + (audio.time - last).ToString());
-			last = audio.time;
-			generateNewNote(noteStartX);
-		}
-
+//		for (int i=0; i < subbands; i++){ 
+//			for (int j = i *32; j < (i+1) *32; j++) {
+//				Es[i] += spectrum[j] * spectrum[j];
+//			}
+//			Es[i] /= (float)subbands;
+//		}
+//
+//		//S1: instant sound energy
+//		float instantE= 0;
+//		for (int i=0; i < qSamples; i++){
+//			instantE += samples[i]*samples[i]; // sum squared samples
+//		}
+//		
+//		//S2: compute average energy
+//		float aveE = 0.0f;
+//		for (int i = 0; i < eSamples; i++)
+//			aveE += E[i];
+//		aveE /= (float)eSamples;
+//		
+//		//S3: variance of energies in E
+//		float V = 0.0f;
+//		for (int i = 0; i < eSamples; i++)
+//			V += Mathf.Pow(E[i] - aveE, 2.0f);
+//		V /= (float)eSamples;
+//		
+//		//S4:
+//		double C = (-0.0025714 * V) + 1.5142857;
+//		
+//		//S5: repace the old E
+//		eId = (++eId == eSamples) ? 0 : eId;
+//		E [eId] = instantE;
+//		
+//		//S6: compare e > C*E
+//		if (instantE > C * aveE)
+//		{
+//			Debug.Log (instantE.ToString() + " time:" + (audio.time - last).ToString());
+//			last = audio.time;
+//			generateNewNote(noteStartX);
+//		}
 	}
 }
