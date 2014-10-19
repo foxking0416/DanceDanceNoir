@@ -36,8 +36,8 @@ TagManager:
   - Key
   - BeatFlashPlane
   - TextStatus
-  - 
-  - 
+  - Player1BeatMissPlane
+  - Player2BeatMissPlane
   - 
   - 
   Builtin Layer 0: Default
