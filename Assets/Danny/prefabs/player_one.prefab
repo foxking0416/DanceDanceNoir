@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: .5, y: .5, z: .5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -80,8 +80,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af4ea44351ec5d745a4e7ca5f1b7a71b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  beatFlashMaterial1: {fileID: 2100000, guid: 6add207fd4de1c6458d14d15121d22b3, type: 2}
-  beatFlashMaterial2: {fileID: 2100000, guid: 2cb6f29958d41b649922c0f8d6e5c5a6, type: 2}
   playerPositionDiscreteX: 0
   playerPositionDiscreteY: 0
 --- !u!212 &21200000
@@ -104,7 +102,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 5778d40fda0c3c0438865b017aa1c32b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d12accdcda2771d4eb28ff74fae36a43, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:
