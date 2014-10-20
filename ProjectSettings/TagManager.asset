@@ -38,7 +38,7 @@ TagManager:
   - TextStatus
   - Player1BeatMissPlane
   - Player2BeatMissPlane
-  - 
+  - TransNote
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX
