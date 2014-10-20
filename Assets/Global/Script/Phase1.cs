@@ -7,6 +7,7 @@ public class Phase1 : MonoBehaviour {
 	float musicBarLayerOffset;
 
 	public GameObject notetoSpwan;
+	public Material transMaterial;
 	int timing;
 	int noteSpwanDuration;
 
@@ -21,6 +22,7 @@ public class Phase1 : MonoBehaviour {
 	float noteStartX;
 	public GUITexture beatBarBg;
 	public Camera musicCamera;
+	public HittingArea hittingArea;
 	float screenWidth2World;
 	int beatBarHeight;
 	float actionBarWidth;
@@ -62,9 +64,9 @@ public class Phase1 : MonoBehaviour {
 		Vector3 p = musicCamera.ViewportToWorldPoint (new Vector3 (1.0f, 0.5f, musicCamera.nearClipPlane));
 		screenWidth2World = 2*(p.x-musicBarLayerOffset) * musicCamera.transform.position.y / (musicCamera.transform.position.y - p.y);
 		PlayerPrefs.SetFloat ("ScreenWidth2World", screenWidth2World);
-		float t = (float)(musicBarLayerOffset - (0.5 - 0.3 * 0.75) * screenWidth2World);
-		PlayerPrefs.SetFloat ("HittingPos", t);
-		noteStartX = musicBarLayerOffset + screenWidth2World / 2;
+		float t = (float)(musicBarLayerOffset - (0.5-0.3*0.85)*screenWidth2World);
+		PlayerPrefs.SetFloat ("HittingCenter", t);
+		noteStartX = PlayerPrefs.GetFloat ("HittingCenter") + PlayerPrefs.GetFloat ("noteSpeed") * 200;//musicBarLayerOffset + screenWidth2World / 2;
 
 		signal1 = 0;
 		signal2 = 0;
@@ -86,6 +88,7 @@ public class Phase1 : MonoBehaviour {
 		//PlayerPrefs.SetInt ("HittingPeriod", 0);
 
 		preGenerateMusicNote ();
+		hittingArea = Instantiate (hittingArea, new Vector3 (PlayerPrefs.GetFloat ("HittingCenter"), 0.0f, 51.95f), Quaternion.identity) as HittingArea;
 
 		//audio
 		qSamples  = 1024;  // array size
@@ -144,8 +147,11 @@ public class Phase1 : MonoBehaviour {
 				else if (n.tag == "P1P2Note")
 					note2 = n;
 			}
-			if (n.inBeatingCenter() && n.tag == "P1P1Note")
+			if (n.tag == "TransNote" && n.inBeatingCenter()) {
 				BeatFlashPlane.BeatFlash();
+				hittingArea.enlarge();
+				Destroy(n.gameObject);
+			}
 		}
 		
 		//player one input dectection
@@ -290,7 +296,7 @@ public class Phase1 : MonoBehaviour {
 
 	void preGenerateMusicNote()
 	{
-		float endPos = PlayerPrefs.GetFloat ("HittingPos");
+		float endPos = PlayerPrefs.GetFloat ("HittingCenter");
 		float curPos = noteStartX;
 		while (curPos > endPos)
 		{
@@ -308,6 +314,12 @@ public class Phase1 : MonoBehaviour {
 		GameObject p2 = Instantiate(notetoSpwan, new Vector3(posX, 0.0f, 51.95f), 
 		                            Quaternion.Euler(new Vector3(0.0f, 90.0f, 90.0f))) as GameObject;
 		p2.tag = "P1P2Note";
+
+
+		GameObject p = Instantiate(notetoSpwan, new Vector3(posX, 0.0f, 20.0f), 
+		                            Quaternion.Euler(new Vector3(0.0f, 90.0f, 90.0f))) as GameObject;
+		p.renderer.material = transMaterial;
+		p.tag = "TransNote";
 	}
 	
 	void generateObstacle1()
@@ -341,7 +353,7 @@ public class Phase1 : MonoBehaviour {
 		GUI.Button (new Rect(0, 0, (float)(actionBarWidth*0.7), beatBarHeight), keySequence);
 
 		GUI.backgroundColor = Color.green;
-		GUI.Button (new Rect((float)(actionBarWidth*0.7), 0, (float)(actionBarWidth * 0.3), beatBarHeight), "");
+		//GUI.Button (new Rect((float)(actionBarWidth*0.7), 0, (float)(actionBarWidth * 0.3), beatBarHeight), "");
 		
 		GUILayout.EndHorizontal();
 		GUILayout.EndArea();

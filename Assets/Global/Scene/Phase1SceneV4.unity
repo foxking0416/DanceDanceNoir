@@ -2250,8 +2250,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   notetoSpwan: {fileID: 100000, guid: 5fe2a935cf9b9d24c967d21974872f3b, type: 2}
+  transMaterial: {fileID: 2100000, guid: 685e16eabac097247adaab921090d9ec, type: 2}
   beatBarBg: {fileID: 393918747}
   musicCamera: {fileID: 1500500513}
+  hittingArea: {fileID: 11400000, guid: 74795003dcc912446a3c566fb9e2dffc, type: 2}
   player1: {fileID: 0}
   player2: {fileID: 0}
   BeatFlashPlane: {fileID: 291412571}
