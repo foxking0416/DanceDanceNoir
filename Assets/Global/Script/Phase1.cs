@@ -180,7 +180,10 @@ public class Phase1 : MonoBehaviour {
 				if(++keyMiss2 >= maxKeyMiss2)
 				{
 					keyMiss2  = 0;
-					generateObstacle1();
+
+					if (player1 == null)
+						player1 = (PlayerOne)FindObjectOfType (typeof(PlayerOne));
+				 	player1.increaseObstacleSpeed();
 
 					// TODO: Change this!! Player one should be responsible for all obstacle generation.
 				}
