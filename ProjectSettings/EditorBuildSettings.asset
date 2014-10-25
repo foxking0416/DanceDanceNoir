@@ -15,3 +15,7 @@ EditorBuildSettings:
     path: Assets/Global/Scene/GameStartScene.unity
   - enabled: 1
     path: Assets/Global/Scene/Phase1SceneV4.unity
+  - enabled: 1
+    path: Assets/Global/Scene/GameLoseScene.unity
+  - enabled: 1
+    path: Assets/Global/Scene/GameWinScene.unity

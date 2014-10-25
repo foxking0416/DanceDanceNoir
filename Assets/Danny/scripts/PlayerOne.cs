@@ -157,6 +157,7 @@ public class PlayerOne : MonoBehaviour
 	private void GameOver()
 	{
 		// TODO: Implement this method.
+		Application.LoadLevel("GameLoseScene");//Win
 		Debug.Log( "Game over player one." );
 	}
 

@@ -65,7 +65,7 @@ public class GlobalScript : MonoBehaviour {
 		collectedEvidence++;
 		openCabinetStatus.Add (color);
 		if(collectedEvidence == 5)
-			Application.LoadLevel("Phase2Scene");//Win
+			Application.LoadLevel("GameWinScene");//Win
 	}
 
 }

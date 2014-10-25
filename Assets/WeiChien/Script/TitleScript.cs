@@ -3,14 +3,16 @@ using System.Collections;
 
 public class TitleScript : MonoBehaviour {
 
+	public AudioClip titleAudio;
+
 	// Use this for initialization
 	void Start () {
-
+		AudioSource.PlayClipAtPoint (titleAudio, gameObject.transform.position);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		
 	}
 
 
@@ -34,6 +36,7 @@ public class TitleScript : MonoBehaviour {
 			Debug.Log ("Application.Quit() only works in build, not in editor");
 		}
 		GUILayout.EndArea();
-
 	}
+
+
 }
