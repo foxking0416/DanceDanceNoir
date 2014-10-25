@@ -69,8 +69,8 @@ public class GridMap : MonoBehaviour {
 		
 		//UpdateObjectsStatus (11, 2, 15);//super energy
 		
-		//UpdateObjectsStatus (11, 11, 11);//enemy
-		//UpdateObjectsStatus (12, 11, 11);//enemy
+		UpdateObjectsStatus (11, 11, 11);//enemy
+		UpdateObjectsStatus (12, 11, 11);//enemy
 
 		UpdateObjectsStatus (20, 14, 21);//blue cabinet
 		UpdateObjectsStatus (15, 1, 22);//yellow cabinet
@@ -126,12 +126,14 @@ public class GridMap : MonoBehaviour {
 				objChair.tag = "Chair";
 				objChair.transform.localScale = new Vector3(5, 5, 5);
 				objChair.transform.localRotation = Quaternion.Euler( new Vector3(0, 0, 0));
+				objectMap[i % width + 1 + (width + 2) * (i / width + 1)] = objChair;
 				break;
 			case 211://Add obstacle chair
 				GameObject objChaira = Instantiate (gameObjObstacleChair, ComputePosition(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;	
 				objChaira.tag = "Chair";
 				objChaira.transform.localScale = new Vector3(5, 5, 5);
 				objChaira.transform.localRotation = Quaternion.Euler( new Vector3(0, 270, 0));
+				objectMap[i % width + 1 + (width + 2) * (i / width + 1)] = objChaira;
 				break;
 			case 3://Add obstacle table
 				GameObject objTable = Instantiate (gameObjObstacleTable, ComputePosition(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;	
@@ -146,6 +148,15 @@ public class GridMap : MonoBehaviour {
 				UpdateObjectsStatus(i % width + 2, i / width, 10);
 				UpdateObjectsStatus(i % width + 2, i / width + 1, 10);
 				UpdateObjectsStatus(i % width + 2, i / width + 2, 10);
+				objectMap[i % width + 0 + (width + 2) * (i / width + 0)] = objTable;
+				objectMap[i % width + 1 + (width + 2) * (i / width + 0)] = objTable;
+				objectMap[i % width + 2 + (width + 2) * (i / width + 0)] = objTable;
+				objectMap[i % width + 0 + (width + 2) * (i / width + 1)] = objTable;
+				objectMap[i % width + 1 + (width + 2) * (i / width + 1)] = objTable;
+				objectMap[i % width + 2 + (width + 2) * (i / width + 1)] = objTable;
+				objectMap[i % width + 0 + (width + 2) * (i / width + 2)] = objTable;
+				objectMap[i % width + 1 + (width + 2) * (i / width + 2)] = objTable;
+				objectMap[i % width + 2 + (width + 2) * (i / width + 2)] = objTable;
 				break;
 			case 4://Add obstacle Refrigerator
 				GameObject objRefrigerator = Instantiate (gameObjObstacleRefrigerator, ComputePosition(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;
@@ -153,6 +164,7 @@ public class GridMap : MonoBehaviour {
 				objRefrigerator.transform.localScale = new Vector3(5, 5, 5);
 				objRefrigerator.transform.localRotation = Quaternion.Euler( new Vector3(0, 180, 0));
 				objectMap[i % width + 1 + (width + 2) * (i / width + 1)] = objRefrigerator;
+
 				break;
 			case 5://Add obstacle Stove
 				GameObject objStove = Instantiate (gameObjObstacleStove, ComputePosition_Stove(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;
@@ -169,13 +181,15 @@ public class GridMap : MonoBehaviour {
 				objChair2.tag = "Chair";
 				objChair2.transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
 				objChair2.transform.localRotation = Quaternion.Euler( new Vector3(270, 270, 0));
+				objectMap[i % width + 1 + (width + 2) * (i / width + 1)] = objChair2;
 				break;
 			case 11://Add Enemy
-				GameObject objEnemy = Instantiate (gameObjEnemy, ComputePosition(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;	
+				GameObject objEnemy = Instantiate (gameObjEnemy, ComputePosition_Enemy(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;	
 				objEnemy.tag = "Enemy";
 				EnemyScript enemy = objEnemy.GetComponent<EnemyScript>();
 				enemy.positionX = i % width + 1;
 				enemy.positionZ = i / width + 1;
+				objectMap[i % width + 1 + (width + 2) * (i / width + 1)] = objEnemy;
 				break;
 			case 15://Add Super Energy
 				GameObject objSuperEnergy = Instantiate (gameObjSuperEnergy, ComputePosition_SuperEnergy(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;	
@@ -185,6 +199,7 @@ public class GridMap : MonoBehaviour {
 				SuperEnergyScript superEnergy = objSuperEnergy.GetComponent<SuperEnergyScript>();
 				superEnergy.positionX = i % width + 1;
 				superEnergy.positionZ = i / width + 1;
+				objectMap[i % width + 1 + (width + 2) * (i / width + 1)] = objSuperEnergy;
 				break;
 			case 21://Add Blue Cabinet
 				GameObject objCabinetBlue = Instantiate (gameObjCase, ComputePosition_Case(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;
@@ -195,6 +210,7 @@ public class GridMap : MonoBehaviour {
 				cabinetBlue.positionX = i % width + 1;
 				cabinetBlue.positionZ = i / width + 1;
 				cabinetBlue.SetColor(21);
+				objectMap[i % width + 1 + (width + 2) * (i / width + 1)] = objCabinetBlue;
 				break;
 			case 22://Add Yellow Cabinet
 				GameObject objCabinetYellow = Instantiate (gameObjCase, ComputePosition_Case(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;
@@ -205,6 +221,7 @@ public class GridMap : MonoBehaviour {
 				cabinetYellow.positionX = i % width + 1;
 				cabinetYellow.positionZ = i / width + 1;
 				cabinetYellow.SetColor(22);
+				objectMap[i % width + 1 + (width + 2) * (i / width + 1)] = objCabinetYellow;
 				break;
 			case 23://Add Red Cabinet
 				GameObject objCabinetRed = Instantiate (gameObjCase, ComputePosition_Case(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;
@@ -214,8 +231,8 @@ public class GridMap : MonoBehaviour {
 				CabinetScript cabinetRed = objCabinetRed.GetComponent<CabinetScript>();
 				cabinetRed.positionX = i % width + 1;
 				cabinetRed.positionZ = i / width + 1;
-
 				cabinetRed.SetColor(23);
+				objectMap[i % width + 1 + (width + 2) * (i / width + 1)] = objCabinetRed;
 				break;
 			case 24://Add Green Cabinet
 				GameObject objCabinetGreen = Instantiate (gameObjCase, ComputePosition_Case(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;
@@ -226,6 +243,7 @@ public class GridMap : MonoBehaviour {
 				cabinetGreen.positionX = i % width + 1;
 				cabinetGreen.positionZ = i / width + 1;
 				cabinetGreen.SetColor(24);
+				objectMap[i % width + 1 + (width + 2) * (i / width + 1)] = objCabinetGreen;
 				break;
 			case 25://Add Orange Cabinet
 				GameObject objCabinetOrange = Instantiate (gameObjCase, ComputePosition_Case(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;
@@ -236,6 +254,7 @@ public class GridMap : MonoBehaviour {
 				cabinetOrange.positionX = i % width + 1;
 				cabinetOrange.positionZ = i / width + 1;
 				cabinetOrange.SetColor(25);
+				objectMap[i % width + 1 + (width + 2) * (i / width + 1)] = objCabinetOrange;
 				break;
 
 			case 31: //Add Blue key
@@ -320,6 +339,26 @@ public class GridMap : MonoBehaviour {
 		}
 	}
 
+	public void GenerateEnemy(){
+		int indexX = Random.Range (1, 21);
+		int indexZ = Random.Range (1, 21);
+
+
+		while (GetObjectTypeOnMap(indexX, indexZ) != 0) {
+			indexX = Random.Range (1, 21);
+         	indexZ = Random.Range (1, 21);
+		}
+		int index = (indexZ - 1) * width + (indexX - 1);
+
+		GameObject objEnemy = Instantiate (gameObjEnemy, ComputePosition(index % width + 1, 0,  index / width + 1), Quaternion.identity) as GameObject;	
+		objEnemy.tag = "Enemy";
+		EnemyScript enemy = objEnemy.GetComponent<EnemyScript>();
+		enemy.positionX = index % width + 1;
+		enemy.positionZ = index / width + 1;
+		objectMap[index % width + 1 + (width + 2) * (index / width + 1)] = objEnemy;
+		Debug.Log("Create Enemy!!!!");
+	}
+
 	public int GetObjectTypeOnMap(int indexX, int indexZ){
 		int index = (indexZ - 1) * width + (indexX - 1);
 		return map [index];
@@ -334,13 +373,26 @@ public class GridMap : MonoBehaviour {
 			return objectMap [index];
 	}
 
+	public void UpdateObjectOnObjectMap(int indexX, int indexZ, GameObject obj){
+		int index = (indexZ) * (width + 2) + (indexX );
+
+		objectMap [index] = obj;
+	}
+
+
 	public void UpdateObjectsStatus(int indexX, int indexZ, int objectStatus){
 		int index = (indexZ - 1) * width + (indexX - 1);
 		map [index] = objectStatus;
 	}
 
+
 	Vector3 ComputePosition(int x, int y, int z){
 		Vector3 pos = new Vector3 (-2.5f + x * 5.0f, 0.0f, -2.5f + z * 5.0f);
+		return pos;
+	}
+
+	Vector3 ComputePosition_Enemy(int x, int y, int z){
+		Vector3 pos = new Vector3 (-2.5f + x * 5.0f, 1.5f, -2.5f + z * 5.0f);
 		return pos;
 	}
 

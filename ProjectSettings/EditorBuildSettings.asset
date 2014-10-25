@@ -7,7 +7,11 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Global/Scene/GameStartScene.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/Global/Scene/Phase1SceneV2.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/Global/Scene/Phase2SceneV1.unity
+  - enabled: 0
+    path: Assets/Global/Scene/GameStartScene.unity
+  - enabled: 1
+    path: Assets/Global/Scene/Phase1SceneV4.unity

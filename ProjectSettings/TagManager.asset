@@ -39,6 +39,11 @@ TagManager:
   - Player1BeatMissPlane
   - Player2BeatMissPlane
   - TransNote
+  - CaseRedForShow
+  - CaseGreenForShow
+  - CaseYellowForShow
+  - CaseOrangeForShow
+  - CaseBlueForShow
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX
