@@ -9,20 +9,7 @@ public class PlayerOne : MonoBehaviour
 	// Game object members.
 	////////////////////////////////////////////////////
 
-
-
-
 	private GameObject gameObjPhase1;
-
-	// Player states.
-	private bool isColliding;
-	private bool isJumping;
-	private bool isFalling;
-	private bool isSliding;
-	private bool isUping;
-	private bool isSprinting;
-	
-
 
 	// Temporary variables used for development and testing.
 	private int jumpBeat = 0;
@@ -53,6 +40,10 @@ public class PlayerOne : MonoBehaviour
 	private int current_num_beats_between_key_generation;
 	private int num_beats_since_last_key_generation;
 
+	private int min_lane;
+	private int max_lane;
+	private int current_lane;
+
 	////////////////////////////////////////////////////
 	// Game object initialization.
 	////////////////////////////////////////////////////
@@ -64,12 +55,6 @@ public class PlayerOne : MonoBehaviour
 
 		gameObjGrid = GameObject.FindGameObjectWithTag ("Grid");
 		grid = gameObjGrid.GetComponent< Grid > ();
-		
-		isColliding = false;
-		isJumping = false;
-		isFalling = false;
-		isSprinting = false;
-		isSliding = false;
 
 		// Danny was here.
 		num_beats_between_obstacle_movement = 1;
@@ -87,6 +72,10 @@ public class PlayerOne : MonoBehaviour
 		num_beats_between_key_generation_max = 51;
 		current_num_beats_between_key_generation = getWaitTimeUntilNextKey();
 		num_beats_since_last_key_generation = 0;
+
+		min_lane = 1;
+		max_lane = 3;
+		current_lane = 2;
 	}
 
 
@@ -150,7 +139,6 @@ public class PlayerOne : MonoBehaviour
 	}
 
 
-
 	////////////////////////////////////////////////////
 	// Method to handle actions that occur when player one has lost the game.
 	////////////////////////////////////////////////////
@@ -162,11 +150,8 @@ public class PlayerOne : MonoBehaviour
 	}
 
 
-
-
-
-	public void trigger(int actionType){
-
+	public void trigger( int actionType )
+	{
 		// Danny was here.
 		++num_beats_since_last_obstacle_movement;
 		++num_beats_since_last_obstacle_generation;
@@ -204,27 +189,30 @@ public class PlayerOne : MonoBehaviour
 
 		//Action: Sprint
 		if(actionType == 1) {
-			if( !isSliding && !isUping && !isFalling && !isJumping 
-			   && grid.hasObstacle(playerPositionDiscreteX+1, playerPositionDiscreteY) == false){
-				sprint();	
-			}	
+			if( grid.hasObstacle( playerPositionDiscreteX + 1, playerPositionDiscreteY ) == false ){
+				playerPositionDiscreteX++;
+				transform.position = grid.computePlayerPosition (playerPositionDiscreteX, playerPositionDiscreteY);
+			}
 		}
 
 		//Action: Jump
 		if (actionType == 2) {
-			if(!isSliding && !isUping && !isFalling && !isJumping ){
-				isJumping = true;
-				jump();
-			}	
+			if ( current_lane < max_lane ) {
+				++current_lane;
+
+				playerPositionDiscreteY++;
+				transform.position = grid.computePlayerPosition (playerPositionDiscreteX, playerPositionDiscreteY);
+			}
 		}
 
 		//Action: Slide
 		if(actionType == 3) {
-			if( !isSliding && !isUping && !isFalling && !isJumping ){
-				isSliding = true;
-				slide();
-				
-			}	
+			if ( current_lane > min_lane ) {
+				--current_lane;
+
+				playerPositionDiscreteY--;
+				transform.position = grid.computePlayerPosition (playerPositionDiscreteX, playerPositionDiscreteY);
+			}
 		}
 
 		GameObject objKeyBlue = GameObject.FindGameObjectWithTag("BlueKey");
@@ -273,24 +261,6 @@ public class PlayerOne : MonoBehaviour
 					pushBack();
 			}
 		}
-		
-		if (isJumping) {
-			jumpBeat++;	
-		}
-		if (jumpBeat >= 2 && grid.hasObstacle(playerPositionDiscreteX, 1) == false) {
-			jumpBeat = 0;
-			jumpFall();
-			isJumping = false;
-		}
-		
-		if (isSliding) {
-			slideBeat++;	
-		}
-		if (slideBeat >= 2 && grid.hasObstacle(playerPositionDiscreteX, 1) == false) {
-			slideBeat = 0;
-			slideUp();
-			isSliding = false;
-		}
 
 		//If player collide with keys, then collect the key
 		int keyStatus = grid.hasKeys (playerPositionDiscreteX, playerPositionDiscreteY);
@@ -338,51 +308,4 @@ public class PlayerOne : MonoBehaviour
 		}
 
 	}
-	////////////////////////////////////////////////////
-	// Player should jump.
-	////////////////////////////////////////////////////
-	private void jump(){
-		//grid.setObjectInGrid (playerPositionDiscreteX, playerPositionDiscreteY, -1);
-		playerPositionDiscreteY++;
-		//grid.setObjectInGrid (playerPositionDiscreteX, playerPositionDiscreteY, 0);
-		transform.position = grid.computePlayerPosition (playerPositionDiscreteX, playerPositionDiscreteY);
-	}
-
-	private void jumpFall(){
-		//grid.setObjectInGrid (playerPositionDiscreteX, playerPositionDiscreteY, -1);
-		playerPositionDiscreteY--;
-		//grid.setObjectInGrid (playerPositionDiscreteX, playerPositionDiscreteY, 0);
-		transform.position = grid.computePlayerPosition (playerPositionDiscreteX, playerPositionDiscreteY);
-	}
-
-	////////////////////////////////////////////////////
-	// Player should slide.
-	////////////////////////////////////////////////////
-	private void slide(){
-		//grid.setObjectInGrid (playerPositionDiscreteX, playerPositionDiscreteY, -1);
-		playerPositionDiscreteY--;
-		//grid.setObjectInGrid (playerPositionDiscreteX, playerPositionDiscreteY, 0);
-		transform.position = grid.computePlayerPosition (playerPositionDiscreteX, playerPositionDiscreteY);
-
-	}
-
-	private void slideUp(){
-		//grid.setObjectInGrid (playerPositionDiscreteX, playerPositionDiscreteY, -1);
-		playerPositionDiscreteY++;
-		//grid.setObjectInGrid (playerPositionDiscreteX, playerPositionDiscreteY, 0);
-		transform.position = grid.computePlayerPosition (playerPositionDiscreteX, playerPositionDiscreteY);
-
-	}
-
-
-	////////////////////////////////////////////////////
-	// Player should sprint.
-	////////////////////////////////////////////////////
-	private void sprint(){
-		//grid.setObjectInGrid (playerPositionDiscreteX, playerPositionDiscreteY, -1);
-		playerPositionDiscreteX++;
-		//grid.setObjectInGrid (playerPositionDiscreteX, playerPositionDiscreteY, 0);
-		transform.position = grid.computePlayerPosition (playerPositionDiscreteX, playerPositionDiscreteY);
-	}
-	
 }
