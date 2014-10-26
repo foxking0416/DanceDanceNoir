@@ -41,12 +41,7 @@ public class MusicNote : MonoBehaviour {
 
 				if (player2 == null)
 					player2 = (Character2Script) FindObjectOfType(typeof(Character2Script));
-				/*
-				GameObject[] stars = GameObject.FindGameObjectsWithTag("Enemy");
-				foreach(GameObject s in stars){
-					EnemyScript star = s.GetComponent<EnemyScript>();
-					star.RandomMove();
-				}*/
+
 
 				Destroy (gameObject);
 				//Debug.Log("0");

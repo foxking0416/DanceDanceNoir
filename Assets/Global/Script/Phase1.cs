@@ -181,6 +181,14 @@ public class Phase1 : MonoBehaviour {
 				beatAuido.audio.Play ();
 				hittingArea.enlarge();
 				Destroy(n.gameObject);
+
+				GameObject[] stars = GameObject.FindGameObjectsWithTag("Enemy");
+				foreach(GameObject s in stars){
+					EnemyScript star = s.GetComponent<EnemyScript>();
+					star.countBeat();
+				}
+
+				player2.DoNothing();
 			}
 		}
 		

@@ -53,6 +53,7 @@ public class GridMap : MonoBehaviour {
 		UpdateObjectsStatus (9, 18, 1);
 		UpdateObjectsStatus (9, 19, 1);
 		UpdateObjectsStatus (9, 20, 1);
+		UpdateObjectsStatus (15, 14, 1);
 		UpdateObjectsStatus (15, 13, 1);
 		UpdateObjectsStatus (16, 13, 1);
 		UpdateObjectsStatus (17, 13, 1);

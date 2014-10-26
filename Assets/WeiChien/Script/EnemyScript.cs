@@ -12,7 +12,8 @@ public class EnemyScript : MonoBehaviour {
 	float timer;
 	float beatTime;
 	float rotateAngle = 60;
-
+	int moveBeatCount = 0;
+	int beatNeedToMove = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -22,7 +23,7 @@ public class EnemyScript : MonoBehaviour {
 		timer = 0;
 		beatTime = 2.50f;
 
-
+		beatNeedToMove = Random.Range (1, 5);
 	}
 	
 	// Update is called once per frame
@@ -41,10 +42,20 @@ public class EnemyScript : MonoBehaviour {
 	public void Destroy(){
 		GameObject phase1 = GameObject.Find ("Phase1");
 		Phase1 phase1Obj = phase1.GetComponent<Phase1> ();
-		phase1Obj.noteSpeedDecrease ();
+		phase1Obj.noteSpeedReset ();
 		map.UpdateObjectsStatus (positionX, positionZ, 0);
 		map.UpdateObjectOnObjectMap (positionX, positionZ, null);
 		Destroy (gameObject);
+	}
+
+	public void countBeat(){
+		moveBeatCount++;
+
+		if (moveBeatCount > beatNeedToMove) {
+			moveBeatCount = 0;
+			RandomMove();
+			beatNeedToMove = Random.Range (1, 5);
+		}
 	}
 
 	public void RandomMove(){
@@ -72,19 +83,23 @@ public class EnemyScript : MonoBehaviour {
 		map.UpdateObjectsStatus (positionX, positionZ, 0);
 		map.UpdateObjectOnObjectMap (positionX, positionZ, null);
 		++positionZ;
-		
+		bool moveSuccess = true;
 		if (positionZ > width) {
-						--positionZ;		
+			--positionZ;	
+			moveSuccess = false;
 		} 
 		else {
-				int objectType = map.GetObjectTypeOnMap (positionX, positionZ);
-				if (!CanWalkThrough (objectType)) {
-						--positionZ;		
-				}
+			int objectType = map.GetObjectTypeOnMap (positionX, positionZ);
+			if (!CanWalkThrough (objectType)) {
+				--positionZ;	
+				moveSuccess = false;
+			}
 		}
 		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
 		map.UpdateObjectsStatus (positionX, positionZ, 11);
 		map.UpdateObjectOnObjectMap (positionX, positionZ, gameObject);
+		if (moveSuccess == false)
+			RandomMove ();
 	}
 	
 	void MoveLeft(){
@@ -92,19 +107,23 @@ public class EnemyScript : MonoBehaviour {
 		map.UpdateObjectsStatus (positionX, positionZ, 0);
 		map.UpdateObjectOnObjectMap (positionX, positionZ, null);
 		--positionX;
-		
+		bool moveSuccess = true;
 		if (positionX < 1) {
-			++positionX;		
+			++positionX;
+			moveSuccess = false;
 		} 
 		else {
 			int objectType = map.GetObjectTypeOnMap (positionX, positionZ);
 			if (!CanWalkThrough (objectType)) {
-					++positionX;		
+				++positionX;
+				moveSuccess = false;
 			}
 		}
 		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
 		map.UpdateObjectsStatus (positionX, positionZ, 11);
 		map.UpdateObjectOnObjectMap (positionX, positionZ, gameObject);
+		if (moveSuccess == false)
+			RandomMove ();
 	}
 	
 	void MoveDown(){
@@ -112,20 +131,24 @@ public class EnemyScript : MonoBehaviour {
 		map.UpdateObjectsStatus (positionX, positionZ, 0);
 		map.UpdateObjectOnObjectMap (positionX, positionZ, null);
 		--positionZ;
-		
+		bool moveSuccess = true;
 		if (positionZ < 1) {
-			++positionZ;		
+			++positionZ;	
+			moveSuccess = false;
 		} 
 		else {
 			int objectType = map.GetObjectTypeOnMap (positionX, positionZ);
 			if (!CanWalkThrough (objectType)) {
-					++positionZ;		
+				++positionZ;
+				moveSuccess = false;
 			}
 		}
 		
 		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
 		map.UpdateObjectsStatus (positionX, positionZ, 11);
 		map.UpdateObjectOnObjectMap (positionX, positionZ, gameObject);
+		if (moveSuccess == false)
+			RandomMove ();
 	}
 	
 	void MoveRight(){
@@ -133,18 +156,23 @@ public class EnemyScript : MonoBehaviour {
 		map.UpdateObjectsStatus (positionX, positionZ, 0);
 		map.UpdateObjectOnObjectMap (positionX, positionZ, null);
 		++positionX;
+		bool moveSuccess = true;
 		if (positionX > width) {
 			--positionX;		
+			moveSuccess = false;
 		} 
 		else {
 			int objectType = map.GetObjectTypeOnMap (positionX, positionZ);
 			if (!CanWalkThrough (objectType)) {
-					--positionX;		
+				--positionX;	
+				moveSuccess = false;
 			}
 		}
 		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
 		map.UpdateObjectsStatus (positionX, positionZ, 11);
 		map.UpdateObjectOnObjectMap (positionX, positionZ, gameObject);
+		if (moveSuccess == false)
+			RandomMove ();
 	}
 
 	Vector3 ComputePosition(int x, int y, int z){
@@ -153,7 +181,7 @@ public class EnemyScript : MonoBehaviour {
 	}
 
 	bool CanWalkThrough(int type){
-		if (type == 1 || type == 2 || type == 3 || type == 4 || type == 5 || type == 6|| type == 10 || type == 21 || type == 22 || type == 23 || type == 24 || type == 25)
+		if (type == 1 || type == 2 || type == 211 || type == 3 || type == 4 || type == 5 || type == 6|| type == 10 || type == 11 || type == 21 || type == 22 || type == 23 || type == 24 || type == 25)
 			return false;
 		else 
 			return true;

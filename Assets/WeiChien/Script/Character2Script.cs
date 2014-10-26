@@ -125,8 +125,6 @@ public class Character2Script : MonoBehaviour {
 	
 	
 	public void MoveUp(){
-		if(startCount == true)
-			beatCount++;
 		int faceDir = direction / 90;
 		if (faceDir == 0) {
 			++positionZ;
@@ -180,8 +178,6 @@ public class Character2Script : MonoBehaviour {
 	}
 
 	public void MoveDown(){
-		if(startCount == true)
-			beatCount++;
 		int faceDir = direction / 90;
 		if (faceDir == 0) {
 			--positionZ;
@@ -235,8 +231,6 @@ public class Character2Script : MonoBehaviour {
 	}
 
 	public void MoveLeft(){
-		if(startCount == true)
-			beatCount++;
 		int faceDir = direction / 90;
 		
 		if(faceDir == 0) {
@@ -291,8 +285,6 @@ public class Character2Script : MonoBehaviour {
 	}
 	
 	public void MoveRight(){
-		if(startCount == true)
-			beatCount++;
 		int faceDir = direction / 90;
 		
 		if(faceDir == 0) {
@@ -347,14 +339,10 @@ public class Character2Script : MonoBehaviour {
 	}
 	
 	public void TurnLeft(){
-		if(startCount == true)
-			beatCount++;
 		turnLeft = true;
 	}
 	
 	public void TurnRight(){
-		if(startCount == true)
-			beatCount++;
 		turnRight = true;
 	}
 	
@@ -408,8 +396,6 @@ public class Character2Script : MonoBehaviour {
 
 	
 	public void OpenCabinet(){
-		if(startCount == true)
-			beatCount++;
 		if(global.holdKeyStatus == 31 && CheckAround(positionX, positionZ, 21)){
 			//if(holdKeyStatus == 31 && CheckAround(positionX, positionZ, 21)){
 			GameObject objCabinetBlue = GameObject.FindGameObjectWithTag ("BlueCabinet");
@@ -485,8 +471,6 @@ public class Character2Script : MonoBehaviour {
 
 	
 	public void PickUpSuperEnergy(){
-		if(startCount == true)
-			beatCount++;
 		if (globalObjectType == 2) {
 			Debug.Log ("Pick up Super energy");
 			GameObject objSuperEnergy = GameObject.FindGameObjectWithTag ("SuperEnergy");
@@ -501,7 +485,7 @@ public class Character2Script : MonoBehaviour {
 	}
 
 	bool CanWalkThrough(int type){
-		if (type == 1 || type == 2 || type == 3 || type == 4 || type == 5 || type == 6 || type == 10 || type == 21 || type == 22 || type == 23 || type == 24 || type == 25)
+		if (type == 1 || type == 2 || type == 211 || type == 3 || type == 4 || type == 5 || type == 6 || type == 10 || type == 21 || type == 22 || type == 23 || type == 24 || type == 25)
 			return false;
 		else 
 			return true;
