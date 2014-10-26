@@ -27,13 +27,14 @@ public class EnemyScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		timer += Time.deltaTime;
+		//timer += Time.deltaTime;
 		rotateAngle += Time.deltaTime * 200;
-		if (timer > beatTime) {
+		/*if (timer > beatTime) {
 			RandomMove();
 			timer = 0;
-		}
-
+		}*/
+		if(Input.GetKeyDown(KeyCode.G))
+			RandomMove();
 		gameObject.transform.localRotation = Quaternion.Euler (new Vector3 (0, rotateAngle, 0));
 	}
 
@@ -72,14 +73,15 @@ public class EnemyScript : MonoBehaviour {
 		map.UpdateObjectOnObjectMap (positionX, positionZ, null);
 		++positionZ;
 		
-		if (positionZ > width ) {
-			--positionZ;		
+		if (positionZ > width) {
+						--positionZ;		
 		} 
-		int objectType = map.GetObjectTypeOnMap (positionX, positionZ);
-		if (!CanWalkThrough(objectType)) {
-			--positionZ;		
+		else {
+				int objectType = map.GetObjectTypeOnMap (positionX, positionZ);
+				if (!CanWalkThrough (objectType)) {
+						--positionZ;		
+				}
 		}
-		
 		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
 		map.UpdateObjectsStatus (positionX, positionZ, 11);
 		map.UpdateObjectOnObjectMap (positionX, positionZ, gameObject);
@@ -93,12 +95,13 @@ public class EnemyScript : MonoBehaviour {
 		
 		if (positionX < 1) {
 			++positionX;		
+		} 
+		else {
+			int objectType = map.GetObjectTypeOnMap (positionX, positionZ);
+			if (!CanWalkThrough (objectType)) {
+					++positionX;		
+			}
 		}
-		int objectType = map.GetObjectTypeOnMap (positionX, positionZ);
-		if (!CanWalkThrough(objectType)) {
-			++positionX;		
-		}
-
 		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
 		map.UpdateObjectsStatus (positionX, positionZ, 11);
 		map.UpdateObjectOnObjectMap (positionX, positionZ, gameObject);
@@ -112,10 +115,12 @@ public class EnemyScript : MonoBehaviour {
 		
 		if (positionZ < 1) {
 			++positionZ;		
-		}
-		int objectType = map.GetObjectTypeOnMap (positionX, positionZ);
-		if (!CanWalkThrough(objectType)) {
-			++positionZ;		
+		} 
+		else {
+			int objectType = map.GetObjectTypeOnMap (positionX, positionZ);
+			if (!CanWalkThrough (objectType)) {
+					++positionZ;		
+			}
 		}
 		
 		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
@@ -130,10 +135,12 @@ public class EnemyScript : MonoBehaviour {
 		++positionX;
 		if (positionX > width) {
 			--positionX;		
-		}
-		int objectType = map.GetObjectTypeOnMap (positionX, positionZ);
-		if (!CanWalkThrough(objectType)) {
-			--positionX;		
+		} 
+		else {
+			int objectType = map.GetObjectTypeOnMap (positionX, positionZ);
+			if (!CanWalkThrough (objectType)) {
+					--positionX;		
+			}
 		}
 		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
 		map.UpdateObjectsStatus (positionX, positionZ, 11);
