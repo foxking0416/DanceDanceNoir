@@ -10,6 +10,8 @@ public class Phase1 : MonoBehaviour {
 	public Material transMaterial;
 	int timing;
 	int noteSpwanDuration;
+	int noteSpeedChangeTiming;
+	int noteSpeedChangePeriod;
 
 	int signal1, signal2;
 	bool isToClear;
@@ -53,8 +55,10 @@ public class Phase1 : MonoBehaviour {
 	void Start () {
 		musicBarLayerOffset = 150.0f;
 
-		timing = 0;
-		noteSpwanDuration = 22;
+		timing = noteSpwanDuration;
+		noteSpwanDuration = 30;
+		noteSpeedChangeTiming = noteSpeedChangePeriod;
+		noteSpeedChangePeriod = 100;
 		PlayerPrefs.SetFloat ("noteSpeed", 0.035f);
 
 		beatBarHeight = (int)(Screen.height * 0.06);
@@ -115,6 +119,12 @@ public class Phase1 : MonoBehaviour {
 			generateNewNote(noteStartX);
 		}
 
+		if (noteSpeedChangeTiming-- <= 0)
+		{
+			noteSpeedChangeTiming = noteSpeedChangePeriod;
+			noteSpeedIncrese();
+		}
+
 		if (isToClear)
 		{
 			keySequence = "";
@@ -149,6 +159,7 @@ public class Phase1 : MonoBehaviour {
 			}
 			if (n.tag == "TransNote" && n.inBeatingCenter()) {
 				BeatFlashPlane.BeatFlash();
+				musicCamera.audio.Play ();
 				hittingArea.enlarge();
 				Destroy(n.gameObject);
 			}
@@ -183,7 +194,8 @@ public class Phase1 : MonoBehaviour {
 
 					if (player1 == null)
 						player1 = (PlayerOne)FindObjectOfType (typeof(PlayerOne));
-				 	player1.increaseObstacleSpeed();
+					if (player1 == null)
+				 		player1.increaseObstacleSpeed();
 
 					// TODO: Change this!! Player one should be responsible for all obstacle generation.
 				}
@@ -337,6 +349,17 @@ public class Phase1 : MonoBehaviour {
 		}
 		ObstacleGenerator obsGen = gameObjCrate.GetComponent<ObstacleGenerator>();
 		obsGen.CreateCrate();
+	}
+
+	void noteSpeedIncrese()
+	{
+		noteSpwanDuration -= 2;
+		noteSpwanDuration = (noteSpwanDuration < 18) ? 18 : noteSpwanDuration;
+	}
+
+	void noteSpeedDecrease()
+	{
+		noteSpwanDuration += 2;
 	}
 
 	void OnGUI()
