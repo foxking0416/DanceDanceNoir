@@ -56,9 +56,11 @@ public class Phase1 : MonoBehaviour {
 		musicBarLayerOffset = 150.0f;
 
 
-		timing = 0;
-		noteSpwanDuration = 27;
-		PlayerPrefs.SetFloat ("noteSpeed", 0.028f);
+		timing = noteSpwanDuration;
+		noteSpwanDuration = 30;
+		noteSpeedChangeTiming = noteSpeedChangePeriod;
+		noteSpeedChangePeriod = 100;
+		PlayerPrefs.SetFloat ("noteSpeed", 0.035f);
 
 
 		beatBarHeight = (int)(Screen.height * 0.06);
@@ -196,8 +198,10 @@ public class Phase1 : MonoBehaviour {
 					if (player1 == null)
 						player1 = (PlayerOne)FindObjectOfType (typeof(PlayerOne));
 
+
 					if (player1 != null)
 						player1.increaseObstacleSpeed();
+
 
 
 					// TODO: Change this!! Player one should be responsible for all obstacle generation.
