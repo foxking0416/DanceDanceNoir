@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a82661cc38746c54c8fecf3168ce957d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  titleAudio: {fileID: 8300000, guid: d011da77fc3b95d4392148e55fe4dfe9, type: 3}
+  titleAudio: {fileID: 8300000, guid: 4971b7671bf395448b7b8907ebf90c0b, type: 3}
 --- !u!4 &239687443
 Transform:
   m_ObjectHideFlags: 0
@@ -228,13 +228,13 @@ GUIText:
   m_PixelOffset: {x: 0, y: 0}
   m_LineSpacing: 1
   m_TabSize: 4
-  m_Font: {fileID: 12800000, guid: 7c74ad4f6dbc3c946885ea246b5c756d, type: 3}
+  m_Font: {fileID: 12800000, guid: a1e91a1fe3c231340b565b03d84789af, type: 3}
   m_Material: {fileID: 0}
   m_FontSize: 120
   m_FontStyle: 0
   m_Color:
     serializedVersion: 2
-    rgba: 4279177084
+    rgba: 4294967295
   m_PixelCorrect: 1
   m_RichText: 1
 --- !u!4 &841447310
