@@ -76,7 +76,7 @@ public class Character2Script : MonoBehaviour {
 
 		if (beatCount > beatNeedToGenerateEnemy) {
 			map.GenerateEnemy();		
-			//startCount = false;
+			startCount = false;
 			beatCount = 0;
 		}
 		
