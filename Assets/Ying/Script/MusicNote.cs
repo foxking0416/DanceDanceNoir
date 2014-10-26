@@ -11,6 +11,8 @@ public class MusicNote : MonoBehaviour {
 
 	public Phase1 phase1;
 	public PlayerOne player1;
+	public Character2Script player2;
+
 	//private BeatFlashScript beatFlash;
 	
 	// Use this for initialization
@@ -36,6 +38,15 @@ public class MusicNote : MonoBehaviour {
 					player1 = (PlayerOne)FindObjectOfType (typeof(PlayerOne));
 				if (gameObject.tag == "P1P1Note" && player1 != null)
 					player1.trigger(0);
+
+				if (player2 == null)
+					player2 = (Character2Script) FindObjectOfType(typeof(Character2Script));
+				/*
+				GameObject[] stars = GameObject.FindGameObjectsWithTag("Enemy");
+				foreach(GameObject s in stars){
+					EnemyScript star = s.GetComponent<EnemyScript>();
+					star.RandomMove();
+				}*/
 
 				Destroy (gameObject);
 				//Debug.Log("0");
