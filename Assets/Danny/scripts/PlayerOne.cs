@@ -161,17 +161,63 @@ public class PlayerOne : MonoBehaviour
 		if ( num_beats_since_last_obstacle_generation > current_num_beats_between_obstacle_generation ) {
 			num_beats_since_last_obstacle_generation = 0;
 			current_num_beats_between_obstacle_generation = getWaitTimeUntilNextObstacle();
-			
-			float randValue = Random.Range( 0, 2 );
-			GameObject gameObjCrate;
-			if ( randValue < 1 ){
-				gameObjCrate = GameObject.FindGameObjectWithTag( "HighCrateGen" );
+
+			// Obstacle generation.
+			int rand_lane = Random.Range( 1, 4 );
+			int rand_stack = Random.Range( 1, 101 );
+			int stack_chance = 40;
+			if ( rand_lane == 1 ) {
+				GameObject game_object = GameObject.FindGameObjectWithTag( "LowCrateGen" );
+				ObstacleGenerator obstacle_generator = game_object.GetComponent<ObstacleGenerator>();
+				obstacle_generator.CreateCrate();
+
+				if ( rand_stack < stack_chance ) {
+					GameObject game_object_mid = GameObject.FindGameObjectWithTag( "MidCrateGen" );
+					ObstacleGenerator obstacle_generator_mid = game_object_mid.GetComponent<ObstacleGenerator>();
+					obstacle_generator_mid.CreateCrate();
+				}
+			}
+			else if ( rand_lane == 2 ) {
+				GameObject game_object = GameObject.FindGameObjectWithTag( "MidCrateGen" );
+				ObstacleGenerator obstacle_generator = game_object.GetComponent<ObstacleGenerator>();
+				obstacle_generator.CreateCrate();
+
+				if ( rand_stack < stack_chance ) {
+					int top_or_bottom = Random.Range( 1, 3 );
+					if ( top_or_bottom == 1 ) {
+						GameObject game_object_top = GameObject.FindGameObjectWithTag( "HighCrateGen" );
+						ObstacleGenerator obstacle_generator_top = game_object_top.GetComponent<ObstacleGenerator>();
+						obstacle_generator_top.CreateCrate();
+					}
+					else {
+						GameObject game_object_bottom = GameObject.FindGameObjectWithTag( "LowCrateGen" );
+						ObstacleGenerator obstacle_generator_bottom = game_object_bottom.GetComponent<ObstacleGenerator>();
+						obstacle_generator_bottom.CreateCrate();
+					}
+				}
 			}
 			else {
-				gameObjCrate = GameObject.FindGameObjectWithTag( "LowCrateGen" );
+				GameObject game_object = GameObject.FindGameObjectWithTag( "HighCrateGen" );
+				ObstacleGenerator obstacle_generator = game_object.GetComponent<ObstacleGenerator>();
+				obstacle_generator.CreateCrate();
+
+				if ( rand_stack < stack_chance ) {
+					GameObject game_object_mid = GameObject.FindGameObjectWithTag( "MidCrateGen" );
+					ObstacleGenerator obstacle_generator_mid = game_object_mid.GetComponent<ObstacleGenerator>();
+					obstacle_generator_mid.CreateCrate();
+				}
 			}
-			ObstacleGenerator obsGen = gameObjCrate.GetComponent<ObstacleGenerator>();
-			obsGen.CreateCrate();
+
+//			float randValue = Random.Range( 0, 2 );
+//			GameObject gameObjCrate;
+//			if ( randValue < 1 ){
+//				gameObjCrate = GameObject.FindGameObjectWithTag( "HighCrateGen" );
+//			}
+//			else {
+//				gameObjCrate = GameObject.FindGameObjectWithTag( "LowCrateGen" );
+//			}
+//			ObstacleGenerator obsGen = gameObjCrate.GetComponent<ObstacleGenerator>();
+//			obsGen.CreateCrate();
 		}
 
 		// Danny was here.
