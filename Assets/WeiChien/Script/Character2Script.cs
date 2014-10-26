@@ -33,7 +33,7 @@ public class Character2Script : MonoBehaviour {
 	float cameraAngleDown = 30;
 	int beatCount = 0;
 	int beatNeedToGenerateEnemy = 10;
-	bool startCount = true;
+	bool startCount = false;
 	// Use this for initialization
 	
 	void Start () {
