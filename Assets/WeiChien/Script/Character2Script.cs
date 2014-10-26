@@ -66,7 +66,7 @@ public class Character2Script : MonoBehaviour {
 		globalObjectType = map.GetObjectTypeOnMap (positionX, positionZ);
 		if (globalObjectType == 11) {
 			//Game Over
-			Debug.Log("You are caught by enemy!!!!!!");
+			//Debug.Log("You are caught by enemy!!!!!!");
 
 			GameObject enemy = map.GetObjectOnObjectMap(positionX, positionZ);
 			EnemyScript enemyScript = enemy.GetComponent<EnemyScript>();

@@ -350,7 +350,7 @@ public class GridMap : MonoBehaviour {
 		}
 		int index = (indexZ - 1) * width + (indexX - 1);
 
-		GameObject objEnemy = Instantiate (gameObjEnemy, ComputePosition(index % width + 1, 0,  index / width + 1), Quaternion.identity) as GameObject;	
+		GameObject objEnemy = Instantiate (gameObjEnemy, ComputePosition_Enemy(index % width + 1, 0,  index / width + 1), Quaternion.identity) as GameObject;	
 		objEnemy.tag = "Enemy";
 		EnemyScript enemy = objEnemy.GetComponent<EnemyScript>();
 		enemy.positionX = index % width + 1;
