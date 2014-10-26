@@ -354,13 +354,13 @@ public class Phase1 : MonoBehaviour {
 		obsGen.CreateCrate();
 	}
 
-	void noteSpeedIncrese()
+	public void noteSpeedIncrese()
 	{
 		noteSpwanDuration -= 2;
 		noteSpwanDuration = (noteSpwanDuration < 18) ? 18 : noteSpwanDuration;
 	}
 
-	void noteSpeedDecrease()
+	public void noteSpeedDecrease()
 	{
 		noteSpwanDuration += 2;
 	}

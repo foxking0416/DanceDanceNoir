@@ -38,6 +38,9 @@ public class EnemyScript : MonoBehaviour {
 	}
 
 	public void Destroy(){
+		GameObject phase1 = GameObject.Find ("Phase1");
+		Phase1 phase1Obj = phase1.GetComponent<Phase1> ();
+		phase1Obj.noteSpeedDecrease ();
 		map.UpdateObjectsStatus (positionX, positionZ, 0);
 		map.UpdateObjectOnObjectMap (positionX, positionZ, null);
 		Destroy (gameObject);
