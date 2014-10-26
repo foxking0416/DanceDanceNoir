@@ -12,10 +12,10 @@ public class ObstacleGenerator : MonoBehaviour
 	private Grid grid;
 	public int height = 0;
 
-	void Start () {
-		
-		gameObjGrid = GameObject.FindGameObjectWithTag ("Grid");
-		grid = gameObjGrid.GetComponent< Grid > ();
+	void Start ()
+	{	
+		gameObjGrid = GameObject.FindGameObjectWithTag( "Grid" );
+		grid = gameObjGrid.GetComponent< Grid >();
 	}
 
 	////////////////////////////////////////////////////
@@ -52,9 +52,5 @@ public class ObstacleGenerator : MonoBehaviour
 			translateScript2.obstaclePositionDiscreteX = start_col;
 			translateScript2.obstaclePositionDiscreteY = 1;
 		}
-
 	}
-	
-
-
 }
