@@ -388,6 +388,11 @@ public class Phase1 : MonoBehaviour {
 		noteSpwanDuration += 2;
 	}
 
+	public void noteSpeedReset()
+	{
+		noteSpwanDuration = 30;
+	}
+
 	void OnGUI()
 	{		
 		//one player one part
