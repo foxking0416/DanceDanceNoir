@@ -2,6 +2,7 @@
 using System.Collections;
 
 enum Action {None, Run, Jump, Slide, Left, Right, Up, Down, TurnLeft, TurnRight, Unlock};
+enum Mode {Easy, Difficult};
 
 public class Phase1 : MonoBehaviour {
 	float musicBarLayerOffset;
@@ -13,6 +14,7 @@ public class Phase1 : MonoBehaviour {
 	int noteSpeedChangeTiming;
 	int noteSpeedChangePeriod;
 
+	int mode;
 	int signal1, signal2;
 	bool isToClear;
 	string keySequence;
@@ -36,20 +38,27 @@ public class Phase1 : MonoBehaviour {
 	public BeatFlashScript BeatFlashPlane;
 	public PlayerMissBeatScript MissBeatFlashPlane;
 
-	//audio
-	int qSamples  = 1024;  // array size
-	int eSamples = 44;
-	int subbands = 32;
-	int eId = -1;
+	//audio effect
+	public AudioSource beatAuido;
+	
+	ArrayList beatArray;
+	float[] spectrum; 
+	int beatId;
+	
+	//	int qSamples  = 1024;  // array size
+	//	int eSamples = 44;
+	//	int subbands = 32;
+	//	int eId = -1;
+	//	
+	//	private float[] samples ; // audio samples
+	//	private float[] spectrum; // audio spectrum
+	//	private float fSample;
+	//	private float[] E;
+	//	private float[] Es;
+	//	
+	//	float last = 0.0f;
+	
 	public int numberOfCollectedEvidence;
-	
-	private float[] samples ; // audio samples
-	private float[] spectrum; // audio spectrum
-	private float fSample;
-	private float[] E;
-	private float[] Es;
-	
-	float last = 0.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -74,13 +83,21 @@ public class Phase1 : MonoBehaviour {
 		PlayerPrefs.SetFloat ("HittingCenter", t);
 		noteStartX = PlayerPrefs.GetFloat ("HittingCenter") + PlayerPrefs.GetFloat ("noteSpeed") * 250;//musicBarLayerOffset + screenWidth2World / 2;
 
+		//define mode of the game 
+		mode = (int)Mode.Easy;
+
 		signal1 = 0;
 		signal2 = 0;
 		keySequence = "";
 
 		isToClear = false;
 		actionPatterns = new string[3];
-		actionPatterns[0] = " A D D";	actionPatterns[1] = " A W D";	actionPatterns[2] = " A S D";
+		if (mode == (int)Mode.Easy) {
+			actionPatterns[0] = " D";	actionPatterns[1] = " W";	actionPatterns[2] = " S";
+		}
+		else {
+			actionPatterns[0] = " A D D";	actionPatterns[1] = " A W D";	actionPatterns[2] = " A S D";
+		}
 
 		keyMiss2 = 0;
 		maxKeyMiss2 = 10;
@@ -97,23 +114,23 @@ public class Phase1 : MonoBehaviour {
 		hittingArea = Instantiate (hittingArea, new Vector3 (PlayerPrefs.GetFloat ("HittingCenter"), 0.0f, 51.95f), Quaternion.identity) as HittingArea;
 
 		//audio
-		qSamples  = 1024;  // array size
-		eSamples = 44;
-		subbands = 32;
-		eId = -1;
-
-		samples = new float[qSamples];
-		spectrum = new float[qSamples];
-		fSample = AudioSettings.outputSampleRate;
-		E = new float[eSamples];
-		Es = new float[subbands];
+//		qSamples  = 1024;  // array size
+//		eSamples = 44;
+//		subbands = 32;
+//		eId = -1;
+//
+//		samples = new float[qSamples];
+//		spectrum = new float[qSamples];
+//		fSample = AudioSettings.outputSampleRate;
+//		E = new float[eSamples];
+//		Es = new float[subbands];
 
 		numberOfCollectedEvidence = 0;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		AnalyzeSound();
+		//AnalyzeSound();
 
 		if (timing-- <= 0)
 		{
@@ -161,14 +178,14 @@ public class Phase1 : MonoBehaviour {
 			}
 			if (n.tag == "TransNote" && n.inBeatingCenter()) {
 				BeatFlashPlane.BeatFlash();
-				musicCamera.audio.Play ();
+				beatAuido.audio.Play ();
 				hittingArea.enlarge();
 				Destroy(n.gameObject);
 			}
 		}
 		
 		//player one input dectection
-		if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.D))
+		if ((mode == (int)Mode.Difficult && Input.GetKeyDown(KeyCode.A)) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.D))
 		{
 			if (note1 == null)
 				MissBeatFlashPlane.Player1MissBeatFlash();
@@ -219,7 +236,7 @@ public class Phase1 : MonoBehaviour {
 	{
 
 		signal1 = (int)Action.None;
-
+		
 		if (Input.GetKeyDown (KeyCode.A)) {
 			if (keySequence.Length != 0)
 				isToClear = true;
@@ -246,8 +263,10 @@ public class Phase1 : MonoBehaviour {
 			//isToClear = true;
 			return false;
 		}
-		
-		if (keySequence.Length >= 6)
+
+		int patternLength = (mode == (int)Mode.Easy) ? 2 : 6;
+
+		if (keySequence.Length >= patternLength)
 		{
 			if (player1 == null)
 				player1 = (PlayerOne)FindObjectOfType (typeof(PlayerOne));
@@ -392,11 +411,11 @@ public class Phase1 : MonoBehaviour {
 		GUILayout.EndArea();
 	}
 
-	void AnalyzeSound(){
-		musicCamera.audio.GetOutputData(samples, 0); // fill array with samples
-		musicCamera.audio.GetSpectrumData(spectrum, 0, FFTWindow.BlackmanHarris); 
-
-		PlayerPrefs.SetFloat ("CurSpectrum", spectrum[5]);
+//	void AnalyzeSound(){
+//		musicCamera.audio.GetOutputData(samples, 0); // fill array with samples
+//		musicCamera.audio.GetSpectrumData(spectrum, 0, FFTWindow.BlackmanHarris); 
+//
+//		PlayerPrefs.SetFloat ("CurSpectrum", spectrum[5]);
 
 //		for (int i=0; i < subbands; i++){ 
 //			for (int j = i *32; j < (i+1) *32; j++) {
@@ -437,5 +456,5 @@ public class Phase1 : MonoBehaviour {
 //			last = audio.time;
 //			generateNewNote(noteStartX);
 //		}
-	}
+//	}
 }
