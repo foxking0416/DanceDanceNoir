@@ -72,19 +72,19 @@ public class PlayerOne : MonoBehaviour
 		isSliding = false;
 
 		// Danny was here.
-		num_beats_between_obstacle_movement = 3;
+		num_beats_between_obstacle_movement = 1;
 		num_beats_since_last_obstacle_movement = 0;
 		num_beats_between_obstacle_movement_max = 3;
 
 		// Danny was here.
-		num_beats_between_obstacle_generation_min = 12;
-		num_beats_between_obstacle_generation_max = 36;
+		num_beats_between_obstacle_generation_min = 18;
+		num_beats_between_obstacle_generation_max = 27;
 		current_num_beats_between_obstacle_generation = getWaitTimeUntilNextObstacle();
 		num_beats_since_last_obstacle_generation = 0;
 
 		// Danny was here.
-		num_beats_between_key_generation_min = 40;
-		num_beats_between_key_generation_max = 100;
+		num_beats_between_key_generation_min = 36;
+		num_beats_between_key_generation_max = 51;
 		current_num_beats_between_key_generation = getWaitTimeUntilNextKey();
 		num_beats_since_last_key_generation = 0;
 	}
@@ -157,6 +157,7 @@ public class PlayerOne : MonoBehaviour
 	private void GameOver()
 	{
 		// TODO: Implement this method.
+		Application.LoadLevel("GameLoseScene");//Win
 		Debug.Log( "Game over player one." );
 	}
 

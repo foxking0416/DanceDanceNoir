@@ -55,11 +55,17 @@ public class Phase1 : MonoBehaviour {
 	void Start () {
 		musicBarLayerOffset = 150.0f;
 
+<<<<<<< HEAD
 		timing = noteSpwanDuration;
 		noteSpwanDuration = 30;
 		noteSpeedChangeTiming = noteSpeedChangePeriod;
 		noteSpeedChangePeriod = 100;
 		PlayerPrefs.SetFloat ("noteSpeed", 0.035f);
+=======
+		timing = 0;
+		noteSpwanDuration = 27;
+		PlayerPrefs.SetFloat ("noteSpeed", 0.028f);
+>>>>>>> 6b153129c13c96dc416679d1b183fee0b89911e7
 
 		beatBarHeight = (int)(Screen.height * 0.06);
 		actionBarWidth = (float)(Screen.width * 0.3);
@@ -70,7 +76,7 @@ public class Phase1 : MonoBehaviour {
 		PlayerPrefs.SetFloat ("ScreenWidth2World", screenWidth2World);
 		float t = (float)(musicBarLayerOffset - (0.5-0.3*0.85)*screenWidth2World);
 		PlayerPrefs.SetFloat ("HittingCenter", t);
-		noteStartX = PlayerPrefs.GetFloat ("HittingCenter") + PlayerPrefs.GetFloat ("noteSpeed") * 200;//musicBarLayerOffset + screenWidth2World / 2;
+		noteStartX = PlayerPrefs.GetFloat ("HittingCenter") + PlayerPrefs.GetFloat ("noteSpeed") * 250;//musicBarLayerOffset + screenWidth2World / 2;
 
 		signal1 = 0;
 		signal2 = 0;
@@ -192,10 +198,16 @@ public class Phase1 : MonoBehaviour {
 				{
 					keyMiss2  = 0;
 
+					//generateObstacle1();
 					if (player1 == null)
 						player1 = (PlayerOne)FindObjectOfType (typeof(PlayerOne));
+<<<<<<< HEAD
 					if (player1 == null)
 				 		player1.increaseObstacleSpeed();
+=======
+					if (player1 != null)
+						player1.increaseObstacleSpeed();
+>>>>>>> 6b153129c13c96dc416679d1b183fee0b89911e7
 
 					// TODO: Change this!! Player one should be responsible for all obstacle generation.
 				}

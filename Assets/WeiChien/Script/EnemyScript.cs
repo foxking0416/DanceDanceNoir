@@ -11,6 +11,8 @@ public class EnemyScript : MonoBehaviour {
 	int width;
 	float timer;
 	float beatTime;
+	float rotateAngle = 60;
+
 
 	// Use this for initialization
 	void Start () {
@@ -19,18 +21,26 @@ public class EnemyScript : MonoBehaviour {
 		width = map.GetMapSize ();
 		timer = 0;
 		beatTime = 2.50f;
+
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		timer += Time.deltaTime;
-
+		rotateAngle += Time.deltaTime * 200;
 		if (timer > beatTime) {
 			RandomMove();
 			timer = 0;
 		}
 
+		gameObject.transform.localRotation = Quaternion.Euler (new Vector3 (0, rotateAngle, 0));
+	}
 
+	public void Destroy(){
+		map.UpdateObjectsStatus (positionX, positionZ, 0);
+		map.UpdateObjectOnObjectMap (positionX, positionZ, null);
+		Destroy (gameObject);
 	}
 
 	public void RandomMove(){
@@ -56,6 +66,7 @@ public class EnemyScript : MonoBehaviour {
 	void MoveUp(){
 
 		map.UpdateObjectsStatus (positionX, positionZ, 0);
+		map.UpdateObjectOnObjectMap (positionX, positionZ, null);
 		++positionZ;
 		
 		if (positionZ > width ) {
@@ -68,11 +79,13 @@ public class EnemyScript : MonoBehaviour {
 		
 		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
 		map.UpdateObjectsStatus (positionX, positionZ, 11);
+		map.UpdateObjectOnObjectMap (positionX, positionZ, gameObject);
 	}
 	
 	void MoveLeft(){
 
 		map.UpdateObjectsStatus (positionX, positionZ, 0);
+		map.UpdateObjectOnObjectMap (positionX, positionZ, null);
 		--positionX;
 		
 		if (positionX < 1) {
@@ -85,11 +98,13 @@ public class EnemyScript : MonoBehaviour {
 
 		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
 		map.UpdateObjectsStatus (positionX, positionZ, 11);
+		map.UpdateObjectOnObjectMap (positionX, positionZ, gameObject);
 	}
 	
 	void MoveDown(){
 
 		map.UpdateObjectsStatus (positionX, positionZ, 0);
+		map.UpdateObjectOnObjectMap (positionX, positionZ, null);
 		--positionZ;
 		
 		if (positionZ < 1) {
@@ -102,11 +117,13 @@ public class EnemyScript : MonoBehaviour {
 		
 		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
 		map.UpdateObjectsStatus (positionX, positionZ, 11);
+		map.UpdateObjectOnObjectMap (positionX, positionZ, gameObject);
 	}
 	
 	void MoveRight(){
 
 		map.UpdateObjectsStatus (positionX, positionZ, 0);
+		map.UpdateObjectOnObjectMap (positionX, positionZ, null);
 		++positionX;
 		if (positionX > width) {
 			--positionX;		
@@ -117,10 +134,11 @@ public class EnemyScript : MonoBehaviour {
 		}
 		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
 		map.UpdateObjectsStatus (positionX, positionZ, 11);
+		map.UpdateObjectOnObjectMap (positionX, positionZ, gameObject);
 	}
 
 	Vector3 ComputePosition(int x, int y, int z){
-		Vector3 pos = new Vector3 (-2.5f + x * 5.0f, 0.0f, -2.5f + z * 5.0f);
+		Vector3 pos = new Vector3 (-2.5f + x * 5.0f, 1.5f, -2.5f + z * 5.0f);
 		return pos;
 	}
 
