@@ -62,8 +62,8 @@ public class PlayerOne : MonoBehaviour
 		num_beats_between_obstacle_movement_max = 3;
 
 		// Danny was here.
-		num_beats_between_obstacle_generation_min = 18;
-		num_beats_between_obstacle_generation_max = 27;
+		num_beats_between_obstacle_generation_min = 10;
+		num_beats_between_obstacle_generation_max = 30;
 		current_num_beats_between_obstacle_generation = getWaitTimeUntilNextObstacle();
 		num_beats_since_last_obstacle_generation = 0;
 
@@ -113,7 +113,7 @@ public class PlayerOne : MonoBehaviour
 	public void increaseRateOfObstacleGeneration()
 	{
 		if ( num_beats_between_obstacle_generation_max > num_beats_between_obstacle_generation_min ) {
-			num_beats_between_obstacle_generation_max += 4;
+			num_beats_between_obstacle_generation_max += 5;
 		}
 	}
 
