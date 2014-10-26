@@ -7,6 +7,7 @@ public class Character2Script : MonoBehaviour {
 	public Shader normalShader;
 	public AudioClip audioPickUpKey;
 	public AudioClip audioOpenCase;
+	public AudioClip audioGetStar;
 	public GameObject gameObjCamera;
 	public GameObject gameObjTextEvidence;
 
@@ -72,6 +73,7 @@ public class Character2Script : MonoBehaviour {
 			EnemyScript enemyScript = enemy.GetComponent<EnemyScript>();
 			enemyScript.Destroy();
 			startCount = true;
+			AudioSource.PlayClipAtPoint (audioGetStar, gameObject.transform.position);
 		}
 
 		if (beatCount > beatNeedToGenerateEnemy) {

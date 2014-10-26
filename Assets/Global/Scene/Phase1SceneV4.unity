@@ -1937,6 +1937,7 @@ MonoBehaviour:
   normalShader: {fileID: 4, guid: 0000000000000000f000000000000000, type: 0}
   audioPickUpKey: {fileID: 8300000, guid: f62668c1347f348448e97f9846698b03, type: 3}
   audioOpenCase: {fileID: 8300000, guid: ddda14a1aac1182428dfb0d5dfd0e9fb, type: 3}
+  audioGetStar: {fileID: 8300000, guid: 9742bb1b30b835a4a8dac8d4c3b31569, type: 3}
   gameObjCamera: {fileID: 100000, guid: af5d1ffef6641ee45a262babf13a61cd, type: 2}
   gameObjTextEvidence: {fileID: 100000, guid: b64f463fc34627a4e86704f934466808, type: 2}
 --- !u!143 &513886086
