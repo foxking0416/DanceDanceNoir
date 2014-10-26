@@ -41,17 +41,34 @@ public class InstantiatePhase1Player1GameObjects : MonoBehaviour
 		playerScript.playerPositionDiscreteX = initialPlayerX;
 		playerScript.playerPositionDiscreteY = initialPlayerY;
 		Instantiate( obstacleManager, new Vector3(0,0,0), transform.rotation );
+
+//		GameObject lowCrate = Instantiate( obstacleGenerator, new Vector3(0,0,0), transform.rotation ) as GameObject;
+//		lowCrate.tag = "LowCrateGen";
+//		ObstacleGenerator lowCrateObj = lowCrate.GetComponent< ObstacleGenerator > ();
+//		lowCrateObj.height = 0;
+//		GameObject highCrate = Instantiate( obstacleGenerator, new Vector3(0,0,0), transform.rotation )as GameObject;
+//		highCrate.tag = "HighCrateGen";
+//		ObstacleGenerator highCrateObj = highCrate.GetComponent< ObstacleGenerator > ();
+//		highCrateObj.height = 2;
+
+		// Lane 1 obstacle generator (low).
 		GameObject lowCrate = Instantiate( obstacleGenerator, new Vector3(0,0,0), transform.rotation ) as GameObject;
 		lowCrate.tag = "LowCrateGen";
 		ObstacleGenerator lowCrateObj = lowCrate.GetComponent< ObstacleGenerator > ();
-		lowCrateObj.height = 0;
+		lowCrateObj.lane = 1;
+
+		// Lane 2 obstacle generator (mid).
+		GameObject midCrate = Instantiate( obstacleGenerator, new Vector3(0,0,0), transform.rotation )as GameObject;
+		midCrate.tag = "MidCrateGen";
+		ObstacleGenerator midCrateObj = midCrate.GetComponent< ObstacleGenerator > ();
+		midCrateObj.lane = 2;
+
+		// Lane 3 obstacle generator (high).
 		GameObject highCrate = Instantiate( obstacleGenerator, new Vector3(0,0,0), transform.rotation )as GameObject;
 		highCrate.tag = "HighCrateGen";
 		ObstacleGenerator highCrateObj = highCrate.GetComponent< ObstacleGenerator > ();
-		highCrateObj.height = 2;
+		highCrateObj.lane = 3;
 
 		Instantiate( keyGenerator, new Vector3(0,0,0), transform.rotation );
 	}
-
-
 }
