@@ -64,11 +64,13 @@ public class Phase1 : MonoBehaviour {
 	void Start () {
 		musicBarLayerOffset = 150.0f;
 
+
 		timing = noteSpwanDuration;
 		noteSpwanDuration = 30;
 		noteSpeedChangeTiming = noteSpeedChangePeriod;
 		noteSpeedChangePeriod = 100;
 		PlayerPrefs.SetFloat ("noteSpeed", 0.035f);
+
 
 		beatBarHeight = (int)(Screen.height * 0.06);
 		actionBarWidth = (float)(Screen.width * 0.3);
@@ -212,8 +214,12 @@ public class Phase1 : MonoBehaviour {
 					//generateObstacle1();
 					if (player1 == null)
 						player1 = (PlayerOne)FindObjectOfType (typeof(PlayerOne));
+
+
 					if (player1 != null)
 						player1.increaseObstacleSpeed();
+
+
 
 					// TODO: Change this!! Player one should be responsible for all obstacle generation.
 				}
@@ -371,13 +377,13 @@ public class Phase1 : MonoBehaviour {
 		obsGen.CreateCrate();
 	}
 
-	void noteSpeedIncrese()
+	public void noteSpeedIncrese()
 	{
 		noteSpwanDuration -= 2;
 		noteSpwanDuration = (noteSpwanDuration < 18) ? 18 : noteSpwanDuration;
 	}
 
-	void noteSpeedDecrease()
+	public void noteSpeedDecrease()
 	{
 		noteSpwanDuration += 2;
 	}
