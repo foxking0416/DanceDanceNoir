@@ -36,7 +36,7 @@ public class Key : MonoBehaviour {
 	public void MoveKey(){
 		gameObjGrid = GameObject.FindGameObjectWithTag ("Grid");
 		grid = gameObjGrid.GetComponent< Grid > ();
-		grid.setObjectInGrid (keyPositionDiscreteX, keyPositionDiscreteY, -1);
+		//grid.setObjectInGrid (keyPositionDiscreteX, keyPositionDiscreteY, -1);
 		keyPositionDiscreteX--;
 		if (keyPositionDiscreteX < 0) {
 			Destroy (gameObject);

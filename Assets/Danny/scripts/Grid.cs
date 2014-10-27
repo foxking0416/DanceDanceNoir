@@ -37,6 +37,12 @@ public class Grid : MonoBehaviour {
 		map[linear_index] = type;
 	}
 
+	public void resetGrid(){
+		for (int i = 0; i < width * height; ++i) {
+			map[i] = 0;	
+		}
+	}
+
 	public bool hasObstacle(int x, int y){
 
 		int linear_index = y * width + x;

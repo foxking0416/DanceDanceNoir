@@ -208,16 +208,7 @@ public class PlayerOne : MonoBehaviour
 				}
 			}
 
-//			float randValue = Random.Range( 0, 2 );
-//			GameObject gameObjCrate;
-//			if ( randValue < 1 ){
-//				gameObjCrate = GameObject.FindGameObjectWithTag( "HighCrateGen" );
-//			}
-//			else {
-//				gameObjCrate = GameObject.FindGameObjectWithTag( "LowCrateGen" );
-//			}
-//			ObstacleGenerator obsGen = gameObjCrate.GetComponent<ObstacleGenerator>();
-//			obsGen.CreateCrate();
+
 		}
 
 		// Danny was here.
@@ -299,7 +290,7 @@ public class PlayerOne : MonoBehaviour
 		// Danny was here.
 		if ( num_beats_since_last_obstacle_movement > num_beats_between_obstacle_movement ) {
 			num_beats_since_last_obstacle_movement = 0;
-
+			grid.resetGrid();
 			//Move all the keys in the current scene
 			if (objKeyBlue != null) {
 				Key keyBlue = objKeyBlue.GetComponent<Key>();
