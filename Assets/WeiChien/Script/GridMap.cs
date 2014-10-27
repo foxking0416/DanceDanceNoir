@@ -33,6 +33,10 @@ public class GridMap : MonoBehaviour {
 
 		map = new int[width * width]; 
 		objectMap = new GameObject[(width + 2) * (width + 2)];
+		UpdateObjectsStatus (4, 5, 1);
+		UpdateObjectsStatus (4, 6, 1);
+		UpdateObjectsStatus (4, 7, 1);
+		UpdateObjectsStatus (5, 7, 1);
 		UpdateObjectsStatus (7, 1, 1);
 		UpdateObjectsStatus (7, 2, 1);
 		UpdateObjectsStatus (7, 3, 1);
@@ -46,6 +50,9 @@ public class GridMap : MonoBehaviour {
 		UpdateObjectsStatus (14, 3, 1);
 		UpdateObjectsStatus (14, 4, 1);
 		UpdateObjectsStatus (14, 5, 1);
+		UpdateObjectsStatus (11, 3, 1);
+		UpdateObjectsStatus (12, 3, 1);
+		UpdateObjectsStatus (13, 3, 1);
 		UpdateObjectsStatus (8, 20, 1);
 		UpdateObjectsStatus (8, 19, 1);
 		UpdateObjectsStatus (8, 17, 1);
