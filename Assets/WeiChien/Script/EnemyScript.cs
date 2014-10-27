@@ -34,8 +34,8 @@ public class EnemyScript : MonoBehaviour {
 			RandomMove();
 			timer = 0;
 		}*/
-		if(Input.GetKeyDown(KeyCode.G))
-			RandomMove();
+		//if(Input.GetKeyDown(KeyCode.G))
+		//	RandomMove();
 		gameObject.transform.localRotation = Quaternion.Euler (new Vector3 (0, rotateAngle, 0));
 	}
 
@@ -54,7 +54,7 @@ public class EnemyScript : MonoBehaviour {
 		if (moveBeatCount > beatNeedToMove) {
 			moveBeatCount = 0;
 			RandomMove();
-			beatNeedToMove = Random.Range (1, 5);
+			beatNeedToMove = Random.Range (1, 4);
 		}
 	}
 
