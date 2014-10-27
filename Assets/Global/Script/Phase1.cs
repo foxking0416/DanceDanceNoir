@@ -387,8 +387,8 @@ public class Phase1 : MonoBehaviour {
 
 	public void noteSpeedIncrese()
 	{
-		noteSpwanDuration -= 2;
-		noteSpwanDuration = (noteSpwanDuration < 18) ? 18 : noteSpwanDuration;
+		//noteSpwanDuration -= 2;
+		//noteSpwanDuration = (noteSpwanDuration < 18) ? 18 : noteSpwanDuration;
 	}
 
 	public void noteSpeedDecrease()

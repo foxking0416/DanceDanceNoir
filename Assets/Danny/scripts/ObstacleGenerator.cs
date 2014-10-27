@@ -25,7 +25,7 @@ public class ObstacleGenerator : MonoBehaviour
 	////////////////////////////////////////////////////
 	public void CreateCrate()
 	{
-		int start_col = grid.getWidth();
+		int start_col = grid.getWidth() - 1;
 		
 		if ( lane == 1 ) {
 			grid.setObjectInGrid (start_col, 0, 1);

@@ -35,8 +35,10 @@ public class TranslateLeftAtConstantSpeed : MonoBehaviour
 	}
 
 	public void MoveObstacle(){
-		gameObjGrid = GameObject.FindGameObjectWithTag ("Grid");
-		grid = gameObjGrid.GetComponent< Grid > ();
+		if (gameObjGrid == null) {
+			gameObjGrid = GameObject.FindGameObjectWithTag ("Grid");
+			grid = gameObjGrid.GetComponent< Grid > ();
+		}
 		grid.setObjectInGrid (obstaclePositionDiscreteX, obstaclePositionDiscreteY, 0);
 		//grid.setObjectInGrid (obstaclePositionDiscreteX, 1, 0);
 		obstaclePositionDiscreteX--;

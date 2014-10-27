@@ -22,7 +22,7 @@ public class KeyGenerate : MonoBehaviour {
 	
 	}
 
-	public void createKey(){
+	public void createKey(int createKeyInLane){
 
 		int keyColor = 0;
 
@@ -75,11 +75,13 @@ public class KeyGenerate : MonoBehaviour {
 
 		int grid_width = grid.getWidth();
 
-		grid.setObjectInGrid ( grid_width - 1, 2, keyColor);
+
+		grid.setObjectInGrid ( grid_width - 1, createKeyInLane, keyColor);
+
 
 		Key keyScript = objKey.GetComponent<Key> ();
 		keyScript.keyPositionDiscreteX = grid_width - 1;
-		keyScript.keyPositionDiscreteY = 2;
+		keyScript.keyPositionDiscreteY = createKeyInLane;
 		keyScript.keyColor = keyColor;
 		keyScript.SetColor (keyColor);
 	}

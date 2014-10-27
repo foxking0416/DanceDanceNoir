@@ -62,14 +62,14 @@ public class PlayerOne : MonoBehaviour
 		num_beats_between_obstacle_movement_max = 3;
 
 		// Danny was here.
-		num_beats_between_obstacle_generation_min = 1;
+		num_beats_between_obstacle_generation_min = 3;
 		num_beats_between_obstacle_generation_max = 4;
 		current_num_beats_between_obstacle_generation = getWaitTimeUntilNextObstacle();
 		num_beats_since_last_obstacle_generation = 0;
 
 		// Danny was here.
-		num_beats_between_key_generation_min = 20;
-		num_beats_between_key_generation_max = 30;
+		num_beats_between_key_generation_min = 2;
+		num_beats_between_key_generation_max = 3;
 		current_num_beats_between_key_generation = getWaitTimeUntilNextKey();
 		num_beats_since_last_key_generation = 0;
 
@@ -223,15 +223,25 @@ public class PlayerOne : MonoBehaviour
 		// Danny was here.
 		if ( num_beats_since_last_key_generation > current_num_beats_between_key_generation ) {
 			int grid_width = grid.getWidth();
-			if( grid.hasObstacle( grid_width - 1, 2 ) != true ) {
+			int createKeyInLane = Random.Range (0, max_lane);
+			while (grid.hasObstacle(grid_width - 1, createKeyInLane) == true) {
+				createKeyInLane = Random.Range (0, max_lane);
+			}
+			//if( grid.hasObstacle( grid_width - 1, 2 ) != true ) {
 				num_beats_since_last_key_generation = 0;
 				current_num_beats_between_key_generation = getWaitTimeUntilNextKey();
 
 				GameObject gameObjKeyGen = GameObject.FindGameObjectWithTag( "KeyGen" );
 				KeyGenerate keyGen = gameObjKeyGen.GetComponent<KeyGenerate>();
-				keyGen.createKey();
-			}
+				keyGen.createKey(createKeyInLane);
+			//}
 		}
+
+		bool avoidJumpCollision = false;
+		bool avoidSlideCollision = false;
+		int oldPositionX = playerPositionDiscreteX;
+		int oldPositionY = playerPositionDiscreteY;
+
 
 		//Action: Sprint
 		if(actionType == 1) {
@@ -244,22 +254,41 @@ public class PlayerOne : MonoBehaviour
 		//Action: Jump
 		if (actionType == 2) {
 			if ( current_lane < max_lane ) {
+				if(grid.hasObstacle( playerPositionDiscreteX, playerPositionDiscreteY + 1 ) == true){
+					avoidJumpCollision = true;
+				}
+				else if(grid.hasObstacle( playerPositionDiscreteX + 1, playerPositionDiscreteY + 1 ) == false ||
+				   (grid.hasObstacle( playerPositionDiscreteX + 1, playerPositionDiscreteY + 1 ) == true &&
+				 	grid.hasObstacle( playerPositionDiscreteX + 1, playerPositionDiscreteY ) == true)){
+
 				++current_lane;
 
 				playerPositionDiscreteY++;
 				transform.position = grid.computePlayerPosition (playerPositionDiscreteX, playerPositionDiscreteY);
+				}
 			}
 		}
 
 		//Action: Slide
 		if(actionType == 3) {
 			if ( current_lane > min_lane ) {
+				if(grid.hasObstacle( playerPositionDiscreteX, playerPositionDiscreteY - 1 ) == true){
+					avoidSlideCollision = true;
+				}
+
+				else if(grid.hasObstacle( playerPositionDiscreteX + 1, playerPositionDiscreteY - 1 ) == false ||
+				   (grid.hasObstacle( playerPositionDiscreteX + 1, playerPositionDiscreteY - 1 ) == true &&
+				    grid.hasObstacle( playerPositionDiscreteX + 1, playerPositionDiscreteY ) == true)){
+
 				--current_lane;
 
 				playerPositionDiscreteY--;
 				transform.position = grid.computePlayerPosition (playerPositionDiscreteX, playerPositionDiscreteY);
+				}
 			}
 		}
+
+
 
 		GameObject objKeyBlue = GameObject.FindGameObjectWithTag("BlueKey");
 		GameObject objKeyYellow = GameObject.FindGameObjectWithTag("YellowKey");
@@ -308,35 +337,50 @@ public class PlayerOne : MonoBehaviour
 			}
 		}
 
-		//If player collide with keys, then collect the key
-		int keyStatus = grid.hasKeys (playerPositionDiscreteX, playerPositionDiscreteY);
-		switch (keyStatus) {
-		case 31:
-			Key keyBlue = objKeyBlue.GetComponent<Key>();
-			keyBlue.Pick();
-			global.holdKeyStatus = keyStatus;
-			break;
-		case 32:
-			Key keyYellow = objKeyYellow.GetComponent<Key>();
-			keyYellow.Pick();
-			global.holdKeyStatus = keyStatus;
-			break;
-		case 33:
-			Key keyRed = objKeyRed.GetComponent<Key>();
-			keyRed.Pick();
-			global.holdKeyStatus = keyStatus;
-			break;
-		case 34:
-			Key keyGreen = objKeyGreen.GetComponent<Key>();
-			keyGreen.Pick();
-			global.holdKeyStatus = keyStatus;
-			break;
-		case 35:
-			Key keyOrange = objKeyOrange.GetComponent<Key>();
-			keyOrange.Pick();
-			global.holdKeyStatus = keyStatus;
-			break;
+
+		if (avoidJumpCollision == true) {
+			++current_lane;
+			
+			playerPositionDiscreteY++;
+			transform.position = grid.computePlayerPosition (playerPositionDiscreteX, playerPositionDiscreteY);
 		}
+		if (avoidSlideCollision == true) {
+			--current_lane;
+			
+			playerPositionDiscreteY--;
+			transform.position = grid.computePlayerPosition (playerPositionDiscreteX, playerPositionDiscreteY);
+		}
+
+
+		int keyStatus = grid.hasKeys (playerPositionDiscreteX, playerPositionDiscreteY);
+		int keyStatus2 = -1;
+		if(actionType == 1)
+			keyStatus2 = grid.hasKeys (oldPositionX, oldPositionY);
+
+		//If player collide with keys, then collect the key
+		
+		if (keyStatus == 31 || keyStatus2 == 31) {
+			Key keyBlue = objKeyBlue.GetComponent<Key> ();
+			keyBlue.Pick ();
+			global.holdKeyStatus = 31;
+		} else if (keyStatus == 32 || keyStatus2 == 32) {
+			Key keyYellow = objKeyYellow.GetComponent<Key> ();
+			keyYellow.Pick ();
+			global.holdKeyStatus = 32;
+		} else if (keyStatus == 33 || keyStatus2 == 33) {
+			Key keyRed = objKeyRed.GetComponent<Key> ();
+			keyRed.Pick ();
+			global.holdKeyStatus = 33;
+		} else if (keyStatus == 34 || keyStatus2 == 34) {
+			Key keyGreen = objKeyGreen.GetComponent<Key> ();
+			keyGreen.Pick ();
+			global.holdKeyStatus = 34;
+		} else if (keyStatus == 35 || keyStatus2 == 35) {
+			Key keyOrange = objKeyOrange.GetComponent<Key> ();
+			keyOrange.Pick ();
+			global.holdKeyStatus = 35;
+		}
+
 
 	}
 
