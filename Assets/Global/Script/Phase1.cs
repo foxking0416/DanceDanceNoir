@@ -10,11 +10,11 @@ public class Phase1 : MonoBehaviour {
 	public GameObject notetoSpwan;
 	public Material transMaterial;
 	int timing;
-	int noteSpwanDuration;
+	public int noteSpwanDuration;
 	int noteSpeedChangeTiming;
 	int noteSpeedChangePeriod;
 
-	int mode;
+	public int mode;
 	int signal1, signal2;
 	bool isToClear;
 	string keySequence;

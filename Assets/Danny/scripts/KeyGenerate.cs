@@ -54,7 +54,7 @@ public class KeyGenerate : MonoBehaviour {
 
 
 
-		GameObject objKey = Instantiate( key, grid.computeCratePosition(29, 2), transform.rotation ) as GameObject;
+		GameObject objKey = Instantiate( key, grid.computeCratePosition(grid.getWidth()-1, 2), transform.rotation ) as GameObject;
 		switch (keyColor) {
 		case 31:
 			objKey.tag = "BlueKey";
