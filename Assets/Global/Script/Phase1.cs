@@ -10,18 +10,22 @@ public class Phase1 : MonoBehaviour {
 	public GameObject notetoSpwan;
 	public Material transMaterial;
 	int timing;
-	public int noteSpwanDuration;
+	int noteSpwanDuration;
 	int noteSpeedChangeTiming;
 	int noteSpeedChangePeriod;
 
-	public int mode;
+	int mode;
 	int signal1, signal2;
 	bool isToClear;
 	string keySequence;
 	string[] actionPatterns;
 
-	int keyMiss2;
-	int maxKeyMiss2;
+	int keyMiss;
+	int maxKeyMiss;
+	public GridMap gridMap;
+	public AudioSource beatMissAudio1;
+	public AudioSource beatMissAudio2;
+	public AudioSource caseRemoveAudio;
 
 	float noteStartX;
 	public GUITexture beatBarBg;
@@ -99,8 +103,8 @@ public class Phase1 : MonoBehaviour {
 			actionPatterns[0] = " A D D";	actionPatterns[1] = " A W D";	actionPatterns[2] = " A S D";
 		}
 
-		keyMiss2 = 0;
-		maxKeyMiss2 = 10;
+		keyMiss = 0;
+		maxKeyMiss = 20;
 
 		//player1 = GameObject.Find ("player_one(Clone)").GetComponent<PlayerOne> ();
 		player2 = GameObject.FindGameObjectWithTag ("Player2").GetComponent<Character2Script>();
@@ -195,8 +199,11 @@ public class Phase1 : MonoBehaviour {
 		//player one input dectection
 		if ((mode == (int)Mode.Difficult && Input.GetKeyDown(KeyCode.A)) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.D))
 		{
-			if (note1 == null)
+			if (note1 == null) {
+				keyMiss++;
 				MissBeatFlashPlane.Player1MissBeatFlash();
+				beatMissAudio1.Play();
+			}
 			else
 			{
 				if (player1KeyPressDetection())
@@ -214,29 +221,22 @@ public class Phase1 : MonoBehaviour {
 		{
 			if (note2 == null)
 			{
+				keyMiss++;
 				MissBeatFlashPlane.Player2MissBeatFlash();
-				if(++keyMiss2 >= maxKeyMiss2)
-				{
-					keyMiss2  = 0;
-
-					//generateObstacle1();
-					if (player1 == null)
-						player1 = (PlayerOne)FindObjectOfType (typeof(PlayerOne));
-
-
-					if (player1 != null)
-						player1.increaseObstacleSpeed();
-
-
-
-					// TODO: Change this!! Player one should be responsible for all obstacle generation.
-				}
+				beatMissAudio2.Play();
 			}
 			else
 			{
 				if (player2KeyPressDetection())
 					Destroy(note2.gameObject);
 			}
+		}
+
+		if(keyMiss >= maxKeyMiss)
+		{
+			keyMiss  = 0;
+			gridMap.recreateCase();
+			caseRemoveAudio.Play();
 		}
 	}
 
@@ -388,7 +388,7 @@ public class Phase1 : MonoBehaviour {
 	public void noteSpeedIncrese()
 	{
 		noteSpwanDuration -= 2;
-		noteSpwanDuration = (noteSpwanDuration < 18) ? 18 : noteSpwanDuration;
+		//noteSpwanDuration = (noteSpwanDuration < 18) ? 18 : noteSpwanDuration;
 	}
 
 	public void noteSpeedDecrease()
@@ -406,8 +406,8 @@ public class Phase1 : MonoBehaviour {
 		//one player one part
 		GUI.TextArea(new Rect((int)(0.7*Screen.width),10,(int)(Screen.width*0.25),20),"Obstacl Generator");
 		GUI.backgroundColor = Color.red;
-		if (keyMiss2 > 0)
-			GUI.Button(new Rect((int)(0.7*Screen.width),10,(int)(Screen.width*0.25 * keyMiss2 / (float)maxKeyMiss2), 20), "");
+		if (keyMiss > 0)
+			GUI.Button(new Rect((int)(0.7*Screen.width),10,(int)(Screen.width*0.25 * keyMiss / (float)maxKeyMiss), 20), "");
 
 		//on music bar
 		GUILayout.BeginArea(new Rect(0, (Screen.height-beatBarHeight)*0.32f, actionBarWidth, beatBarHeight));

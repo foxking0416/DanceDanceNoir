@@ -418,6 +418,7 @@ GameObject:
   - 92: {fileID: 153970219}
   - 81: {fileID: 153970218}
   - 114: {fileID: 153970223}
+  - 82: {fileID: 153970224}
   m_Layer: 0
   m_Name: Player1BeatMissCamera
   m_TagString: Untagged
@@ -501,6 +502,69 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 547e415400c0ef7478f929780c7e3a73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!82 &153970224
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 153970217}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 8300000, guid: d3c3aabe1a8fcbd4c961082e492d8bf4, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: .100000001
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 2
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: .986206889
+      inSlope: -6.18075262e-07
+      outSlope: -6.18075262e-07
+      tangentMode: 0
+    - time: .982483327
+      value: .979578376
+      inSlope: -.0289908871
+      outSlope: -.0289908871
+      tangentMode: 0
+    - time: 1
+      value: .972413838
+      inSlope: -1.00200403
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!1 &158528659
 GameObject:
   m_ObjectHideFlags: 0
@@ -801,7 +865,7 @@ AudioSource:
   m_GameObject: {fileID: 202094754}
   m_Enabled: 1
   serializedVersion: 3
-  m_audioClip: {fileID: 8300000, guid: 280b421229c52c74885116c2ac13189c, type: 3}
+  m_audioClip: {fileID: 8300000, guid: db462b0e5cfaa5547af9d639be28ebbd, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -1997,7 +2061,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: a97eb6e7d3fb33c4fa28852dc4c692d3, type: 2}
+  - {fileID: 2100000, guid: cf27b11596510d14fb8a50fe72907a5d, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -2999,6 +3063,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   notetoSpwan: {fileID: 100000, guid: 5fe2a935cf9b9d24c967d21974872f3b, type: 2}
   transMaterial: {fileID: 2100000, guid: 685e16eabac097247adaab921090d9ec, type: 2}
+  gridMap: {fileID: 169229532}
+  beatMissAudio1: {fileID: 153970224}
+  beatMissAudio2: {fileID: 844770566}
+  caseRemoveAudio: {fileID: 1012336821}
   beatBarBg: {fileID: 393918747}
   musicCamera: {fileID: 1500500513}
   hittingArea: {fileID: 11400000, guid: 74795003dcc912446a3c566fb9e2dffc, type: 2}
@@ -3071,6 +3139,7 @@ GameObject:
   - 92: {fileID: 844770561}
   - 81: {fileID: 844770560}
   - 114: {fileID: 844770565}
+  - 82: {fileID: 844770566}
   m_Layer: 0
   m_Name: Player2BeatMissCamera
   m_TagString: Untagged
@@ -3154,6 +3223,64 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 547e415400c0ef7478f929780c7e3a73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!82 &844770566
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 844770559}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 8300000, guid: 2f241186658649d479711e7d6c42e421, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 2
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: .00712820422
+      value: .275862187
+      inSlope: 0
+      outSlope: -1.00200403
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: -1.00200403
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!1 &853220964
 GameObject:
   m_ObjectHideFlags: 0
@@ -3430,6 +3557,7 @@ GameObject:
   - 124: {fileID: 1012336818}
   - 92: {fileID: 1012336817}
   - 81: {fileID: 1012336816}
+  - 82: {fileID: 1012336821}
   m_Layer: 0
   m_Name: BeatFlashCamera
   m_TagString: Untagged
@@ -3502,6 +3630,64 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 11
+--- !u!82 &1012336821
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1012336815}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 8300000, guid: 5c58797f495bc0b408de1bc356286007, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 1
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!1 &1018470931
 GameObject:
   m_ObjectHideFlags: 0
