@@ -35,6 +35,13 @@ public class Character2Script : MonoBehaviour {
 	int beatCount = 0;
 	int beatNeedToGenerateEnemy = 10;
 	bool startCount = false;
+
+	//bool active = true;
+	GameObject objCaseBlueForShow;
+	GameObject objCaseYellowForShow;
+	GameObject objCaseRedForShow;
+	GameObject objCaseGreenForShow;
+	GameObject objCaseOrangeForShow;
 	// Use this for initialization
 	
 	void Start () {
@@ -60,10 +67,20 @@ public class Character2Script : MonoBehaviour {
 		objTextEvidence = Instantiate (gameObjTextEvidence, new Vector3(0,0,0), Quaternion.identity) as GameObject;	
 		
 		holdKeyStatus = 0;
+		objCaseBlueForShow = GameObject.FindGameObjectWithTag ("CaseBlueForShow");
+		objCaseYellowForShow = GameObject.FindGameObjectWithTag ("CaseYellowForShow");
+		objCaseRedForShow = GameObject.FindGameObjectWithTag ("CaseRedForShow");
+		objCaseGreenForShow = GameObject.FindGameObjectWithTag ("CaseGreenForShow");
+		objCaseOrangeForShow = GameObject.FindGameObjectWithTag ("CaseOrangeForShow");
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+		/*if (Input.GetKeyDown(KeyCode.B)){
+
+		}*/
 		globalObjectType = map.GetObjectTypeOnMap (positionX, positionZ);
 		if (globalObjectType == 11) {
 			//Game Over
@@ -173,7 +190,7 @@ public class Character2Script : MonoBehaviour {
 		}
 		
 		
-		MakeObjectNormal (obstacleArray1);
+		//MakeObjectNormal (obstacleArray1);
 		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
 		gameObject.transform.localRotation = Quaternion.Euler (new Vector3 (0, direction, 0));
 		player2Camera.transform.position = ComputeCameraPosition2 (positionX, cameraHeigh, positionZ);
@@ -226,7 +243,7 @@ public class Character2Script : MonoBehaviour {
 		}
 		
 		
-		MakeObjectNormal (obstacleArray1);
+		//MakeObjectNormal (obstacleArray1);
 		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
 		gameObject.transform.localRotation = Quaternion.Euler (new Vector3 (0, direction, 0));
 		player2Camera.transform.position = ComputeCameraPosition2 (positionX, cameraHeigh, positionZ);
@@ -280,7 +297,7 @@ public class Character2Script : MonoBehaviour {
 		}
 		
 		
-		MakeObjectNormal (obstacleArray1);
+		//MakeObjectNormal (obstacleArray1);
 		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
 		gameObject.transform.localRotation = Quaternion.Euler (new Vector3 (0, direction, 0));
 		player2Camera.transform.position = ComputeCameraPosition2 (positionX, cameraHeigh, positionZ);
@@ -334,7 +351,7 @@ public class Character2Script : MonoBehaviour {
 		}
 		
 		
-		MakeObjectNormal (obstacleArray1);
+		//MakeObjectNormal (obstacleArray1);
 		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
 		gameObject.transform.localRotation = Quaternion.Euler (new Vector3 (0, direction, 0));
 		player2Camera.transform.position = ComputeCameraPosition2 (positionX, cameraHeigh, positionZ);
@@ -408,8 +425,9 @@ public class Character2Script : MonoBehaviour {
 			global.CollectEvidence(31);
 			phase1.numberOfCollectedEvidence++;
 			AudioSource.PlayClipAtPoint (audioOpenCase, gameObject.transform.position);
-			GameObject objCaseBlueForShow = GameObject.FindGameObjectWithTag ("CaseBlueForShow");
-			Destroy(objCaseBlueForShow);
+			//GameObject objCaseBlueForShow = GameObject.FindGameObjectWithTag ("CaseBlueForShow");
+			//Destroy(objCaseBlueForShow);
+			objCaseBlueForShow.SetActive ( false);
 			Debug.Log("Open Blue Cabinet");
 		}
 		else if(global.holdKeyStatus == 32 && CheckAround(positionX, positionZ, 22)){
@@ -422,8 +440,9 @@ public class Character2Script : MonoBehaviour {
 			global.CollectEvidence(32);
 			phase1.numberOfCollectedEvidence++;
 			AudioSource.PlayClipAtPoint (audioOpenCase, gameObject.transform.position);
-			GameObject objCaseYellowForShow = GameObject.FindGameObjectWithTag ("CaseYellowForShow");
-			Destroy(objCaseYellowForShow);
+			//GameObject objCaseYellowForShow = GameObject.FindGameObjectWithTag ("CaseYellowForShow");
+			//Destroy(objCaseYellowForShow);
+			objCaseYellowForShow.SetActive(false);
 			Debug.Log("Open Yellow Cabinet");
 		}
 		else if(global.holdKeyStatus == 33 && CheckAround(positionX, positionZ, 23)){
@@ -436,8 +455,9 @@ public class Character2Script : MonoBehaviour {
 			global.CollectEvidence(33);
 			phase1.numberOfCollectedEvidence++;
 			AudioSource.PlayClipAtPoint (audioOpenCase, gameObject.transform.position);
-			GameObject objCaseRedForShow = GameObject.FindGameObjectWithTag ("CaseRedForShow");
-			Destroy(objCaseRedForShow);
+			//GameObject objCaseRedForShow = GameObject.FindGameObjectWithTag ("CaseRedForShow");
+			//Destroy(objCaseRedForShow);
+			objCaseRedForShow.SetActive(false);
 			Debug.Log("Open Red Cabinet");
 		}
 		else if(global.holdKeyStatus == 34 && CheckAround(positionX, positionZ, 24)){
@@ -450,8 +470,9 @@ public class Character2Script : MonoBehaviour {
 			global.CollectEvidence(34);
 			phase1.numberOfCollectedEvidence++;
 			AudioSource.PlayClipAtPoint (audioOpenCase, gameObject.transform.position);
-			GameObject objCaseGreenForShow = GameObject.FindGameObjectWithTag ("CaseGreenForShow");
-			Destroy(objCaseGreenForShow);
+			//GameObject objCaseGreenForShow = GameObject.FindGameObjectWithTag ("CaseGreenForShow");
+			//Destroy(objCaseGreenForShow);
+			objCaseGreenForShow.SetActive(false);
 			Debug.Log("Open Green Cabinet");
 		}
 		else if(global.holdKeyStatus == 35 && CheckAround(positionX, positionZ, 25)){
@@ -464,14 +485,15 @@ public class Character2Script : MonoBehaviour {
 			global.CollectEvidence(35);
 			phase1.numberOfCollectedEvidence++;
 			AudioSource.PlayClipAtPoint (audioOpenCase, gameObject.transform.position);
-			GameObject objCaseOrangeForShow = GameObject.FindGameObjectWithTag ("CaseOrangeForShow");
-			Destroy(objCaseOrangeForShow);
+			//GameObject objCaseOrangeForShow = GameObject.FindGameObjectWithTag ("CaseOrangeForShow");
+			//Destroy(objCaseOrangeForShow);
+			objCaseOrangeForShow.SetActive(false);
 			Debug.Log("Open Orange Cabinet");
 		}
 	}
 	
 
-	
+	/*
 	public void PickUpSuperEnergy(){
 		if (globalObjectType == 2) {
 			Debug.Log ("Pick up Super energy");
@@ -479,7 +501,7 @@ public class Character2Script : MonoBehaviour {
 			SuperEnergyScript superEnergy = objSuperEnergy.GetComponent<SuperEnergyScript> ();
 			superEnergy.Pick ();
 		}
-	}
+	}*/
 
 	public void DoNothing(){
 		if(startCount == true)
@@ -492,7 +514,7 @@ public class Character2Script : MonoBehaviour {
 		else 
 			return true;
 	}
-	
+	/*
 	void ComputeObstructViewObject(int cx, int cz){
 		
 		MakeObjectTransparent(map.GetObjectOnObjectMap (cx-1, cz));
@@ -529,6 +551,6 @@ public class Character2Script : MonoBehaviour {
 		}
 		
 		arr.Clear ();
-	}
+	}*/
 	
 }

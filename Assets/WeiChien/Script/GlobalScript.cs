@@ -10,6 +10,8 @@ public class GlobalScript : MonoBehaviour {
 	public int holdKeyStatus;
 	public ArrayList openCabinetStatus;
 	private GameObject gameObjTextStatus;
+	//private bool blueCaseOpenStatus = false;
+	private bool[] caseOpenStatus; 
 
 	// Use this for initialization
 	void Start () {
@@ -17,6 +19,8 @@ public class GlobalScript : MonoBehaviour {
 
 		openCabinetStatus = new ArrayList ();
 		collectedEvidence = 0;
+
+		caseOpenStatus = new bool[5]{false, false, false, false, false};
 	}
 	
 	// Update is called once per frame
@@ -51,7 +55,7 @@ public class GlobalScript : MonoBehaviour {
 		//gameObjTextStatus.guiText.
 
 	}
-
+	/*
 	public bool CompareColor(int color){
 		for (int i = 0; i < openCabinetStatus.Count; ++i) {
 			if(color == (int)openCabinetStatus[i])
@@ -59,13 +63,63 @@ public class GlobalScript : MonoBehaviour {
 		}
 
 		return false;
-	}
+	}*/
 
 	public void CollectEvidence(int color){
 		collectedEvidence++;
-		openCabinetStatus.Add (color);
+		//openCabinetStatus.Add (color);
+
+		switch (holdKeyStatus) {
+		case 31:
+			caseOpenStatus[0] = true;
+			break;
+		case 32:
+			caseOpenStatus[1] = true;
+			break;
+		case 33:
+			caseOpenStatus[2] = true;
+			break;
+		case 34:
+			caseOpenStatus[3] = true;
+			break;
+		case 35:
+			caseOpenStatus[4] = true;
+			break;
+		}
 		if(collectedEvidence == 5)
 			Application.LoadLevel("GameWinScene");//Win
+	}
+
+	public void removeEvidence(int color){
+		collectedEvidence--;
+		if (collectedEvidence < 0)
+			collectedEvidence = 0;
+
+		switch (holdKeyStatus) {
+		case 31:
+			caseOpenStatus[0] = false;
+			break;
+		case 32:
+			caseOpenStatus[1] = false;
+			break;
+		case 33:
+			caseOpenStatus[2] = false;
+			break;
+		case 34:
+			caseOpenStatus[3] = false;
+			break;
+		case 35:
+			caseOpenStatus[4] = false;
+			break;
+		}
+	}
+
+	public int getCollectEvidenceNumber(){
+		return collectedEvidence;
+	}
+
+	public bool[] getEvidenceCollectStatus(){
+		return caseOpenStatus;
 	}
 
 }

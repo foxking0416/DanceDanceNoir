@@ -62,8 +62,8 @@ public class PlayerOne : MonoBehaviour
 		num_beats_between_obstacle_movement_max = 3;
 
 		// Danny was here.
-		num_beats_between_obstacle_generation_min = 3;
-		num_beats_between_obstacle_generation_max = 4;
+		num_beats_between_obstacle_generation_min = 999;
+		num_beats_between_obstacle_generation_max = 1000;
 		current_num_beats_between_obstacle_generation = getWaitTimeUntilNextObstacle();
 		num_beats_since_last_obstacle_generation = 0;
 

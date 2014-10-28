@@ -22,7 +22,14 @@ public class GridMap : MonoBehaviour {
 	public GameObject gameObjCharacter;
 
 	private GameObject gameObjObstacleGenerated;
-	
+	private GameObject gameObjPhase1;
+	private GlobalScript global;
+	private GameObject objCaseBlueForShow;
+	private GameObject objCaseYellowForShow;
+	private GameObject objCaseRedForShow;
+	private GameObject objCaseGreenForShow;
+	private GameObject objCaseOrangeForShow;
+
 	int[] map;// = new int[400]; 
 	GameObject[] objectMap;
 	int width = 20;
@@ -86,13 +93,7 @@ public class GridMap : MonoBehaviour {
 		UpdateObjectsStatus (6,  6, 24);//green cabinet
 		UpdateObjectsStatus ( 14,  10, 25);//orange cabinet
 		
-		
-		/*UpdateObjectsStatus ( 5,  3, 31);//blue key
-		UpdateObjectsStatus ( 3, 16, 32);//yellow key
-		UpdateObjectsStatus (18,  4, 33);//red key
-		UpdateObjectsStatus (19, 18, 34);//green key
-		UpdateObjectsStatus (10, 20, 35);//orange key*/
-
+	
 
 		gameObject.transform.position = new Vector3 ((float)width / 2 * 5.0f, 0.0f, (float)width / 2 * 5.0f);
 		gameObject.transform.localScale = new Vector3 ((float)width / 2, 1, (float)width / 2);
@@ -102,6 +103,14 @@ public class GridMap : MonoBehaviour {
 		GameObject objCharacter = Instantiate (gameObjCharacter, ComputePosition(10, 0, 10), Quaternion.identity) as GameObject;
 		objCharacter.transform.localScale = new Vector3 (10, 10, 10);
 		objCharacter.tag = "Player2";
+
+		gameObjPhase1 = GameObject.Find("Phase1");
+		global = gameObjPhase1.GetComponent<GlobalScript> ();
+		objCaseBlueForShow = GameObject.FindGameObjectWithTag ("CaseBlueForShow");
+		objCaseYellowForShow = GameObject.FindGameObjectWithTag ("CaseYellowForShow");
+		objCaseRedForShow = GameObject.FindGameObjectWithTag ("CaseRedForShow");
+		objCaseGreenForShow = GameObject.FindGameObjectWithTag ("CaseGreenForShow");
+		objCaseOrangeForShow = GameObject.FindGameObjectWithTag ("CaseOrangeForShow");
 	}
 
 	void Initial(){
@@ -210,7 +219,8 @@ public class GridMap : MonoBehaviour {
 				objectMap[i % width + 1 + (width + 2) * (i / width + 1)] = objSuperEnergy;
 				break;
 			case 21://Add Blue Cabinet
-				GameObject objCabinetBlue = Instantiate (gameObjCase, ComputePosition_Case(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;
+				GenerateCase(i % width + 1, i / width + 1, "BlueCabinet", 21);
+				/*GameObject objCabinetBlue = Instantiate (gameObjCase, ComputePosition_Case(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;
 				objCabinetBlue.tag = "BlueCabinet";
 				objCabinetBlue.transform.localScale = new Vector3(3, 5, 5);
 				objCabinetBlue.transform.localRotation= Quaternion.Euler( new Vector3(90, 0, 0));
@@ -218,10 +228,11 @@ public class GridMap : MonoBehaviour {
 				cabinetBlue.positionX = i % width + 1;
 				cabinetBlue.positionZ = i / width + 1;
 				cabinetBlue.SetColor(21);
-				objectMap[i % width + 1 + (width + 2) * (i / width + 1)] = objCabinetBlue;
+				objectMap[i % width + 1 + (width + 2) * (i / width + 1)] = objCabinetBlue;*/
 				break;
 			case 22://Add Yellow Cabinet
-				GameObject objCabinetYellow = Instantiate (gameObjCase, ComputePosition_Case(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;
+				GenerateCase(i % width + 1, i / width + 1, "YellowCabinet", 22);
+				/*GameObject objCabinetYellow = Instantiate (gameObjCase, ComputePosition_Case(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;
 				objCabinetYellow.tag = "YellowCabinet";
 				objCabinetYellow.transform.localScale = new Vector3(3, 5, 5);
 				objCabinetYellow.transform.localRotation= Quaternion.Euler( new Vector3(90, 0, 0));
@@ -229,10 +240,11 @@ public class GridMap : MonoBehaviour {
 				cabinetYellow.positionX = i % width + 1;
 				cabinetYellow.positionZ = i / width + 1;
 				cabinetYellow.SetColor(22);
-				objectMap[i % width + 1 + (width + 2) * (i / width + 1)] = objCabinetYellow;
+				objectMap[i % width + 1 + (width + 2) * (i / width + 1)] = objCabinetYellow;*/
 				break;
 			case 23://Add Red Cabinet
-				GameObject objCabinetRed = Instantiate (gameObjCase, ComputePosition_Case(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;
+				GenerateCase(i % width + 1, i / width + 1, "RedCabinet", 23);
+				/*GameObject objCabinetRed = Instantiate (gameObjCase, ComputePosition_Case(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;
 				gameObjCase.tag = "RedCabinet";
 				objCabinetRed.transform.localScale = new Vector3(3, 5, 5);
 				objCabinetRed.transform.localRotation= Quaternion.Euler( new Vector3(90, 0, 0));
@@ -240,10 +252,11 @@ public class GridMap : MonoBehaviour {
 				cabinetRed.positionX = i % width + 1;
 				cabinetRed.positionZ = i / width + 1;
 				cabinetRed.SetColor(23);
-				objectMap[i % width + 1 + (width + 2) * (i / width + 1)] = objCabinetRed;
+				objectMap[i % width + 1 + (width + 2) * (i / width + 1)] = objCabinetRed;*/
 				break;
 			case 24://Add Green Cabinet
-				GameObject objCabinetGreen = Instantiate (gameObjCase, ComputePosition_Case(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;
+				GenerateCase(i % width + 1, i / width + 1, "GreenCabinet", 24);
+				/*GameObject objCabinetGreen = Instantiate (gameObjCase, ComputePosition_Case(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;
 				objCabinetGreen.tag = "GreenCabinet";
 				objCabinetGreen.transform.localScale = new Vector3(3, 5, 5);
 				objCabinetGreen.transform.localRotation= Quaternion.Euler( new Vector3(90, 0, 0));
@@ -251,10 +264,11 @@ public class GridMap : MonoBehaviour {
 				cabinetGreen.positionX = i % width + 1;
 				cabinetGreen.positionZ = i / width + 1;
 				cabinetGreen.SetColor(24);
-				objectMap[i % width + 1 + (width + 2) * (i / width + 1)] = objCabinetGreen;
+				objectMap[i % width + 1 + (width + 2) * (i / width + 1)] = objCabinetGreen;*/
 				break;
 			case 25://Add Orange Cabinet
-				GameObject objCabinetOrange = Instantiate (gameObjCase, ComputePosition_Case(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;
+				GenerateCase(i % width + 1, i / width + 1, "OrangeCabinet", 25);
+				/*GameObject objCabinetOrange = Instantiate (gameObjCase, ComputePosition_Case(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;
 				objCabinetOrange.tag = "OrangeCabinet";
 				objCabinetOrange.transform.localScale = new Vector3(3, 5, 5);
 				objCabinetOrange.transform.localRotation= Quaternion.Euler( new Vector3(90, 0, 0));
@@ -262,10 +276,10 @@ public class GridMap : MonoBehaviour {
 				cabinetOrange.positionX = i % width + 1;
 				cabinetOrange.positionZ = i / width + 1;
 				cabinetOrange.SetColor(25);
-				objectMap[i % width + 1 + (width + 2) * (i / width + 1)] = objCabinetOrange;
+				objectMap[i % width + 1 + (width + 2) * (i / width + 1)] = objCabinetOrange;*/
 				break;
 
-			case 31: //Add Blue key
+			/*case 31: //Add Blue key
 				GameObject objKeyBlue = Instantiate (gameObjKey, ComputePosition_Key(i % width + 1, 0, i / width + 1), Quaternion.identity) as GameObject;
 				objKeyBlue.tag = "BlueKey";
 				objKeyBlue.transform.localScale = new Vector3(3, 3, 3);
@@ -314,7 +328,7 @@ public class GridMap : MonoBehaviour {
 				keyOrange.positionX = i % width + 1;
 				keyOrange.positionZ = i / width + 1;
 				keyOrange.SetColor(35);
-				break;
+				break;*/
 			}		
 		}
 	}
@@ -365,6 +379,18 @@ public class GridMap : MonoBehaviour {
 		enemy.positionZ = index / width + 1;
 		objectMap[index % width + 1 + (width + 2) * (index / width + 1)] = objEnemy;
 		Debug.Log("Create Enemy!!!!");
+	}
+
+	private void GenerateCase(int x, int z, string tagname, int color){
+		GameObject objCabinet = Instantiate (gameObjCase, ComputePosition_Case (x, 0, z), Quaternion.identity) as GameObject;
+		objCabinet.tag = tagname;
+		objCabinet.transform.localScale = new Vector3 (3, 5, 5);
+		objCabinet.transform.localRotation = Quaternion.Euler (new Vector3 (90, 0, 0));
+		CabinetScript cabinet = objCabinet.GetComponent<CabinetScript> ();
+		cabinet.positionX = x;
+		cabinet.positionZ = z;
+		cabinet.SetColor (color);
+		objectMap [x + (width + 2) * z] = objCabinet;
 	}
 
 	public int GetObjectTypeOnMap(int indexX, int indexZ){
@@ -436,5 +462,27 @@ public class GridMap : MonoBehaviour {
 
 	public int GetMapSize(){
 		return width;
+	}
+
+	public void recreateCase(){
+		int collectNum = global.getCollectEvidenceNumber ();
+		if (collectNum == 0)
+			return;
+		bool[] caseOpenStatus = global.getEvidenceCollectStatus ();
+		int createCaseIndex = Random.Range (0, 5);
+		while (caseOpenStatus[createCaseIndex] == false) {
+			createCaseIndex = Random.Range (0, 5);
+		}
+
+		if (createCaseIndex == 0) {
+				}
+		else if(createCaseIndex == 1) {
+		}
+		else if(createCaseIndex == 2) {
+		}
+		else if(createCaseIndex == 3) {
+		}
+		else if(createCaseIndex == 4) {
+		}
 	}
 }
