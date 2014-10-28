@@ -230,7 +230,7 @@ GUIText:
   m_TabSize: 4
   m_Font: {fileID: 12800000, guid: a1e91a1fe3c231340b565b03d84789af, type: 3}
   m_Material: {fileID: 0}
-  m_FontSize: 120
+  m_FontSize: 50
   m_FontStyle: 0
   m_Color:
     serializedVersion: 2

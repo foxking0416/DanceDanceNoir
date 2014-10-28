@@ -14,10 +14,10 @@ public class GameWinScript : MonoBehaviour {
 	}
 
 	void OnGUI (){
-		GUILayout.BeginArea(new Rect(10, 850, 140, 600));
+		GUILayout.BeginArea(new Rect(10, 500, 140, 600));
 		
-		if (GUILayout.Button("New Game")) {
-			Application.LoadLevel("Phase1SceneV4");
+		if (GUILayout.Button("Main Menu")) {
+			Application.LoadLevel("GameStartScene");
 		}
 		GUILayout.EndArea();
 

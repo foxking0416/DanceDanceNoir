@@ -221,7 +221,7 @@ GUIText:
   m_GameObject: {fileID: 841447308}
   m_Enabled: 1
   serializedVersion: 3
-  m_Text: You Win
+  m_Text: "KEEP\r\nCALM\r\nYOU LOSE\r\nI WIN"
   m_Anchor: 0
   m_Alignment: 0
   m_PixelOffset: {x: 0, y: 0}

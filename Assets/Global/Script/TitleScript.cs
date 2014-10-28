@@ -17,8 +17,8 @@ public class TitleScript : MonoBehaviour {
 
 
 	void OnGUI (){
-		GUILayout.BeginArea(new Rect(480, 160, 140, 300));
-		GUI.Button (new Rect(480, 160, 140, 200), "New Game");
+		GUILayout.BeginArea(new Rect(300, 160, 140, 300));
+		//GUI.Button (new Rect(480, 160, 140, 200), "New Game");
 
 		if (GUILayout.Button("New Game")) {
 			Application.LoadLevel("Phase1SceneV4");
@@ -30,7 +30,7 @@ public class TitleScript : MonoBehaviour {
 		}
 		GUILayout.EndArea();
 
-		GUILayout.BeginArea(new Rect(480, 668, 140, 200));
+		GUILayout.BeginArea(new Rect(300, 500, 140, 200));
 		if (GUILayout.Button("Exit")) {
 			Application.Quit();
 			Debug.Log ("Application.Quit() only works in build, not in editor");
