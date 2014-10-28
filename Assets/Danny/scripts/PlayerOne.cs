@@ -236,7 +236,7 @@ public class PlayerOne : MonoBehaviour
 
 		//Action: Sprint
 		if(actionType == 1) {
-			if( grid.hasObstacle( playerPositionDiscreteX + 1, playerPositionDiscreteY ) == false ){
+			if( grid.hasObstacle( playerPositionDiscreteX + 1, playerPositionDiscreteY ) == false && playerPositionDiscreteX <grid.getWidth()-1 ){
 				playerPositionDiscreteX++;
 				transform.position = grid.computePlayerPosition (playerPositionDiscreteX, playerPositionDiscreteY);
 			}
