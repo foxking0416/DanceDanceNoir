@@ -69,7 +69,7 @@ public class GlobalScript : MonoBehaviour {
 		collectedEvidence++;
 		//openCabinetStatus.Add (color);
 
-		switch (holdKeyStatus) {
+		switch (color) {
 		case 31:
 			caseOpenStatus[0] = true;
 			break;

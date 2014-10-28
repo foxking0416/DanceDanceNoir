@@ -112,14 +112,14 @@ public class GridMap : MonoBehaviour {
 		objCaseGreenForShow = GameObject.FindGameObjectWithTag ("CaseGreenForShow");
 		objCaseOrangeForShow = GameObject.FindGameObjectWithTag ("CaseOrangeForShow");
 	}
-
-	void Initial(){
-
-	}
+	
 
 	// Update is called once per frame
 	void Update () {
-	
+		/*if (Input.GetKeyDown(KeyCode.B)){
+			recreateCase();
+		}*/
+
 	}
 
 	void GenerateEnvironment(){
@@ -194,141 +194,36 @@ public class GridMap : MonoBehaviour {
 					UpdateObjectsStatus(i % width, i / width + 1, 10);
 				break;
 			case 6://Add obstacle chair
-				GameObject objChair2 = Instantiate (gameObjObstacleChair2, ComputePosition_Chair2(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;	
+				GameObject objChair2 = Instantiate (gameObjObstacleChair2, ComputePosition(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;	
 				objChair2.tag = "Chair";
 				objChair2.transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
 				objChair2.transform.localRotation = Quaternion.Euler( new Vector3(270, 270, 0));
 				objectMap[i % width + 1 + (width + 2) * (i / width + 1)] = objChair2;
 				break;
 			case 11://Add Enemy
-				GameObject objEnemy = Instantiate (gameObjEnemy, ComputePosition_Enemy(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;	
+				GameObject objEnemy = Instantiate (gameObjEnemy, ComputePosition(i % width + 1, 1.5f,  i / width + 1), Quaternion.identity) as GameObject;	
 				objEnemy.tag = "Enemy";
 				EnemyScript enemy = objEnemy.GetComponent<EnemyScript>();
 				enemy.positionX = i % width + 1;
 				enemy.positionZ = i / width + 1;
 				objectMap[i % width + 1 + (width + 2) * (i / width + 1)] = objEnemy;
 				break;
-			case 15://Add Super Energy
-				GameObject objSuperEnergy = Instantiate (gameObjSuperEnergy, ComputePosition_SuperEnergy(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;	
-				objSuperEnergy.tag = "SuperEnergy";
-				objSuperEnergy.transform.localScale = new Vector3(3, 3, 3);
-				objSuperEnergy.transform.localRotation = Quaternion.Euler( new Vector3(270, 0, 0));
-				SuperEnergyScript superEnergy = objSuperEnergy.GetComponent<SuperEnergyScript>();
-				superEnergy.positionX = i % width + 1;
-				superEnergy.positionZ = i / width + 1;
-				objectMap[i % width + 1 + (width + 2) * (i / width + 1)] = objSuperEnergy;
-				break;
 			case 21://Add Blue Cabinet
 				GenerateCase(i % width + 1, i / width + 1, "BlueCabinet", 21);
-				/*GameObject objCabinetBlue = Instantiate (gameObjCase, ComputePosition_Case(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;
-				objCabinetBlue.tag = "BlueCabinet";
-				objCabinetBlue.transform.localScale = new Vector3(3, 5, 5);
-				objCabinetBlue.transform.localRotation= Quaternion.Euler( new Vector3(90, 0, 0));
-				CabinetScript cabinetBlue = objCabinetBlue.GetComponent<CabinetScript>();
-				cabinetBlue.positionX = i % width + 1;
-				cabinetBlue.positionZ = i / width + 1;
-				cabinetBlue.SetColor(21);
-				objectMap[i % width + 1 + (width + 2) * (i / width + 1)] = objCabinetBlue;*/
 				break;
 			case 22://Add Yellow Cabinet
 				GenerateCase(i % width + 1, i / width + 1, "YellowCabinet", 22);
-				/*GameObject objCabinetYellow = Instantiate (gameObjCase, ComputePosition_Case(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;
-				objCabinetYellow.tag = "YellowCabinet";
-				objCabinetYellow.transform.localScale = new Vector3(3, 5, 5);
-				objCabinetYellow.transform.localRotation= Quaternion.Euler( new Vector3(90, 0, 0));
-				CabinetScript cabinetYellow = objCabinetYellow.GetComponent<CabinetScript>();
-				cabinetYellow.positionX = i % width + 1;
-				cabinetYellow.positionZ = i / width + 1;
-				cabinetYellow.SetColor(22);
-				objectMap[i % width + 1 + (width + 2) * (i / width + 1)] = objCabinetYellow;*/
 				break;
 			case 23://Add Red Cabinet
 				GenerateCase(i % width + 1, i / width + 1, "RedCabinet", 23);
-				/*GameObject objCabinetRed = Instantiate (gameObjCase, ComputePosition_Case(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;
-				gameObjCase.tag = "RedCabinet";
-				objCabinetRed.transform.localScale = new Vector3(3, 5, 5);
-				objCabinetRed.transform.localRotation= Quaternion.Euler( new Vector3(90, 0, 0));
-				CabinetScript cabinetRed = objCabinetRed.GetComponent<CabinetScript>();
-				cabinetRed.positionX = i % width + 1;
-				cabinetRed.positionZ = i / width + 1;
-				cabinetRed.SetColor(23);
-				objectMap[i % width + 1 + (width + 2) * (i / width + 1)] = objCabinetRed;*/
 				break;
 			case 24://Add Green Cabinet
 				GenerateCase(i % width + 1, i / width + 1, "GreenCabinet", 24);
-				/*GameObject objCabinetGreen = Instantiate (gameObjCase, ComputePosition_Case(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;
-				objCabinetGreen.tag = "GreenCabinet";
-				objCabinetGreen.transform.localScale = new Vector3(3, 5, 5);
-				objCabinetGreen.transform.localRotation= Quaternion.Euler( new Vector3(90, 0, 0));
-				CabinetScript cabinetGreen = objCabinetGreen.GetComponent<CabinetScript>();
-				cabinetGreen.positionX = i % width + 1;
-				cabinetGreen.positionZ = i / width + 1;
-				cabinetGreen.SetColor(24);
-				objectMap[i % width + 1 + (width + 2) * (i / width + 1)] = objCabinetGreen;*/
 				break;
 			case 25://Add Orange Cabinet
 				GenerateCase(i % width + 1, i / width + 1, "OrangeCabinet", 25);
-				/*GameObject objCabinetOrange = Instantiate (gameObjCase, ComputePosition_Case(i % width + 1, 0,  i / width + 1), Quaternion.identity) as GameObject;
-				objCabinetOrange.tag = "OrangeCabinet";
-				objCabinetOrange.transform.localScale = new Vector3(3, 5, 5);
-				objCabinetOrange.transform.localRotation= Quaternion.Euler( new Vector3(90, 0, 0));
-				CabinetScript cabinetOrange = objCabinetOrange.GetComponent<CabinetScript>();
-				cabinetOrange.positionX = i % width + 1;
-				cabinetOrange.positionZ = i / width + 1;
-				cabinetOrange.SetColor(25);
-				objectMap[i % width + 1 + (width + 2) * (i / width + 1)] = objCabinetOrange;*/
 				break;
 
-			/*case 31: //Add Blue key
-				GameObject objKeyBlue = Instantiate (gameObjKey, ComputePosition_Key(i % width + 1, 0, i / width + 1), Quaternion.identity) as GameObject;
-				objKeyBlue.tag = "BlueKey";
-				objKeyBlue.transform.localScale = new Vector3(3, 3, 3);
-				objKeyBlue.transform.localRotation= Quaternion.Euler( new Vector3(0, 0, 180));
-				KeyScript keyBlue = objKeyBlue.GetComponent<KeyScript>();
-				keyBlue.positionX = i % width + 1;
-				keyBlue.positionZ = i / width + 1;
-				keyBlue.SetColor(31);
-				break;
-			case 32: //Add Yellow key
-				GameObject objKeyYellow = Instantiate (gameObjKey, ComputePosition_Key(i % width + 1, 0, i / width + 1), Quaternion.identity) as GameObject;
-				objKeyYellow.tag = "YellowKey";
-				objKeyYellow.transform.localScale = new Vector3(3, 3, 3);
-				objKeyYellow.transform.localRotation= Quaternion.Euler( new Vector3(0, 0, 180));
-				KeyScript keyYellow = objKeyYellow.GetComponent<KeyScript>();
-				keyYellow.positionX = i % width + 1;
-				keyYellow.positionZ = i / width + 1;
-				keyYellow.SetColor(32);
-				break;
-			case 33: //Add Red Key
-				GameObject objKeyRed = Instantiate (gameObjKey, ComputePosition_Key(i % width + 1, 0, i / width + 1), Quaternion.identity) as GameObject;
-				objKeyRed.tag = "RedKey";
-				objKeyRed.transform.localScale = new Vector3(3, 3, 3);
-				objKeyRed.transform.localRotation= Quaternion.Euler( new Vector3(0, 0, 180));
-				KeyScript keyRed = objKeyRed.GetComponent<KeyScript>();
-				keyRed.positionX = i % width + 1;
-				keyRed.positionZ = i / width + 1;
-				keyRed.SetColor(33);
-				break;
-			case 34://Add Green Key
-				GameObject objKeyGreen = Instantiate (gameObjKey, ComputePosition_Key(i % width + 1, 0, i / width + 1), Quaternion.identity) as GameObject;
-				objKeyGreen.tag = "GreenKey";
-				objKeyGreen.transform.localScale = new Vector3(3, 3, 3);
-				objKeyGreen.transform.localRotation= Quaternion.Euler( new Vector3(0, 0, 180));
-				KeyScript keyGreen = objKeyGreen.GetComponent<KeyScript>();
-				keyGreen.positionX = i % width + 1;
-				keyGreen.positionZ = i / width + 1;
-				keyGreen.SetColor(34);
-				break;
-			case 35://Add Orange Key
-				GameObject objKeyOrange = Instantiate (gameObjKey, ComputePosition_Key(i % width + 1, 0, i / width + 1), Quaternion.identity) as GameObject;
-				objKeyOrange.tag = "OrangeKey";
-				objKeyOrange.transform.localScale = new Vector3(3, 3, 3);
-				objKeyOrange.transform.localRotation= Quaternion.Euler( new Vector3(0, 0, 180));
-				KeyScript keyOrange = objKeyOrange.GetComponent<KeyScript>();
-				keyOrange.positionX = i % width + 1;
-				keyOrange.positionZ = i / width + 1;
-				keyOrange.SetColor(35);
-				break;*/
 			}		
 		}
 	}
@@ -361,7 +256,7 @@ public class GridMap : MonoBehaviour {
 		}
 	}
 
-	public void GenerateEnemy(){
+	public void GenerateStar(){
 		int indexX = Random.Range (1, 21);
 		int indexZ = Random.Range (1, 21);
 
@@ -372,17 +267,17 @@ public class GridMap : MonoBehaviour {
 		}
 		int index = (indexZ - 1) * width + (indexX - 1);
 
-		GameObject objEnemy = Instantiate (gameObjEnemy, ComputePosition_Enemy(index % width + 1, 0,  index / width + 1), Quaternion.identity) as GameObject;	
-		objEnemy.tag = "Enemy";
-		EnemyScript enemy = objEnemy.GetComponent<EnemyScript>();
-		enemy.positionX = index % width + 1;
-		enemy.positionZ = index / width + 1;
-		objectMap[index % width + 1 + (width + 2) * (index / width + 1)] = objEnemy;
+		GameObject objStar = Instantiate (gameObjEnemy, ComputePosition(index % width + 1, 1.5f,  index / width + 1), Quaternion.identity) as GameObject;	
+		objStar.tag = "Enemy";
+		EnemyScript star = objStar.GetComponent<EnemyScript>();
+		star.positionX = index % width + 1;
+		star.positionZ = index / width + 1;
+		objectMap[index % width + 1 + (width + 2) * (index / width + 1)] = objStar;
 		Debug.Log("Create Enemy!!!!");
 	}
 
 	private void GenerateCase(int x, int z, string tagname, int color){
-		GameObject objCabinet = Instantiate (gameObjCase, ComputePosition_Case (x, 0, z), Quaternion.identity) as GameObject;
+		GameObject objCabinet = Instantiate (gameObjCase, ComputePosition (x, 4.2f, z), Quaternion.identity) as GameObject;
 		objCabinet.tag = tagname;
 		objCabinet.transform.localScale = new Vector3 (3, 5, 5);
 		objCabinet.transform.localRotation = Quaternion.Euler (new Vector3 (90, 0, 0));
@@ -420,28 +315,8 @@ public class GridMap : MonoBehaviour {
 	}
 
 
-	Vector3 ComputePosition(int x, int y, int z){
-		Vector3 pos = new Vector3 (-2.5f + x * 5.0f, 0.0f, -2.5f + z * 5.0f);
-		return pos;
-	}
-
-	Vector3 ComputePosition_Enemy(int x, int y, int z){
-		Vector3 pos = new Vector3 (-2.5f + x * 5.0f, 1.5f, -2.5f + z * 5.0f);
-		return pos;
-	}
-
-	Vector3 ComputePosition_Key(int x, int y, int z){
-		Vector3 pos = new Vector3 (-2.5f + x * 5.0f, 0.5f, -2.5f + z * 5.0f);
-		return pos;
-	}
-
-	Vector3 ComputePosition_Case(int x, int y, int z){
-		Vector3 pos = new Vector3 (-2.5f + x * 5.0f, 4.2f, -2.5f + z * 5.0f);
-		return pos;
-	}
-
-	Vector3 ComputePosition_SuperEnergy(int x, int y, int z){
-		Vector3 pos = new Vector3 (-2.5f + x * 5.0f, 3.2f, -2.5f + z * 5.0f);
+	Vector3 ComputePosition(float x, float y, float z){
+		Vector3 pos = new Vector3 (-2.5f + x * 5.0f, y, -2.5f + z * 5.0f);
 		return pos;
 	}
 
@@ -455,10 +330,6 @@ public class GridMap : MonoBehaviour {
 		return pos;
 	}
 
-	Vector3 ComputePosition_Chair2(int x, int y, int z){
-		Vector3 pos = new Vector3 (-2.5f + x * 5.0f, 0.0f, -2.5f + z * 5.0f);
-		return pos;
-	}
 
 	public int GetMapSize(){
 		return width;
@@ -468,21 +339,73 @@ public class GridMap : MonoBehaviour {
 		int collectNum = global.getCollectEvidenceNumber ();
 		if (collectNum == 0)
 			return;
+		int count = 0;
 		bool[] caseOpenStatus = global.getEvidenceCollectStatus ();
 		int createCaseIndex = Random.Range (0, 5);
 		while (caseOpenStatus[createCaseIndex] == false) {
 			createCaseIndex = Random.Range (0, 5);
+			count++;
+			if(count > 1000)
+				return;
 		}
+		Character2Script player2 = GameObject.FindGameObjectWithTag ("Player2").GetComponent<Character2Script>();;
+		int newPosX = Random.Range (1, 21);
+		int newPosZ = Random.Range (1, 21);
 
+		count = 0;
+		while(GetObjectTypeOnMap(newPosX, newPosZ) == 1 || 
+		      GetObjectTypeOnMap(newPosX, newPosZ) == 2 ||
+		      GetObjectTypeOnMap(newPosX, newPosZ) == 3 ||
+		      GetObjectTypeOnMap(newPosX, newPosZ) == 4 ||
+		      GetObjectTypeOnMap(newPosX, newPosZ) == 5 ||
+		      GetObjectTypeOnMap(newPosX, newPosZ) == 6 ||
+		      GetObjectTypeOnMap(newPosX, newPosZ) == 10 ||
+		      GetObjectTypeOnMap(newPosX, newPosZ) == 11 ||
+		      GetObjectTypeOnMap(newPosX, newPosZ) == 211 ||
+		      GetObjectTypeOnMap(newPosX, newPosZ) == 21 ||
+		      GetObjectTypeOnMap(newPosX, newPosZ) == 22 ||
+		      GetObjectTypeOnMap(newPosX, newPosZ) == 23 ||
+		      GetObjectTypeOnMap(newPosX, newPosZ) == 24 ||
+		      GetObjectTypeOnMap(newPosX, newPosZ) == 25 ||
+		      (newPosX == player2.getPlayer2PosX() && newPosZ == player2.getPlayer2PosZ())){
+			newPosX = Random.Range (1, 21);
+			newPosZ = Random.Range (1, 21);
+			count++;
+
+			if(count > 1000)
+				return;
+		}
 		if (createCaseIndex == 0) {
-				}
+			UpdateObjectsStatus(newPosX, newPosZ, 21);
+			GenerateCase(newPosX, newPosZ, "BlueCabinet", 21);
+			global.removeEvidence(31);
+			objCaseBlueForShow.SetActive(true);
+		}
 		else if(createCaseIndex == 1) {
+			UpdateObjectsStatus(newPosX, newPosZ, 22);
+			GenerateCase(newPosX, newPosZ, "YellowCabinet", 22);
+			global.removeEvidence(32);
+			objCaseYellowForShow.SetActive(true);
 		}
 		else if(createCaseIndex == 2) {
+			UpdateObjectsStatus(newPosX, newPosZ, 23);
+			GenerateCase(newPosX, newPosZ, "RedCabinet", 23);
+			global.removeEvidence(33);
+			objCaseRedForShow.SetActive(true);
 		}
 		else if(createCaseIndex == 3) {
+			UpdateObjectsStatus(newPosX, newPosZ, 24);
+			GenerateCase(newPosX, newPosZ, "GreenCabinet", 24);
+			global.removeEvidence(34);
+			objCaseGreenForShow.SetActive(true);
 		}
 		else if(createCaseIndex == 4) {
+			UpdateObjectsStatus(newPosX, newPosZ, 25);
+			GenerateCase(newPosX, newPosZ, "OrangeCabinet", 25);
+			global.removeEvidence(35);
+			objCaseOrangeForShow.SetActive(true);
 		}
+
+
 	}
 }

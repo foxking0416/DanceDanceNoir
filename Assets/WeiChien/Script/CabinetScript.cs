@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+	
 public class CabinetScript : MonoBehaviour {
 	private GameObject gameObjGridMap;
 	private GridMap map;

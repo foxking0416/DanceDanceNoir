@@ -55,8 +55,8 @@ public class Character2Script : MonoBehaviour {
 		global = gameObjPhase1.GetComponent<GlobalScript> ();
 		width = map.GetMapSize ();
 		
-		positionX = 10;
-		positionZ = 6;
+		positionX = 14;
+		positionZ = 9;
 		direction = 0;
 		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
 		
@@ -94,7 +94,7 @@ public class Character2Script : MonoBehaviour {
 		}
 
 		if (beatCount > beatNeedToGenerateEnemy) {
-			map.GenerateEnemy();		
+			map.GenerateStar();		
 			startCount = false;
 			beatCount = 0;
 		}
@@ -374,12 +374,12 @@ public class Character2Script : MonoBehaviour {
 		Vector3 pos = new Vector3 (-2.5f + x * 5.0f, y, -2.5f + z * 5.0f);
 		return pos;
 	}
-	
+	/*
 	Vector3 ComputeCameraPosition(int x, int y, int z, float angle){
 		Vector3 pos = new Vector3 (-2.5f + x * 5.0f - 100.0f * Mathf.Cos(angle), 80.0f, -2.5f + z * 5.0f - 100.0f * Mathf.Cos(angle));
 		//Vector3 pos = new Vector3 (-2.5f + x * 5.0f , 1.0f, -2.5f + z * 5.0f );
 		return pos;
-	}
+	}*/
 	
 	bool CheckAround(int cx, int cz, int type){
 		int objectType;
@@ -416,92 +416,53 @@ public class Character2Script : MonoBehaviour {
 	
 	public void OpenCabinet(){
 		if(global.holdKeyStatus == 31 && CheckAround(positionX, positionZ, 21)){
-			//if(holdKeyStatus == 31 && CheckAround(positionX, positionZ, 21)){
 			GameObject objCabinetBlue = GameObject.FindGameObjectWithTag ("BlueCabinet");
 			CabinetScript cabinetBlue = objCabinetBlue.GetComponent<CabinetScript> ();
 			cabinetBlue.OpenCabinet ();
-			//holdKeyStatus = 0;
 			global.holdKeyStatus = 0;
 			global.CollectEvidence(31);
-			phase1.numberOfCollectedEvidence++;
 			AudioSource.PlayClipAtPoint (audioOpenCase, gameObject.transform.position);
-			//GameObject objCaseBlueForShow = GameObject.FindGameObjectWithTag ("CaseBlueForShow");
-			//Destroy(objCaseBlueForShow);
 			objCaseBlueForShow.SetActive ( false);
-			Debug.Log("Open Blue Cabinet");
 		}
 		else if(global.holdKeyStatus == 32 && CheckAround(positionX, positionZ, 22)){
-			//else if(holdKeyStatus == 32 && CheckAround(positionX, positionZ, 22)){
 			GameObject objCabinetYellow = GameObject.FindGameObjectWithTag ("YellowCabinet");
 			CabinetScript cabinetYellow = objCabinetYellow.GetComponent<CabinetScript> ();
 			cabinetYellow.OpenCabinet ();
-			//holdKeyStatus = 0;
 			global.holdKeyStatus = 0;
 			global.CollectEvidence(32);
-			phase1.numberOfCollectedEvidence++;
 			AudioSource.PlayClipAtPoint (audioOpenCase, gameObject.transform.position);
-			//GameObject objCaseYellowForShow = GameObject.FindGameObjectWithTag ("CaseYellowForShow");
-			//Destroy(objCaseYellowForShow);
 			objCaseYellowForShow.SetActive(false);
-			Debug.Log("Open Yellow Cabinet");
 		}
 		else if(global.holdKeyStatus == 33 && CheckAround(positionX, positionZ, 23)){
-			//else if(holdKeyStatus == 33 && CheckAround(positionX, positionZ, 23)){
 			GameObject objCabinetRed = GameObject.FindGameObjectWithTag ("RedCabinet");
 			CabinetScript cabinetRed = objCabinetRed.GetComponent<CabinetScript> ();
 			cabinetRed.OpenCabinet ();
-			//holdKeyStatus = 0;
 			global.holdKeyStatus = 0;
 			global.CollectEvidence(33);
-			phase1.numberOfCollectedEvidence++;
 			AudioSource.PlayClipAtPoint (audioOpenCase, gameObject.transform.position);
-			//GameObject objCaseRedForShow = GameObject.FindGameObjectWithTag ("CaseRedForShow");
-			//Destroy(objCaseRedForShow);
 			objCaseRedForShow.SetActive(false);
-			Debug.Log("Open Red Cabinet");
 		}
 		else if(global.holdKeyStatus == 34 && CheckAround(positionX, positionZ, 24)){
-			//else if(holdKeyStatus == 34 && CheckAround(positionX, positionZ, 24)){
 			GameObject objCabinetGreen = GameObject.FindGameObjectWithTag ("GreenCabinet");
 			CabinetScript cabinetGreen = objCabinetGreen.GetComponent<CabinetScript> ();
 			cabinetGreen.OpenCabinet ();
-			//holdKeyStatus = 0;
 			global.holdKeyStatus = 0;
 			global.CollectEvidence(34);
-			phase1.numberOfCollectedEvidence++;
 			AudioSource.PlayClipAtPoint (audioOpenCase, gameObject.transform.position);
-			//GameObject objCaseGreenForShow = GameObject.FindGameObjectWithTag ("CaseGreenForShow");
-			//Destroy(objCaseGreenForShow);
 			objCaseGreenForShow.SetActive(false);
-			Debug.Log("Open Green Cabinet");
 		}
 		else if(global.holdKeyStatus == 35 && CheckAround(positionX, positionZ, 25)){
-			//else if(holdKeyStatus == 35 && CheckAround(positionX, positionZ, 25)){
 			GameObject objCabinetOrange = GameObject.FindGameObjectWithTag ("OrangeCabinet");
 			CabinetScript cabinetOrange = objCabinetOrange.GetComponent<CabinetScript> ();
 			cabinetOrange.OpenCabinet ();
-			//holdKeyStatus = 0;
 			global.holdKeyStatus = 0;
 			global.CollectEvidence(35);
-			phase1.numberOfCollectedEvidence++;
 			AudioSource.PlayClipAtPoint (audioOpenCase, gameObject.transform.position);
-			//GameObject objCaseOrangeForShow = GameObject.FindGameObjectWithTag ("CaseOrangeForShow");
-			//Destroy(objCaseOrangeForShow);
 			objCaseOrangeForShow.SetActive(false);
-			Debug.Log("Open Orange Cabinet");
 		}
 	}
 	
 
-	/*
-	public void PickUpSuperEnergy(){
-		if (globalObjectType == 2) {
-			Debug.Log ("Pick up Super energy");
-			GameObject objSuperEnergy = GameObject.FindGameObjectWithTag ("SuperEnergy");
-			SuperEnergyScript superEnergy = objSuperEnergy.GetComponent<SuperEnergyScript> ();
-			superEnergy.Pick ();
-		}
-	}*/
 
 	public void DoNothing(){
 		if(startCount == true)
@@ -514,43 +475,12 @@ public class Character2Script : MonoBehaviour {
 		else 
 			return true;
 	}
-	/*
-	void ComputeObstructViewObject(int cx, int cz){
-		
-		MakeObjectTransparent(map.GetObjectOnObjectMap (cx-1, cz));
-		MakeObjectTransparent(map.GetObjectOnObjectMap (cx-1, cz-1));
-		MakeObjectTransparent(map.GetObjectOnObjectMap (cx-1, cz-2));
-		MakeObjectTransparent(map.GetObjectOnObjectMap (cx, cz-1));
-		MakeObjectTransparent(map.GetObjectOnObjectMap (cx-2, cz-1));
-		MakeObjectTransparent(map.GetObjectOnObjectMap (cx-2, cz-2));
+
+	public int getPlayer2PosX(){
+		return positionX;
 	}
 
-	void MakeObjectTransparent(GameObject obj){
-		if (obj != null) {
-			
-			if (obj.tag == "Refrigerator") {
-				Debug.Log ("RefridgeratorPrefab");
-				GameObject refriBody = GameObject.Find("Refridgerator");
-				refriBody.renderer.material.shader = transparentShader;
-				GameObject refriDoor = GameObject.Find("Refridgerator_Door");
-				refriDoor.renderer.material.shader = transparentShader;
-				obstacleArray1.Add (refriBody);
-				obstacleArray1.Add (refriDoor);
-			} 
-			else {
-				Debug.Log(obj.name);
-				obj.renderer.material.shader = transparentShader;
-				obstacleArray1.Add (obj);
-			}
-		}
+	public int getPlayer2PosZ(){
+		return positionZ;
 	}
-	
-	void MakeObjectNormal(ArrayList arr){
-		foreach (GameObject obj in arr) {
-			obj.renderer.material.shader = normalShader;			
-		}
-		
-		arr.Clear ();
-	}*/
-	
 }
