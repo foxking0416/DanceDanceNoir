@@ -326,6 +326,13 @@ public class PlayerOne : MonoBehaviour
 				if(grid.hasObstacle(playerPositionDiscreteX, playerPositionDiscreteY) == true)
 					pushBack();
 			}
+
+			// Move background.
+			GameObject bg_object = GameObject.FindGameObjectWithTag( "PlayerOneBackground" );
+			if ( bg_object != null ) {
+				InfiniteScroll bg_script = bg_object.GetComponent<InfiniteScroll>();
+				bg_script.Move();
+			}
 		}
 
 

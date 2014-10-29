@@ -2061,7 +2061,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: cf27b11596510d14fb8a50fe72907a5d, type: 2}
+  - {fileID: 2100000, guid: a97eb6e7d3fb33c4fa28852dc4c692d3, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -2524,7 +2524,7 @@ AudioListener:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 663628846}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!92 &663628848
 Behaviour:
   m_ObjectHideFlags: 0
