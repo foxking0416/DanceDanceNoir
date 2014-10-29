@@ -72,7 +72,7 @@ public class Phase1 : MonoBehaviour {
 		timing = noteSpwanDuration;
 		noteSpwanDuration = 30;
 		noteSpeedChangeTiming = noteSpeedChangePeriod;
-		noteSpeedChangePeriod = 100;
+		noteSpeedChangePeriod = 200;
 		PlayerPrefs.SetFloat ("noteSpeed", 0.035f);
 
 
@@ -105,7 +105,7 @@ public class Phase1 : MonoBehaviour {
 		}
 
 		keyMiss = 0;
-		maxKeyMiss = 20;
+		maxKeyMiss = 50;
 
 		//player1 = GameObject.Find ("player_one(Clone)").GetComponent<PlayerOne> ();
 		player2 = GameObject.FindGameObjectWithTag ("Player2").GetComponent<Character2Script>();
