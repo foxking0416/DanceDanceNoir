@@ -85,6 +85,7 @@ public class Phase1 : MonoBehaviour {
 		PlayerPrefs.SetFloat ("ScreenWidth2World", screenWidth2World);
 		float t = (float)(musicBarLayerOffset - (0.5-0.3*0.85)*screenWidth2World);
 		PlayerPrefs.SetFloat ("HittingCenter", t);
+		PlayerPrefs.SetFloat ("halfHittingRange",PlayerPrefs.GetFloat("ScreenWidth2World") * 0.3f * 0.23f / 2.0f);
 		noteStartX = PlayerPrefs.GetFloat ("HittingCenter") + PlayerPrefs.GetFloat ("noteSpeed") * 250;//musicBarLayerOffset + screenWidth2World / 2;
 
 		//define mode of the game 
@@ -388,17 +389,20 @@ public class Phase1 : MonoBehaviour {
 	public void noteSpeedIncrese()
 	{
 		noteSpwanDuration -= 2;
-		//noteSpwanDuration = (noteSpwanDuration < 18) ? 18 : noteSpwanDuration;
+		noteSpwanDuration = (noteSpwanDuration < 12) ? 12 : noteSpwanDuration;
+		PlayerPrefs.SetFloat ("halfHittingRange", PlayerPrefs.GetFloat("halfHittingRange")-0.01f);
 	}
 
 	public void noteSpeedDecrease()
 	{
 		noteSpwanDuration += 2;
+		PlayerPrefs.SetFloat ("halfHittingRange",PlayerPrefs.GetFloat ("halfHittingRange")+0.01f);
 	}
 
 	public void noteSpeedReset()
 	{
 		noteSpwanDuration = 30;
+		PlayerPrefs.SetFloat ("halfHittingRange",PlayerPrefs.GetFloat("ScreenWidth2World") * 0.3f * 0.23f / 2.0f);
 	}
 
 	void OnGUI()
