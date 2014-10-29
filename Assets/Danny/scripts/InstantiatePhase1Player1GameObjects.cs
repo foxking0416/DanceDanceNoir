@@ -35,7 +35,11 @@ public class InstantiatePhase1Player1GameObjects : MonoBehaviour
 		int initialPlayerY = ( int )( grid.getHeight() / 2 );
 
 		Instantiate( camera, cameraPosition, transform.rotation );
+
 		Instantiate( background, backgroundPosition, transform.rotation );
+		//GameObject bg_object = Instantiate( background, backgroundPosition, transform.rotation );
+		//bg_object.tag = "PlayerOneBackground";
+
 		GameObject objPlayer = Instantiate( player, grid.computePlayerPosition(initialPlayerX, initialPlayerY), transform.rotation ) as GameObject;
 		PlayerOne playerScript =  objPlayer.GetComponent< PlayerOne > ();
 		playerScript.playerPositionDiscreteX = initialPlayerX;
