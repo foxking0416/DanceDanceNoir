@@ -26,7 +26,7 @@ public class TitleScript : MonoBehaviour {
 		GUILayout.EndArea();
 		GUILayout.BeginArea(new Rect(53, 410, 140, 200));
 		if (GUILayout.Button("Introduction")) {
-			Application.LoadLevel("IntroScene");
+			Application.LoadLevel("GameInstructionScene");
 		}
 		GUILayout.EndArea();
 

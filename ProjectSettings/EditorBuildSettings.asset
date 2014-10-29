@@ -19,3 +19,9 @@ EditorBuildSettings:
     path: Assets/Global/Scene/GameLoseScene.unity
   - enabled: 1
     path: Assets/Global/Scene/GameWinScene.unity
+  - enabled: 1
+    path: Assets/Global/Scene/GameInstructionScene.unity
+  - enabled: 1
+    path: Assets/Global/Scene/GameInstructionScene2.unity
+  - enabled: 1
+    path: Assets/Global/Scene/GameInstructionScene3.unity
