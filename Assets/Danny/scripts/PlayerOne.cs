@@ -68,8 +68,8 @@ public class PlayerOne : MonoBehaviour
 		num_beats_since_last_obstacle_generation = 0;
 
 		// Danny was here.
-		num_beats_between_key_generation_min = 1;
-		num_beats_between_key_generation_max = 4;
+		num_beats_between_key_generation_min = 2;
+		num_beats_between_key_generation_max = 8;
 		current_num_beats_between_key_generation = getWaitTimeUntilNextKey();
 		num_beats_since_last_key_generation = 0;
 
@@ -157,6 +157,8 @@ public class PlayerOne : MonoBehaviour
 		++num_beats_since_last_obstacle_generation;
 		++num_beats_since_last_key_generation;
 
+		bool crates_were_stacked = false;
+
 		// Danny was here.
 		if ( num_beats_since_last_obstacle_generation > current_num_beats_between_obstacle_generation ) {
 			num_beats_since_last_obstacle_generation = 0;
@@ -172,6 +174,7 @@ public class PlayerOne : MonoBehaviour
 				obstacle_generator.CreateCrate();
 
 				if ( rand_stack < stack_chance ) {
+					crates_were_stacked = true;
 					GameObject game_object_mid = GameObject.FindGameObjectWithTag( "MidCrateGen" );
 					ObstacleGenerator obstacle_generator_mid = game_object_mid.GetComponent<ObstacleGenerator>();
 					obstacle_generator_mid.CreateCrate();
@@ -183,6 +186,7 @@ public class PlayerOne : MonoBehaviour
 				obstacle_generator.CreateCrate();
 
 				if ( rand_stack < stack_chance ) {
+					crates_were_stacked = true;
 					int top_or_bottom = Random.Range( 1, 3 );
 					if ( top_or_bottom == 1 ) {
 						GameObject game_object_top = GameObject.FindGameObjectWithTag( "HighCrateGen" );
@@ -202,6 +206,7 @@ public class PlayerOne : MonoBehaviour
 				obstacle_generator.CreateCrate();
 
 				if ( rand_stack < stack_chance ) {
+					crates_were_stacked = true;
 					GameObject game_object_mid = GameObject.FindGameObjectWithTag( "MidCrateGen" );
 					ObstacleGenerator obstacle_generator_mid = game_object_mid.GetComponent<ObstacleGenerator>();
 					obstacle_generator_mid.CreateCrate();
@@ -212,7 +217,7 @@ public class PlayerOne : MonoBehaviour
 		}
 
 		// Danny was here.
-		if ( num_beats_since_last_key_generation > current_num_beats_between_key_generation ) {
+		if ( num_beats_since_last_key_generation > current_num_beats_between_key_generation && !crates_were_stacked ) {
 			int grid_width = grid.getWidth();
 			int createKeyInLane = Random.Range (0, max_lane);
 			while (grid.hasObstacle(grid_width - 1, createKeyInLane) == true) {
