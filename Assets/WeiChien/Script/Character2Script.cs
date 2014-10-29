@@ -55,8 +55,8 @@ public class Character2Script : MonoBehaviour {
 		global = gameObjPhase1.GetComponent<GlobalScript> ();
 		width = map.GetMapSize ();
 		
-		positionX = 14;
-		positionZ = 9;
+		positionX = 9;
+		positionZ = 8;
 		direction = 0;
 		gameObject.transform.position = ComputePosition(positionX,0 ,positionZ);
 		
