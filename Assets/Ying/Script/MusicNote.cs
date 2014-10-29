@@ -6,7 +6,7 @@ public class MusicNote : MonoBehaviour {
 	Vector3 orgScale;
 	float speed;
 	
-	float halfHittingRange;
+	//float halfHittingRange;
 	public Material blinnOrange;
 
 	public Phase1 phase1;
@@ -22,7 +22,7 @@ public class MusicNote : MonoBehaviour {
 		orgScale = gameObject.transform.localScale;
 		speed = PlayerPrefs.GetFloat("noteSpeed");
 
-		halfHittingRange = PlayerPrefs.GetFloat("ScreenWidth2World") * 0.3f * 0.23f / 2.0f;
+		//halfHittingRange = PlayerPrefs.GetFloat("ScreenWidth2World") * 0.3f * 0.23f / 2.0f;
 	}
 	
 	// Update is called once per frame
@@ -30,9 +30,9 @@ public class MusicNote : MonoBehaviour {
 		gameObject.transform.position = new Vector3 (transform.position.x-speed, orgPos.y, orgPos.z);
 		scaleToMusic ();
 
-		if (gameObject.transform.position.x < PlayerPrefs.GetFloat("HittingCenter") + halfHittingRange)
+		if (gameObject.transform.position.x < PlayerPrefs.GetFloat("HittingCenter") + PlayerPrefs.GetFloat ("halfHittingRange"))
 		{
-			if (gameObject.transform.position.x < PlayerPrefs.GetFloat("HittingCenter")- halfHittingRange)
+			if (gameObject.transform.position.x < PlayerPrefs.GetFloat("HittingCenter")- PlayerPrefs.GetFloat ("halfHittingRange"))
 			{
 				if (player1 == null)
 					player1 = (PlayerOne)FindObjectOfType (typeof(PlayerOne));
@@ -57,7 +57,7 @@ public class MusicNote : MonoBehaviour {
 
 	public bool inBeatingArea()
 	{
-		if (gameObject.transform.position.x < PlayerPrefs.GetFloat ("HittingCenter") + halfHittingRange)
+		if (gameObject.transform.position.x < PlayerPrefs.GetFloat ("HittingCenter") + PlayerPrefs.GetFloat ("halfHittingRange"))
 			return true;
 		return false;
 	}
