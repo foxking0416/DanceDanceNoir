@@ -19,6 +19,15 @@ public class Phase1 : MonoBehaviour {
 	bool isToClear;
 	string keySequence;
 	string[] actionPatterns;
+	char[] bgMusic = {'E','D','C','D','E','E','E','0',
+					  'D','D','D','0','E','E','E','0',
+					  'E','D','C','D','E','E','E','0',
+					  'D','D','E','D','C','0','0','0'}; 
+	int bgMusicId;
+	public AudioSource C;
+	public AudioSource D;
+	public AudioSource E;
+	public AudioSource N;
 
 	int keyMiss;
 	int maxKeyMiss;
@@ -26,6 +35,7 @@ public class Phase1 : MonoBehaviour {
 	public AudioSource beatMissAudio1;
 	public AudioSource beatMissAudio2;
 	public AudioSource caseRemoveAudio;
+
 
 	float noteStartX;
 	public GUITexture beatBarBg;
@@ -43,8 +53,6 @@ public class Phase1 : MonoBehaviour {
 	public PlayerMissBeatScript MissBeatFlashPlane;
 
 	//audio effect
-	public AudioSource beatAuido;
-	
 	ArrayList beatArray;
 	float[] spectrum; 
 	int beatId;
@@ -75,7 +83,6 @@ public class Phase1 : MonoBehaviour {
 		noteSpeedChangePeriod = 200;
 		PlayerPrefs.SetFloat ("noteSpeed", 0.035f);
 
-
 		beatBarHeight = (int)(Screen.height * 0.06);
 		actionBarWidth = (float)(Screen.width * 0.3);
 		beatBarBg.pixelInset = new Rect(-Screen.width/2,-beatBarHeight/2, Screen.width, beatBarHeight);
@@ -103,6 +110,8 @@ public class Phase1 : MonoBehaviour {
 		else {
 			actionPatterns[0] = " A D D";	actionPatterns[1] = " A W D";	actionPatterns[2] = " A S D";
 		}
+
+		bgMusicId = 0;
 
 		keyMiss = 0;
 		maxKeyMiss = 50;
@@ -183,7 +192,7 @@ public class Phase1 : MonoBehaviour {
 			}
 			if (n.tag == "TransNote" && n.inBeatingCenter()) {
 				BeatFlashPlane.BeatFlash();
-				beatAuido.audio.Play ();
+				bgMusicPlay();
 				hittingArea.enlarge();
 				Destroy(n.gameObject);
 
@@ -372,18 +381,18 @@ public class Phase1 : MonoBehaviour {
 		p.tag = "TransNote";
 	}
 	
-	void generateObstacle1()
+	void bgMusicPlay()
 	{
-		float randValue = Random.Range(0, 2);
-		GameObject gameObjCrate;
-		if(randValue < 1){
-			gameObjCrate = GameObject.FindGameObjectWithTag("HighCrateGen");
-		}
-		else{
-			gameObjCrate = GameObject.FindGameObjectWithTag("LowCrateGen");
-		}
-		ObstacleGenerator obsGen = gameObjCrate.GetComponent<ObstacleGenerator>();
-		obsGen.CreateCrate();
+		//Debug.Log ((bgMusic [bgMusicId]).ToString ());
+		if (bgMusic [bgMusicId] == 'C')
+			C.Play ();
+		else if (bgMusic [bgMusicId] == 'D')
+			D.Play ();
+		else if (bgMusic [bgMusicId] == 'E')
+			E.Play ();
+		else
+			N.Play ();
+		bgMusicId = (++bgMusicId >= bgMusic.Length) ? 0 : bgMusicId;
 	}
 
 	public void noteSpeedIncrese()
@@ -408,7 +417,7 @@ public class Phase1 : MonoBehaviour {
 	void OnGUI()
 	{		
 		//one player one part
-		GUI.TextArea(new Rect((int)(0.7*Screen.width),10,(int)(Screen.width*0.25),20),"Obstacl Generator");
+		GUI.TextArea(new Rect((int)(0.7*Screen.width),10,(int)(Screen.width*0.25),20),"Beat Missed");
 		GUI.backgroundColor = Color.red;
 		if (keyMiss > 0)
 			GUI.Button(new Rect((int)(0.7*Screen.width),10,(int)(Screen.width*0.25 * keyMiss / (float)maxKeyMiss), 20), "");
