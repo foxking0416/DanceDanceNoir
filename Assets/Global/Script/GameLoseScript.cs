@@ -14,7 +14,7 @@ public class GameLoseScript : MonoBehaviour {
 	}
 
 	void OnGUI (){
-		GUILayout.BeginArea(new Rect(10, 850, 140, 600));
+		GUILayout.BeginArea(new Rect(100, 850, 140, 600));
 		
 		if (GUILayout.Button("New Game")) {
 			Application.LoadLevel("Phase1SceneV4");
