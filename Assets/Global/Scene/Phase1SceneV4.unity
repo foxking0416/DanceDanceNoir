@@ -655,7 +655,7 @@ AudioSource:
   serializedVersion: 3
   m_audioClip: {fileID: 8300000, guid: d3c3aabe1a8fcbd4c961082e492d8bf4, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: .100000001
+  m_Volume: .0500000007
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -664,7 +664,7 @@ AudioSource:
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
-  rolloffMode: 2
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -672,19 +672,14 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - time: 0
-      value: .986206889
+      value: .0896552801
       inSlope: -6.18075262e-07
       outSlope: -6.18075262e-07
       tangentMode: 0
-    - time: .982483327
-      value: .979578376
+    - time: 1
+      value: .0968198478
       inSlope: -.0289908871
       outSlope: -.0289908871
-      tangentMode: 0
-    - time: 1
-      value: .972413838
-      inSlope: -1.00200403
-      outSlope: 0
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -692,7 +687,7 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - time: 0
-      value: 1
+      value: .793103456
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -3206,6 +3201,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   notetoSpwan: {fileID: 100000, guid: 5fe2a935cf9b9d24c967d21974872f3b, type: 2}
   transMaterial: {fileID: 2100000, guid: 685e16eabac097247adaab921090d9ec, type: 2}
+  starToSpawn: {fileID: 100000, guid: b9109cdbef93f904b83bef27637c2ece, type: 2}
   C: {fileID: 933978463}
   D: {fileID: 21819837}
   E: {fileID: 956529580}
@@ -3379,7 +3375,7 @@ AudioSource:
   serializedVersion: 3
   m_audioClip: {fileID: 8300000, guid: 2f241186658649d479711e7d6c42e421, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: .0500000007
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -3388,7 +3384,7 @@ AudioSource:
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
-  rolloffMode: 2
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0

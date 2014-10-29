@@ -14,6 +14,9 @@ public class Phase1 : MonoBehaviour {
 	int noteSpeedChangeTiming;
 	int noteSpeedChangePeriod;
 
+	bool toAddStar;
+	public GameObject starToSpawn;
+
 	int mode;
 	int signal1, signal2;
 	bool isToClear;
@@ -36,7 +39,6 @@ public class Phase1 : MonoBehaviour {
 	public AudioSource beatMissAudio2;
 	public AudioSource caseRemoveAudio;
 
-
 	float noteStartX;
 	public GUITexture beatBarBg;
 	public Camera musicCamera;
@@ -51,37 +53,19 @@ public class Phase1 : MonoBehaviour {
 	//visual effect
 	public BeatFlashScript BeatFlashPlane;
 	public PlayerMissBeatScript MissBeatFlashPlane;
-
-	//audio effect
-	ArrayList beatArray;
-	float[] spectrum; 
-	int beatId;
-	
-	//	int qSamples  = 1024;  // array size
-	//	int eSamples = 44;
-	//	int subbands = 32;
-	//	int eId = -1;
-	//	
-	//	private float[] samples ; // audio samples
-	//	private float[] spectrum; // audio spectrum
-	//	private float fSample;
-	//	private float[] E;
-	//	private float[] Es;
-	//	
-	//	float last = 0.0f;
 	
 	public int numberOfCollectedEvidence;
 
 	// Use this for initialization
 	void Start () {
 		musicBarLayerOffset = 150.0f;
-
-
+		
 		timing = noteSpwanDuration;
 		noteSpwanDuration = 30;
 		noteSpeedChangeTiming = noteSpeedChangePeriod;
 		noteSpeedChangePeriod = 200;
 		PlayerPrefs.SetFloat ("noteSpeed", 0.035f);
+		toAddStar = false;
 
 		beatBarHeight = (int)(Screen.height * 0.06);
 		actionBarWidth = (float)(Screen.width * 0.3);
@@ -119,32 +103,14 @@ public class Phase1 : MonoBehaviour {
 		//player1 = GameObject.Find ("player_one(Clone)").GetComponent<PlayerOne> ();
 		player2 = GameObject.FindGameObjectWithTag ("Player2").GetComponent<Character2Script>();
 
-		//PlayerPrefs.SetInt ("Signal1", (int)Action.None);
-		//PlayerPrefs.SetInt ("Signal2", (int)Action.None);
-
-		//PlayerPrefs.SetInt ("HittingPeriod", 0);
-
 		preGenerateMusicNote ();
 		hittingArea = Instantiate (hittingArea, new Vector3 (PlayerPrefs.GetFloat ("HittingCenter"), 0.0f, 51.95f), Quaternion.identity) as HittingArea;
-
-		//audio
-//		qSamples  = 1024;  // array size
-//		eSamples = 44;
-//		subbands = 32;
-//		eId = -1;
-//
-//		samples = new float[qSamples];
-//		spectrum = new float[qSamples];
-//		fSample = AudioSettings.outputSampleRate;
-//		E = new float[eSamples];
-//		Es = new float[subbands];
-
+	
 		numberOfCollectedEvidence = 0;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		//AnalyzeSound();
 
 		if (timing-- <= 0)
 		{
@@ -162,18 +128,13 @@ public class Phase1 : MonoBehaviour {
 		{
 			keySequence = "";
 			isToClear = false;
-			//PlayerPrefs.SetString ("KeySequence", keySequence);
 		}
-		//PlayerPrefs.SetInt ("Signal1", (int)Action.None);
-		//PlayerPrefs.SetInt ("Signal2", (int)Action.None);
 
 		if(	numberOfCollectedEvidence >= 5)
 			Application.LoadLevel("Phase2SceneV1");//Win
 
 		playerKeyPressDectection ();
 	}
-
-
 
 	void playerKeyPressDectection()
 	{
@@ -302,10 +263,6 @@ public class Phase1 : MonoBehaviour {
 			
 			isToClear = true;
 		}
-		
-		//PlayerPrefs.SetInt ("Signal1", signal1);
-		//signal1 = (int)Action.None;
-		//PlayerPrefs.SetString ("KeySequence", keySequence);
 
 		return true;
 	}
@@ -348,8 +305,7 @@ public class Phase1 : MonoBehaviour {
 			signal2 = (int)Action.None;
 			return false;
 		}
-		
-		//PlayerPrefs.SetInt ("Signal2", signal2);
+
 		return true;
 	}
 
@@ -379,6 +335,11 @@ public class Phase1 : MonoBehaviour {
 		                            Quaternion.Euler(new Vector3(0.0f, 90.0f, 90.0f))) as GameObject;
 		p.renderer.material = transMaterial;
 		p.tag = "TransNote";
+
+		if (toAddStar) {
+			Instantiate(starToSpawn, new Vector3(posX, 0.0f, 52.08f), Quaternion.Euler(new Vector3(90.0f, 0.0f, 0.0f)));
+			toAddStar = false;
+		}
 	}
 	
 	void bgMusicPlay()
@@ -412,6 +373,7 @@ public class Phase1 : MonoBehaviour {
 	{
 		noteSpwanDuration = 30;
 		PlayerPrefs.SetFloat ("halfHittingRange",PlayerPrefs.GetFloat("ScreenWidth2World") * 0.3f * 0.23f / 2.0f);
+		toAddStar = true;
 	}
 
 	void OnGUI()
