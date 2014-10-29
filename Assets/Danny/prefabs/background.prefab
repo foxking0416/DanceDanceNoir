@@ -110,9 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f2864cdb608d6141b0028ef938efac8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scrollSpeedX: .0500000007
-  scrollSpeedY: 0
-  stepSize: .0500000007
+  stepSize: .074000001
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
