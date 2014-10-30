@@ -7,7 +7,7 @@ public class TitleScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		AudioSource.PlayClipAtPoint (titleAudio, gameObject.transform.position);
+		//AudioSource.PlayClipAtPoint (titleAudio, gameObject.transform.position);
 	}
 	
 	// Update is called once per frame
